@@ -1,0 +1,24 @@
+﻿@page "/ch01r03cl"
+@rendermode InteractiveWebAssembly
+@using BlazorCookbookApp.Client.Pages.Recipe3cl
+
+<h1>Components in Client project</h1>
+<h2>Offer page sends parameters and code to Ticket component</h2>
+<Ticket Tariff="Adult" Price="10.00m" OnAdded="@Add" />
+<Ticket Tariff="Child" Price="5.00m" OnAdded="@Add" />
+
+<h2>Features</h2>
+<ul>
+  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
+  <li>Offer uses rendermode InteractiveWebAssembly
+     (rendering in the browser after full load, but before this at the server?)</li>
+</ul>
+
+<h2>No errors</h2>
+
+@code {
+    private void Add()
+    {
+      Console.WriteLine("Added to cart!");
+    }
+}
