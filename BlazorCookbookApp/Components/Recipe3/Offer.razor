@@ -1,0 +1,24 @@
+﻿@page "/ch01r03"
+@rendermode InteractiveWebAssembly
+
+<Ticket Tariff="Adult" Price="10.00m" OnAdded="@Add" />
+<Ticket Tariff="Child" Price="5.00m" OnAdded="@Add" />
+
+<h2>Current features</h2>	
+<ul>
+  <li>Page Offer uses Ticket component.</li>
+  <li>Offer uses rendermode InteractiveWebAssembly (rendering in the browser after full load, but before this at the server)</li>
+</ul>
+
+<h2>Current errors</h2>
+<ul>
+    <li>Chrome, Edge: ManagedError: One or more errors occurred. (Root component type 'BlazorCookbookApp.Components.Recipe3.Offer' could not be found in the assembly 'BlazorCookbookApp'.)</li>
+    <li>OnClick handler seems not to work.</li>
+</ul>
+
+@code {
+    private void Add()
+    {
+      Console.WriteLine("Added to cart!");
+    }
+}

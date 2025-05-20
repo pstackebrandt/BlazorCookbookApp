@@ -1,0 +1,25 @@
+@baseUrl = https://localhost:7180
+
+### Health Check
+GET {{baseUrl}}/health
+Accept: application/json
+
+### Weather Data
+GET {{baseUrl}}/weather
+Accept: application/json
+
+### Error Page
+GET {{baseUrl}}/Error
+Accept: text/html
+
+### Home Page
+GET {{baseUrl}}/
+Accept: text/html
+
+### Recipe2 Pages
+GET {{baseUrl}}/ch01r02
+Accept: text/html
+
+### Recipe3 Pages
+GET {{baseUrl}}/ch01r03
+Accept: text/html 
