@@ -1,0 +1,39 @@
+﻿@page "/ch01r04"
+@rendermode InteractiveWebAssembly
+
+@if (!RendererInfo.IsInteractive)
+{
+    <p>This page is not fully loaded locally. That's why it is rendered at the server.</p>
+    
+}
+else
+{
+    <p>Page is fully loaded locally. Now it is rendered at the client.</p>
+}
+<p>RendererInfo.Name: @RendererInfo.Name</p>
+
+<h1>Detecting rendermode at runtime</h1>
+<p>All components are placed in the Client project.</p>
+
+<h2>Offer page sends parameters and code to Ticket component</h2>
+<p>- Before the tickets -</p>
+<Ticket Tariff="Adult" Price="10.00m" OnAdded="@Add" />
+<Ticket Tariff="Child" Price="5.00m" OnAdded="@Add" />
+<p>- After the tickets -</p>
+
+<h2>Features</h2>
+<ul>
+  <li>I detect the rendermode at runtime.</li>
+  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
+  <li>Offer uses rendermode InteractiveWebAssembly
+     (rendering in the browser after full load, but before this at the server?)</li>
+</ul>
+
+<h2>No errors</h2>
+
+@code {
+    private void Add()
+    {
+      Console.WriteLine("Added to cart!");
+    }
+}
