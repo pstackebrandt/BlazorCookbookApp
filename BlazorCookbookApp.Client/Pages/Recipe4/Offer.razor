@@ -11,6 +11,8 @@ else
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
 }
 <p>RendererInfo.Name: @RendererInfo.Name</p>
+<p>AssignedRenderMode: @(AssignedRenderMode?.GetType().Name ?? "not assigned")</p>
+
 
 <h1>Detecting rendermode at runtime</h1>
 <p>All components are placed in the Client project.</p>
