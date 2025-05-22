@@ -1,0 +1,38 @@
+﻿@page "/ch01r07"
+@using BlazorCookbook.App.Client.Chapters.Chapter01.Data
+@rendermode InteractiveWebAssembly
+
+@if (!RendererInfo.IsInteractive)
+{
+  <p>Loading ...</p>
+}
+
+<h1>Creating components with customizable content</h1>
+<p>All components are placed in the Client project.</p>
+
+<h2>Tickets</h2>
+<p>Tickets use Data/TicketViewModel.cs and Data/Sample.cs.</p>
+
+<Ticket Id="@Samples.Adult.Id">
+  @Samples.Adult.Tariff (@Samples.Adult.Price)
+</Ticket>
+
+<Ticket Id="@Samples.FreeAdmission.Id">
+  <div class="free-ticket">
+    @Samples.FreeAdmission.Tariff	
+  </div>
+</Ticket>
+
+<h2>Features</h2>
+<ul>
+  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
+</ul>
+
+<h2>No errors</h2>
+
+@code {
+  private void Add()
+  {
+    Console.WriteLine("Added to cart!");
+  }
+}
