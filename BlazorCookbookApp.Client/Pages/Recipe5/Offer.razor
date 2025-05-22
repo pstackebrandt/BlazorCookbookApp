@@ -1,0 +1,39 @@
+﻿@page "/ch01r05"
+@rendermode InteractiveWebAssembly
+
+@if (!RendererInfo.IsInteractive)
+{
+    <p>Loading ...</p>
+    
+}
+
+<h1>Ensuring that component parameter is required at compile time</h1>
+<p>All components are placed in the Client project.</p>
+
+<h2>Offer page sends parameters and code to Ticket component</h2>
+<p>- Before the tickets -</p>
+
+<p>Ticket instance without a required parameter like "Price" wouldn't compile, <br>
+  if we set in project file: &lt;WarningsAsErrors&gt;RZ2012&lt;/WarningsAsErrors&gt;
+</p>
+@* This would be an error: *@
+@* <Ticket Tariff="Adult" OnAdded="@Add" /> *@
+<Ticket Tariff="Adult" Price="10.00m" OnAdded="@Add" />
+
+<p>Left optional parameters like "OnAdded" will compile.</p>
+<Ticket Tariff="Child" Price="5.00m" />
+<p>- After the tickets -</p>
+
+<h2>Features</h2>
+<ul>
+  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
+</ul>
+
+<h2>No errors</h2>
+
+@code {
+    private void Add()
+    {
+      Console.WriteLine("Added to cart!");
+    }
+}

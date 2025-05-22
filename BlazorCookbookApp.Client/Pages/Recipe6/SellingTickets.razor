@@ -1,0 +1,55 @@
+﻿@page "/ch01r06"
+@rendermode InteractiveWebAssembly
+
+<h1>Cascading values to child components</h1>
+
+<h2>SellingTickets page component</h2>
+
+@if (!RendererInfo.IsInteractive)
+{
+    <p>Loading ...</p>
+}
+
+<div class="cart-summary">
+    <div class="cart-content">
+        Items: @Cart.Volume
+    </div>
+    <div class="cart-value">
+        Price: @Cart.Value
+    </div>
+</div>
+
+@* I created a Cart instance. Now I pass it to the Ticket components. *@
+@* CascadingValue is used to pass the Cart instance to the Ticket component. *@
+<CascadingValue Value="Cart">
+    <p>- Before ticket -</p>
+    <Ticket Tariff="Adult" Price="10.00m" />
+    <p>- After ticket -</p>    
+    <p>- Before ticket -</p>
+    <Ticket Tariff="Child" Price="5.00m" />
+    <p>- After ticket -</p>
+</CascadingValue>
+
+<div class="cart-summary">
+    <div class="cart-content">
+        Items: @Cart.Volume
+    </div>
+    <div class="cart-value">
+        Price: @Cart.Value
+    </div>
+</div>
+
+@code {
+    public required Cart Cart;
+
+    // runs when the component is initialized
+    protected override void OnInitialized()
+    {
+        // We give a callback to the Cart, that will be called when the cart's
+        // content changes. The callback ensures that when the cart's content
+        // changes the UI will automatically update to reflect those changes.
+
+        // StateHasChanged is a method in ComponentBase class.
+        Cart = new(() => InvokeAsync(StateHasChanged));
+    }
+}
