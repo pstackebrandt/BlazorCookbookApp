@@ -1,0 +1,116 @@
+@page "/ch01r04s"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject IRecipeUrlService RecipeUrlService
+@using BlazorCookbookApp.Client.Services
+
+<PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
+<h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
+
+<h2>Detecting rendermode at runtime</h2>
+@if (!RendererInfo.IsInteractive)
+{
+    <p>This page is not fully interactive yet. Still processing on the server.</p>
+}
+else
+{
+    <p>Page is now interactive. Server-side processing with real-time updates.</p>
+}
+
+<div class="card border-dark mb-4">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">🔍 Current Render Mode Status</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Render Mode:</strong> 
+                   <span class="badge @GetRenderModeClass() fs-6">@RendererInfo.Name</span>
+                </p>
+                <p><strong>Interactive:</strong> 
+                   <span class="badge @(RendererInfo.IsInteractive ? "bg-success" : "bg-secondary")">
+                       @RendererInfo.IsInteractive
+                   </span>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Assigned Mode:</strong> 
+                   <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
+                </p>
+                <p><strong>Server Processing Time:</strong> 
+                   <span class="badge bg-info text-white">@GetServerProcessingTime()</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>All components are processed on the server with SignalR communication.</p>
+
+<h2>Offer page sends parameters and code to Ticket component</h2>
+<p>- Before the tickets -</p>
+<TicketServer Tariff="Adult" Price="10.00m" OnAdded="@Add" />
+<TicketServer Tariff="Child" Price="5.00m" OnAdded="@Add" />
+<p>- After the tickets -</p>
+
+<h2>Features</h2>
+<ul>
+  <li>I detect the rendermode at runtime.</li>
+  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
+  <li>Offer uses rendermode InteractiveServer
+     (processing on server, UI updates via SignalR)</li>
+  <li>Server-side processing with real-time UI updates</li>
+</ul>
+
+<h2>No errors</h2>
+
+@code {
+    private string _title = "Render modes - Server";
+    private DateTime _startTime = DateTime.UtcNow;
+    private DateTime? _interactiveTime = null;
+
+    protected override void OnInitialized()
+    {
+        RecipeUrlService.Initialize(Navigation);
+        _startTime = DateTime.UtcNow;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && RendererInfo.IsInteractive)
+        {
+            _interactiveTime = DateTime.UtcNow;
+            StateHasChanged();
+        }
+        await Task.CompletedTask;
+    }
+
+    private string GetRenderModeClass()
+    {
+        return RendererInfo.Name?.ToLower() switch
+        {
+            "server" => "bg-primary text-white",     // Blue for Server
+            "static" => "bg-warning text-dark",      // Yellow for Static
+            _ => "bg-secondary text-white"           // Gray for unknown
+        };
+    }
+
+    private string GetServerProcessingTime()
+    {
+        if (_interactiveTime.HasValue)
+        {
+            var processingMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
+            return $"{processingMs:F0}ms";
+        }
+        else if (RendererInfo.IsInteractive)
+        {
+            return "Measuring...";
+        }
+        return "Processing on server...";
+    }
+    
+    private void Add()
+    {
+        Console.WriteLine("Added to cart! (Server-side processing)");
+    }
+} 

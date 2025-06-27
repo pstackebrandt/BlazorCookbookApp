@@ -3,7 +3,6 @@
 ## Todo
 
 - [ ] T6 Create Recipe4 Server vs Client comparison implementation
-- [ ] T6.1 Create server version with InteractiveServer render mode (/ch01r04s)
 - [ ] T6.2 Update client version with distinct page title (/ch01r04)
 - [ ] T6.3 Create comparison page with responsive layout (/ch01r04c)
 - [ ] T6.4 Implement timing measurements for both versions (millisecond precision)
@@ -11,6 +10,8 @@
 - [ ] T6.6 Test mobile responsiveness and stacked layout
 
 ## In Progress
+
+- [ ] T6.1 Create server version with InteractiveServer render mode (/ch01r04s) - Testing
 
 ## Done
 
