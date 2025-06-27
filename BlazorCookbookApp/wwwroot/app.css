@@ -58,3 +58,33 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+/* Recipe Overview Styling */
+.recipe-overview {
+    margin-top: 2rem;
+}
+
+    .recipe-overview table {
+        font-size: 0.9rem;
+    }
+
+    .recipe-overview th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .recipe-overview td {
+        padding: 0.5rem;
+        vertical-align: middle;
+    }
+
+    .recipe-overview .badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .recipe-overview tbody tr:hover {
+        background-color: #f8f9fa;
+    }

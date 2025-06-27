@@ -1,0 +1,29 @@
+namespace BlazorCookbookApp.Services;
+
+/// <summary>
+/// Represents metadata for a recipe found in the Blazor Cookbook application.
+/// Contains route information, location, and summary extracted from .razor files.
+/// </summary>
+public class RecipeInfo
+{
+    /// <summary>Complete route path (e.g., "/ch01r02")</summary>
+    public string Route { get; set; } = string.Empty;
+    
+    /// <summary>Chapter number (e.g., 1)</summary>
+    public int Chapter { get; set; }
+    
+    /// <summary>Recipe number within chapter (e.g., 2)</summary>
+    public int Recipe { get; set; }
+    
+    /// <summary>Optional variant suffix (e.g., "cl" for client)</summary>
+    public string? Variant { get; set; }
+    
+    /// <summary>Project location: "Client" or "Server"</summary>
+    public string Location { get; set; } = string.Empty;
+    
+    /// <summary>Recipe description extracted from H1/H2 tags</summary>
+    public string Summary { get; set; } = string.Empty;
+    
+    /// <summary>Full file path to the .razor file</summary>
+    public string FilePath { get; set; } = string.Empty;
+} 
