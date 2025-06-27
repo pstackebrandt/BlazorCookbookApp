@@ -6,11 +6,6 @@
 <PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
 <h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
 
-<p><strong>Extracted from URL:</strong></p>
-<p>Chapter: @RecipeUrlService.ChapterNumber</p>
-<p>Recipe: @RecipeUrlService.RecipeNumber</p>
-<p><strong>Formatted:</strong> @RecipeUrlService.GetFormattedChapterRecipe()</p>
-
 <h2>Detecting rendermode at runtime</h2>
 @if (!RendererInfo.IsInteractive)
 {
@@ -21,11 +16,8 @@ else
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
 }
 
-
 <p>RendererInfo.Name: @RendererInfo.Name</p>
 <p>AssignedRenderMode: @(AssignedRenderMode?.GetType().Name ?? "not assigned")</p>
-
-
 
 <p>All components are placed in the Client project.</p>
 
