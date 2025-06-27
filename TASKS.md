@@ -6,8 +6,12 @@
 
 ## Done
 
+- [x] T5 Improve render mode display with color-coded Bootstrap styling
+- [x] T5.1 Add artificial delay for demo visibility
+- [x] T5.2 Create professional card layout for render mode status
+- [x] T5.3 Implement color coding (Green=WebAssembly, Yellow=Static)
+- [x] T5.4 Fix ugly light blue color scheme
 - [x] T4 Clean up Recipe4 page by removing debug output section
-
 - [x] T3 Create RecipeUrlService for URL parameter extraction across all recipe pages
 - [x] T3.1 Implement service with chapter/recipe extraction from URLs
 - [x] T3.2 Add formatted title generation functionality
@@ -15,7 +19,6 @@
 - [x] T3.4 Update existing recipe pages to use the service
 - [x] T3.5 Fix DI registration for InteractiveWebAssembly render mode (server + client)
 - [x] T3.6 Add comprehensive XML documentation to service
-
 - [x] T1 Optimize page Rendermodes ch1r4
 - [x] T1.1 Make better visible what the page is about
 - [x] T1.2 Separate render mode detection from the page title

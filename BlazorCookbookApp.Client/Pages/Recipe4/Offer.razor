@@ -7,17 +7,46 @@
 <h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
 
 <h2>Detecting rendermode at runtime</h2>
-@if (!RendererInfo.IsInteractive)
+@if (!RendererInfo.IsInteractive || _isDelayed)
 {
     <p>This page is not fully loaded locally. That's why it is rendered at the server.</p>
+    @if (RendererInfo.IsInteractive && _isDelayed)
+    {
+        <p><em>Delaying client transition for demo purposes...</em></p>
+    }
 }
 else
 {
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
 }
 
-<p>RendererInfo.Name: @RendererInfo.Name</p>
-<p>AssignedRenderMode: @(AssignedRenderMode?.GetType().Name ?? "not assigned")</p>
+<div class="card border-dark mb-4">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">🔍 Current Render Mode Status</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Render Mode:</strong> 
+                   <span class="badge @GetRenderModeClass() fs-6">@RendererInfo.Name</span>
+                </p>
+                <p><strong>Interactive:</strong> 
+                   <span class="badge @(RendererInfo.IsInteractive ? "bg-success" : "bg-secondary")">
+                       @RendererInfo.IsInteractive
+                   </span>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Assigned Mode:</strong> 
+                   <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
+                </p>
+                <p><strong>Static Phase Duration:</strong> 
+                   <span class="badge bg-info text-white">@GetStaticPhaseDuration()</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <p>All components are placed in the Client project.</p>
 
@@ -39,10 +68,53 @@ else
 
 @code {
     private string _title = "Render modes";
+    private bool _isDelayed = false;
+    private DateTime _startTime = DateTime.UtcNow;
+    private DateTime? _interactiveTime = null;
+    private const int DEMO_DELAY_MS = 3000;
 
     protected override void OnInitialized()
     {
         RecipeUrlService.Initialize(Navigation);
+        _startTime = DateTime.UtcNow;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && RendererInfo.IsInteractive)
+        {
+            _interactiveTime = DateTime.UtcNow;
+            
+            // Add demo delay to make server-to-client transition visible
+            await Task.Delay(DEMO_DELAY_MS);
+            _isDelayed = false;
+            StateHasChanged();
+        }
+    }
+
+    private string GetRenderModeClass()
+    {
+        return RendererInfo.Name?.ToLower() switch
+        {
+            "webassembly" => "bg-success text-white", // Green for WebAssembly
+            "static" => "bg-warning text-dark",       // Yellow for Static
+            _ => "bg-secondary text-white"            // Gray for unknown
+        };
+    }
+
+    private string GetStaticPhaseDuration()
+    {
+        if (_interactiveTime.HasValue)
+        {
+            var totalMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
+            var actualMs = Math.Max(0, totalMs - DEMO_DELAY_MS); // Subtract demo delay
+            return $"{actualMs:F0}ms";
+        }
+        else if (RendererInfo.IsInteractive)
+        {
+            return "Measuring...";
+        }
+        return "Still in static phase";
     }
     
     private void Add()
