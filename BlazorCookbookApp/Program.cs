@@ -1,6 +1,7 @@
 using BlazorCookbookApp.Client.Pages;
 using BlazorCookbookApp.Components;
 using BlazorCookbookApp.Services;
+using BlazorCookbookApp.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddRazorComponents()
 
 // Add recipe scanner service
 builder.Services.AddScoped<RecipeScanner>();
+
+// Add recipe URL service (needed for InteractiveWebAssembly pages that pre-render on server)
+builder.Services.AddScoped<IRecipeUrlService, RecipeUrlService>();
 
 var app = builder.Build();
 

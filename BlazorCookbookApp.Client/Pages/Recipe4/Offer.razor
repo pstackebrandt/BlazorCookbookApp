@@ -1,20 +1,32 @@
 ﻿@page "/ch01r04"
 @rendermode InteractiveWebAssembly
+@inject NavigationManager Navigation
+@inject IRecipeUrlService RecipeUrlService
 
+<PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
+<h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
+
+<p><strong>Extracted from URL:</strong></p>
+<p>Chapter: @RecipeUrlService.ChapterNumber</p>
+<p>Recipe: @RecipeUrlService.RecipeNumber</p>
+<p><strong>Formatted:</strong> @RecipeUrlService.GetFormattedChapterRecipe()</p>
+
+<h2>Detecting rendermode at runtime</h2>
 @if (!RendererInfo.IsInteractive)
 {
     <p>This page is not fully loaded locally. That's why it is rendered at the server.</p>
-    
 }
 else
 {
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
 }
+
+
 <p>RendererInfo.Name: @RendererInfo.Name</p>
 <p>AssignedRenderMode: @(AssignedRenderMode?.GetType().Name ?? "not assigned")</p>
 
 
-<h1>Detecting rendermode at runtime</h1>
+
 <p>All components are placed in the Client project.</p>
 
 <h2>Offer page sends parameters and code to Ticket component</h2>
@@ -34,8 +46,15 @@ else
 <h2>No errors</h2>
 
 @code {
+    private string _title = "Render modes";
+
+    protected override void OnInitialized()
+    {
+        RecipeUrlService.Initialize(Navigation);
+    }
+    
     private void Add()
     {
-      Console.WriteLine("Added to cart!");
+        Console.WriteLine("Added to cart!");
     }
 }
