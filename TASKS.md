@@ -2,19 +2,30 @@
 
 ## Todo
 
+- [ ] T7 Create Recipe4 Auto Mode implementation (/ch01r04a)
+- [ ] T7.1 Create OfferAuto.razor with InteractiveAuto render mode
+- [ ] T7.2 Implement first-visit vs subsequent-visit behavior tracking
+- [ ] T7.3 Add WebAssembly download progress indication
+- [ ] T7.4 Show adaptive render mode switching (Server → Client)
+- [ ] T7.5 Document educational comparison between all three modes
 - [ ] T6 Create Recipe4 Server vs Client comparison implementation
-- [ ] T6.2 Update client version with distinct page title (/ch01r04)
+- [ ] T6.2 Update client version with authentic state tracking and distinct page title
 - [ ] T6.3 Create comparison page with responsive layout (/ch01r04c)
-- [ ] T6.4 Implement timing measurements for both versions (millisecond precision)
-- [ ] T6.5 Test Recipe Overview integration for all three versions
-- [ ] T6.6 Test mobile responsiveness and stacked layout
+- [ ] T6.7 Test Recipe Overview integration for all three versions
+- [ ] T6.8 Test mobile responsiveness and stacked layout
+- [ ] T6.9 Validate educational value with authentic behavior
 
 ## In Progress
 
-- [ ] T6.1 Create server version with InteractiveServer render mode (/ch01r04s) - Testing
-
 ## Done
 
+- [x] T6.10 Add "Time to Interactive" display showing duration until interactivity achieved
+- [x] T6.9 Remove artificial delay from server version for authentic timing
+- [x] T6.8 Add duration tracking to action history (milliseconds since start)
+- [x] T6.6 Add action timeline display with real timing
+- [x] T6.5 Create RenderAction data model for action history
+- [x] T6.4 Implement authentic render mode journey tracking (no artificial delays)
+- [x] T6.1 Create server version with InteractiveServer render mode (/ch01r04s)
 - [x] T5 Improve render mode display with color-coded Bootstrap styling
 - [x] T5.1 Add artificial delay for demo visibility
 - [x] T5.2 Create professional card layout for render mode status
@@ -39,6 +50,7 @@
 - Move tasks between sections as needed
 - Use B + number for bug tasks
 - **Task Order**: In Done section, place newer tasks at the top, older tasks at the bottom
+- **Authentic Behavior**: Focus on real render mode behavior, not artificial delays
 
 ## Examples
 

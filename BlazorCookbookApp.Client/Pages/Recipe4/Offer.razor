@@ -34,6 +34,12 @@ else
                    <span class="badge @(RendererInfo.IsInteractive ? "bg-success" : "bg-secondary")">
                        @RendererInfo.IsInteractive
                    </span>
+                   @if (RendererInfo.IsInteractive && _interactiveTime.HasValue)
+                   {
+                       <span class="badge bg-info text-white ms-2">
+                           Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
+                       </span>
+                   }
                 </p>
             </div>
             <div class="col-md-6">
@@ -108,7 +114,7 @@ else
         {
             var totalMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
             var actualMs = Math.Max(0, totalMs - DEMO_DELAY_MS); // Subtract demo delay
-            return $"{actualMs:F0}ms";
+            return $"{actualMs.ToString("F0")}ms";
         }
         else if (RendererInfo.IsInteractive)
         {

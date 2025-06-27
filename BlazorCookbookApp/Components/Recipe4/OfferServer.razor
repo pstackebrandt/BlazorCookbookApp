@@ -3,14 +3,17 @@
 @inject NavigationManager Navigation
 @inject IRecipeUrlService RecipeUrlService
 @using BlazorCookbookApp.Client.Services
+@using BlazorCookbookApp.Components.Recipe4.Shared
 
 <PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
 <h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
 
 <h2>Detecting rendermode at runtime</h2>
-@if (!RendererInfo.IsInteractive)
+@if (!RendererInfo.IsInteractive || _isDelayed)
 {
-    <p>This page is not fully interactive yet. Still processing on the server.</p>
+    <p>📡 Establishing SignalR connection to server...</p>
+    <p>⚙️ Server processing component statically...</p>
+
 }
 else
 {
@@ -19,28 +22,60 @@ else
 
 <div class="card border-dark mb-4">
     <div class="card-header bg-dark text-white">
-        <h5 class="mb-0">🔍 Current Render Mode Status</h5>
+        <h5 class="mb-0">🔍 Render Mode Journey</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <p><strong>Render Mode:</strong> 
+                <p><strong>Initial State:</strong> 
+                   <span class="badge bg-warning text-dark">@_initialRenderMode</span>
+                </p>
+                <p><strong>Current State:</strong> 
                    <span class="badge @GetRenderModeClass() fs-6">@RendererInfo.Name</span>
                 </p>
                 <p><strong>Interactive:</strong> 
                    <span class="badge @(RendererInfo.IsInteractive ? "bg-success" : "bg-secondary")">
                        @RendererInfo.IsInteractive
                    </span>
+                   @if (RendererInfo.IsInteractive && _interactiveTime.HasValue)
+                   {
+                       <span class="badge bg-info text-white ms-2">
+                           Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
+                       </span>
+                   }
                 </p>
             </div>
             <div class="col-md-6">
                 <p><strong>Assigned Mode:</strong> 
                    <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
                 </p>
-                <p><strong>Server Processing Time:</strong> 
-                   <span class="badge bg-info text-white">@GetServerProcessingTime()</span>
+                <p><strong>Transition Time:</strong> 
+                   <span class="badge bg-info text-white">@GetTransitionTime()</span>
+                </p>
+                <p><strong>Current Action:</strong> 
+                   <span class="text-muted">@GetCurrentAction()</span>
                 </p>
             </div>
+        </div>
+        
+        <div class="mt-3">
+            <h6>Action History:</h6>
+            @foreach(var category in GetActionsByCategory())
+            {
+                <div class="mb-2">
+                    <strong>@category.Key:</strong>
+                    <ul class="list-unstyled ms-3">
+                        @foreach(var action in category.Value)
+                        {
+                            <li>
+                                <span class="badge bg-light text-dark">@action.Time</span>
+                                <span class="badge bg-secondary text-white">@($"{action.DurationMs.ToString("F0")}ms")</span>
+                                @action.Description
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -57,32 +92,49 @@ else
 <ul>
   <li>I detect the rendermode at runtime.</li>
   <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
-  <li>Offer uses rendermode InteractiveServer
-     (processing on server, UI updates via SignalR)</li>
+  <li>Offer uses rendermode InteractiveServer (processing on server, UI updates via SignalR)</li>
   <li>Server-side processing with real-time UI updates</li>
+  <li>Action history tracking with categorized timeline</li>
 </ul>
 
 <h2>No errors</h2>
 
 @code {
     private string _title = "Render modes - Server";
+    private bool _isDelayed = false;
     private DateTime _startTime = DateTime.UtcNow;
     private DateTime? _interactiveTime = null;
+    private string _initialRenderMode = "Static";
+    private List<RenderAction> _actionHistory = new();
 
     protected override void OnInitialized()
     {
         RecipeUrlService.Initialize(Navigation);
         _startTime = DateTime.UtcNow;
+        _initialRenderMode = RendererInfo.Name ?? "Static";
+        
+        AddAction("Component initialization started", RenderActionCategory.Initialization);
+        AddAction($"Initial render mode: {_initialRenderMode}", RenderActionCategory.Initialization);
+        AddAction("RecipeUrlService initialized", RenderActionCategory.Initialization);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && RendererInfo.IsInteractive)
+        if (firstRender)
         {
-            _interactiveTime = DateTime.UtcNow;
-            StateHasChanged();
+            AddAction("First render completed", RenderActionCategory.Initialization);
+            
+            if (RendererInfo.IsInteractive)
+            {
+                _interactiveTime = DateTime.UtcNow;
+                AddAction($"Transitioned to {RendererInfo.Name} mode", RenderActionCategory.Transition);
+                AddAction("SignalR connection established", RenderActionCategory.Transition);
+                
+                AddAction("Interactive features now available", RenderActionCategory.Active);
+                AddAction("Server-side processing ready", RenderActionCategory.Active);
+                StateHasChanged();
+            }
         }
-        await Task.CompletedTask;
     }
 
     private string GetRenderModeClass()
@@ -95,22 +147,53 @@ else
         };
     }
 
-    private string GetServerProcessingTime()
+    private string GetTransitionTime()
     {
         if (_interactiveTime.HasValue)
         {
-            var processingMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
-            return $"{processingMs:F0}ms";
+            var actualMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
+            return $"{actualMs.ToString("F0")}ms";
         }
         else if (RendererInfo.IsInteractive)
         {
             return "Measuring...";
         }
-        return "Processing on server...";
+        return "In progress...";
+    }
+
+    private string GetCurrentAction()
+    {
+        return RendererInfo.Name?.ToLower() switch
+        {
+            "server" => "Processing on server, updates via SignalR",
+            "static" => "Rendering static HTML",
+            _ => "Initializing..."
+        };
+    }
+
+    private void AddAction(string description, RenderActionCategory category)
+    {
+        var now = DateTime.UtcNow;
+        _actionHistory.Add(new RenderAction
+        {
+            Time = now.ToString("HH:mm:ss.fff"),
+            DurationMs = (now - _startTime).TotalMilliseconds,
+            Description = description,
+            Category = category,
+            RenderMode = RendererInfo.Name
+        });
+    }
+
+    private Dictionary<string, List<RenderAction>> GetActionsByCategory()
+    {
+        return _actionHistory
+            .GroupBy(a => a.Category.ToString())
+            .ToDictionary(g => g.Key, g => g.ToList());
     }
     
     private void Add()
     {
+        AddAction("Ticket added to cart (server-side)", RenderActionCategory.Interaction);
         Console.WriteLine("Added to cart! (Server-side processing)");
     }
 } 
