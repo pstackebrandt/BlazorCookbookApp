@@ -20,7 +20,7 @@ else
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
 }
 
-<div class="card border-dark mb-4">
+<div class="card mb-4">
     <div class="card-header bg-dark text-white">
         <h5 class="mb-0">🔍 Current Render Mode Status</h5>
     </div>
@@ -36,7 +36,7 @@ else
                    </span>
                    @if (RendererInfo.IsInteractive && _interactiveTime.HasValue)
                    {
-                       <span class="badge bg-info text-white ms-2">
+                       <span class="badge bg-secondary text-white ms-2">
                            Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
                        </span>
                    }
@@ -47,7 +47,7 @@ else
                    <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
                 </p>
                 <p><strong>Static Phase Duration:</strong> 
-                   <span class="badge bg-info text-white">@GetStaticPhaseDuration()</span>
+                   <span class="badge bg-secondary text-white">@GetStaticPhaseDuration()</span>
                 </p>
             </div>
         </div>

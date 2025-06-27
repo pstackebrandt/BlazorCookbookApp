@@ -20,7 +20,7 @@ else
     <p>Page is now interactive. Server-side processing with real-time updates.</p>
 }
 
-<div class="card border-dark mb-4">
+<div class="card mb-4">
     <div class="card-header bg-dark text-white">
         <h5 class="mb-0">🔍 Render Mode Journey</h5>
     </div>
@@ -39,7 +39,7 @@ else
                    </span>
                    @if (RendererInfo.IsInteractive && _interactiveTime.HasValue)
                    {
-                       <span class="badge bg-info text-white ms-2">
+                       <span class="badge bg-secondary text-white ms-2">
                            Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
                        </span>
                    }
@@ -50,7 +50,7 @@ else
                    <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
                 </p>
                 <p><strong>Transition Time:</strong> 
-                   <span class="badge bg-info text-white">@GetTransitionTime()</span>
+                   <span class="badge bg-secondary text-white">@GetTransitionTime()</span>
                 </p>
                 <p><strong>Current Action:</strong> 
                    <span class="text-muted">@GetCurrentAction()</span>
