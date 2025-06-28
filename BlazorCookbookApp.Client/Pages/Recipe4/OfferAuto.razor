@@ -1,0 +1,301 @@
+@page "/ch01r04a"
+@rendermode InteractiveAuto
+@inject NavigationManager Navigation
+@inject IRecipeUrlService RecipeUrlService
+@using BlazorCookbookApp.Client.Shared
+
+<PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
+<h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
+<p class="recipe-summary lead">@_summary</p>
+
+<h2>Detecting rendermode at runtime</h2>
+@if (!RendererInfo.IsInteractive || _isInServerPhase)
+{
+    <p>🚀 Starting with server-side rendering for fast initial load...</p>
+    @if (RendererInfo.Name == "Server")
+    {
+        <p>📡 Currently processing on server with SignalR communication.</p>
+    }
+    else if (_isInServerPhase)
+    {
+        <p>⬇️ Downloading WebAssembly runtime in background...</p>
+    }
+}
+else
+{
+    <p>✨ Now running client-side! Transitioned from server to WebAssembly processing.</p>
+    <p>🏃‍♂️ Subsequent interactions will be lightning fast with no server round-trips.</p>
+}
+
+<div class="card mb-4">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">🔄 Adaptive Render Mode Journey</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Render Mode Journey:</strong></p>
+                <div class="mb-2">
+                    @foreach(var state in GetRenderModeJourney())
+                    {
+                        <span class="badge @GetRenderModeClass(state.Mode) me-1 mb-1">
+                            @state.Mode
+                            @if (!string.IsNullOrEmpty(state.Duration))
+                            {
+                                <small class="ms-1">(@state.Duration)</small>
+                            }
+                        </span>
+                        @if (state != GetRenderModeJourney().Last())
+                        {
+                            <span class="text-muted me-1">→</span>
+                        }
+                    }
+                </div>
+                <p><strong>Current State:</strong> 
+                   <span class="badge @GetRenderModeClass() fs-6">@RendererInfo.Name</span>
+                </p>
+                <p><strong>Interactive:</strong> 
+                   <span class="badge @(RendererInfo.IsInteractive ? "bg-success" : "bg-secondary")">
+                       @RendererInfo.IsInteractive
+                   </span>
+                   @if (RendererInfo.IsInteractive && _interactiveTime.HasValue)
+                   {
+                       <span class="badge bg-secondary text-white ms-2">
+                           Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
+                       </span>
+                   }
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Assigned Mode:</strong> 
+                   <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
+                </p>
+                <p><strong>Phase Transition:</strong> 
+                   <span class="badge bg-secondary text-white">@GetPhaseTransitionTime()</span>
+                </p>
+                <p><strong>Current Phase:</strong> 
+                   <span class="text-muted">@GetCurrentPhase()</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-3">
+            <h6>Adaptive Render Journey:</h6>
+            @foreach(var category in GetActionsByCategory())
+            {
+                <div class="mb-2">
+                    <strong>@category.Key:</strong>
+                    <ul class="list-unstyled ms-3">
+                        @foreach(var action in category.Value)
+                        {
+                            <li>
+                                <span class="badge bg-light text-dark">@action.Time</span>
+                                <span class="badge bg-secondary text-white">@($"{action.DurationMs.ToString("F0")}ms")</span>
+                                @action.Description
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<p>Components start on server, then seamlessly transition to client-side processing.</p>
+
+<h2>Offer page sends parameters and code to Ticket component</h2>
+<p>- Before the tickets -</p>
+<Ticket Tariff="Adult" Price="10.00m" OnAdded="@Add" />
+<Ticket Tariff="Child" Price="5.00m" OnAdded="@Add" />
+<p>- After the tickets -</p>
+
+<h2>Features</h2>
+<ul>
+  <li>I detect the rendermode at runtime and track the adaptive journey.</li>
+  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
+  <li>Offer uses rendermode InteractiveAuto (server-first, then client-side after WASM loads)</li>
+  <li>Best of both worlds: Fast initial load + subsequent client-side performance</li>
+  <li>Adaptive render journey tracking with phase categorization</li>
+  <li>Seamless user experience during server-to-client transition</li>
+</ul>
+
+<h2>No errors</h2>
+
+@code {
+    private string _title = "Render modes - Auto";
+    private string _summary = "Adaptive rendering - server-first, then client-side after WASM loads";
+    private bool _isInServerPhase = true;
+    private DateTime _startTime = DateTime.UtcNow;
+    private DateTime? _interactiveTime = null;
+    private DateTime? _clientTransitionTime = null;
+    private string _initialRenderMode = "Static";
+    private List<RenderAction> _actionHistory = new();
+    private List<RenderModeState> _renderModeJourney = new();
+
+    protected override void OnInitialized()
+    {
+        RecipeUrlService.Initialize(Navigation);
+        _startTime = DateTime.UtcNow;
+        _initialRenderMode = RendererInfo.Name ?? "Static";
+        
+        // Track initial render mode in journey
+        AddRenderModeToJourney(_initialRenderMode, "0ms");
+        
+        AddAction("Component initialization started", RenderActionCategory.Initialization);
+        AddAction($"Initial render mode: {_initialRenderMode}", RenderActionCategory.Initialization);
+        AddAction("RecipeUrlService initialized", RenderActionCategory.Initialization);
+        
+        // Auto mode starts with server-side processing
+        if (RendererInfo.Name == "Server" || !RendererInfo.IsInteractive)
+        {
+            AddAction("Starting in server phase for fast initial load", RenderActionCategory.ServerPhase);
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            AddAction("First render completed", RenderActionCategory.Initialization);
+            
+            if (RendererInfo.IsInteractive)
+            {
+                _interactiveTime = DateTime.UtcNow;
+                
+                if (RendererInfo.Name == "Server")
+                {
+                    AddRenderModeToJourney("Server", $"{(_interactiveTime.Value - _startTime).TotalMilliseconds:F0}ms");
+                    AddAction("Interactive server processing active", RenderActionCategory.ServerPhase);
+                    AddAction("SignalR connection established", RenderActionCategory.ServerPhase);
+                    AddAction("WebAssembly download initiated in background", RenderActionCategory.ClientTransition);
+                }
+                else if (RendererInfo.Name == "WebAssembly")
+                {
+                    // Direct client transition (likely on subsequent visits)
+                    _clientTransitionTime = DateTime.UtcNow;
+                    _isInServerPhase = false;
+                    AddRenderModeToJourney("WebAssembly", $"{(_interactiveTime.Value - _startTime).TotalMilliseconds:F0}ms");
+                    AddAction("Transitioned directly to WebAssembly mode", RenderActionCategory.ClientTransition);
+                    AddAction("Client-side processing now active", RenderActionCategory.ClientActive);
+                }
+                
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            // Check for server-to-client transition
+            if (_isInServerPhase && RendererInfo.Name == "WebAssembly")
+            {
+                _clientTransitionTime = DateTime.UtcNow;
+                _isInServerPhase = false;
+                AddRenderModeToJourney("WebAssembly", $"{(_clientTransitionTime.Value - _startTime).TotalMilliseconds:F0}ms");
+                AddAction("🎉 Successfully transitioned from Server to WebAssembly!", RenderActionCategory.ClientTransition);
+                AddAction("Client-side processing now active", RenderActionCategory.ClientActive);
+                AddAction("Future interactions will be handled locally", RenderActionCategory.ClientActive);
+                StateHasChanged();
+            }
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    private string GetRenderModeClass()
+    {
+        return RendererInfo.Name?.ToLower() switch
+        {
+            "webassembly" => "bg-success text-white",    // Green for WebAssembly
+            "server" => "bg-primary text-white",         // Blue for Server
+            "static" => "bg-warning text-dark",          // Yellow for Static
+            _ => "bg-secondary text-white"               // Gray for unknown
+        };
+    }
+
+    private string GetPhaseTransitionTime()
+    {
+        if (_clientTransitionTime.HasValue)
+        {
+            var transitionMs = (_clientTransitionTime.Value - _startTime).TotalMilliseconds;
+            return $"Server→Client: {transitionMs.ToString("F0")}ms";
+        }
+        else if (_interactiveTime.HasValue && RendererInfo.Name == "Server")
+        {
+            var serverMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
+            return $"Server active: {serverMs.ToString("F0")}ms";
+        }
+        else if (RendererInfo.IsInteractive)
+        {
+            return "Measuring transition...";
+        }
+        return "Initializing...";
+    }
+
+    private string GetCurrentPhase()
+    {
+        return RendererInfo.Name?.ToLower() switch
+        {
+            "webassembly" => "Client-side processing (optimal performance)",
+            "server" => "Server-side processing (preparing for client transition)",
+            "static" => "Static HTML rendering",
+            _ => "Initializing adaptive mode..."
+        };
+    }
+
+    private void AddAction(string description, RenderActionCategory category)
+    {
+        var now = DateTime.UtcNow;
+        _actionHistory.Add(new RenderAction
+        {
+            Time = now.ToString("HH:mm:ss.fff"),
+            DurationMs = (now - _startTime).TotalMilliseconds,
+            Description = description,
+            Category = category,
+            RenderMode = RendererInfo.Name
+        });
+    }
+
+    private Dictionary<string, List<RenderAction>> GetActionsByCategory()
+    {
+        return _actionHistory
+            .GroupBy(a => a.Category.ToString())
+            .ToDictionary(g => g.Key, g => g.ToList());
+    }
+    
+    private void Add()
+    {
+        var processingLocation = RendererInfo.Name == "WebAssembly" ? "client-side" : "server-side";
+        AddAction($"Ticket added to cart ({processingLocation})", RenderActionCategory.Interaction);
+        Console.WriteLine($"Added to cart! ({processingLocation} processing)");
+    }
+
+    private string GetRenderModeClass(string renderMode)
+    {
+        return renderMode?.ToLower() switch
+        {
+            "webassembly" => "bg-success text-white",    // Green for WebAssembly
+            "server" => "bg-primary text-white",         // Blue for Server
+            "static" => "bg-warning text-dark",          // Yellow for Static
+            _ => "bg-secondary text-white"               // Gray for unknown
+        };
+    }
+
+    private void AddRenderModeToJourney(string mode, string duration)
+    {
+        // Only add if it's different from the last mode to avoid duplicates
+        if (!_renderModeJourney.Any() || _renderModeJourney.Last().Mode != mode)
+        {
+            _renderModeJourney.Add(new RenderModeState { Mode = mode, Duration = duration });
+        }
+    }
+
+    private List<RenderModeState> GetRenderModeJourney()
+    {
+        return _renderModeJourney;
+    }
+
+    private class RenderModeState
+    {
+        public string Mode { get; set; } = "";
+        public string Duration { get; set; } = "";
+    }
+} 

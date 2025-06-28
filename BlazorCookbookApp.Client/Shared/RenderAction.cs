@@ -1,4 +1,4 @@
-namespace BlazorCookbookApp.Components.Recipe4.Shared;
+namespace BlazorCookbookApp.Client.Shared;
 
 /// <summary>
 /// Represents an action that occurred during the render mode lifecycle.
@@ -55,5 +55,20 @@ public enum RenderActionCategory
     /// <summary>
     /// User interaction events.
     /// </summary>
-    Interaction
+    Interaction,
+    
+    /// <summary>
+    /// Server-side processing phase (Auto mode).
+    /// </summary>
+    ServerPhase,
+    
+    /// <summary>
+    /// Transitioning from server to client (Auto mode).
+    /// </summary>
+    ClientTransition,
+    
+    /// <summary>
+    /// Client-side processing phase (Auto mode).
+    /// </summary>
+    ClientActive
 } 

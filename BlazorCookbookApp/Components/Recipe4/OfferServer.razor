@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 @inject IRecipeUrlService RecipeUrlService
 @using BlazorCookbookApp.Client.Services
-@using BlazorCookbookApp.Components.Recipe4.Shared
+@using BlazorCookbookApp.Client.Shared
 
 <PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
 <h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
@@ -118,7 +118,7 @@ else
         AddAction("RecipeUrlService initialized", RenderActionCategory.Initialization);
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
@@ -135,6 +135,8 @@ else
                 StateHasChanged();
             }
         }
+        
+        return Task.CompletedTask;
     }
 
     private string GetRenderModeClass()

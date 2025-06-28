@@ -2,12 +2,14 @@
 
 ## Todo
 
-- [ ] T7 Create Recipe4 Auto Mode implementation (/ch01r04a)
-- [ ] T7.1 Create OfferAuto.razor with InteractiveAuto render mode
-- [ ] T7.2 Implement first-visit vs subsequent-visit behavior tracking
-- [ ] T7.3 Add WebAssembly download progress indication
-- [ ] T7.4 Show adaptive render mode switching (Server → Client)
+- [ ] T7.6 Update OfferAuto UI based on component lifecycle discoveries
+- [ ] T7.6.1 Rename "Render Mode Journey" to "Previous render modes"
+- [ ] T7.6.2 Only show previous modes section when there are actual previous states
+- [ ] T7.6.3 Add explanation about component instance recreation behavior
 - [ ] T7.5 Document educational comparison between all three modes
+- [ ] T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED: requires persistence]
+- [ ] T7.3 Add WebAssembly download progress indication [BLOCKED: requires persistence]
+- [ ] T7.2 Implement first-visit vs subsequent-visit behavior tracking [BLOCKED: requires persistence]
 - [ ] T6 Create Recipe4 Server vs Client comparison implementation
 - [ ] T6.2 Update client version with authentic state tracking and distinct page title
 - [ ] T6.3 Create comparison page with responsive layout (/ch01r04c)
@@ -19,6 +21,12 @@
 
 ## Done
 
+- [x] T8.3 Remove duplicate RenderAction.cs files ✅ COMPLETED
+- [x] T8.2 Document shared types placement strategy ✅ COMPLETED
+- [x] T8.1 Add Microsoft's recommended project reference pattern (Server → Client) ✅ COMPLETED
+- [x] T8 Document project reference structure insights in development tips ✅ COMPLETED
+- [x] T7.1 Create OfferAuto.razor with InteractiveAuto render mode ✅ COMPLETED
+- [x] T7.0 Discovered InteractiveAuto component lifecycle behavior (instance recreation)
 - [x] T6.10 Add "Time to Interactive" display showing duration until interactivity achieved
 - [x] T6.9 Remove artificial delay from server version for authentic timing
 - [x] T6.8 Add duration tracking to action history (milliseconds since start)

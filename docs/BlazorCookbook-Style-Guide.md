@@ -131,10 +131,9 @@
 ### CSS Classes
 
 - **Recipe summaries**: `recipe-summary lead`
-- **Status cards**: `card mb-4` with `card-header bg-dark text-white`
+- **Status cards**: Standard Bootstrap card classes
 - **Timing badges**: `badge bg-secondary text-white`
-- **Status badges**: Use semantic colors based on color scheme standards
-- **Action timestamps**: `badge bg-light text-dark`
+- **Status badges**: Use semantic colors (success, warning, primary)
 
 ## UI Consistency Guidelines
 

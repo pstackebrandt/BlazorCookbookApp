@@ -13,12 +13,13 @@ Create `/ch01r04a` to demonstrate `InteractiveAuto` render mode behavior, comple
 
 ### Component Structure
 ```
-BlazorCookbookApp/Components/Recipe4/
-├── OfferAuto.razor          # New auto mode component
-├── TicketAuto.razor         # Auto mode ticket component
+BlazorCookbookApp.Client/Pages/Recipe4/
+├── OfferAuto.razor          # Auto mode component (MUST be in client project)
 └── Shared/
-    └── RenderAction.cs      # Existing action tracking
+    └── RenderAction.cs      # Shared action tracking (client project only)
 ```
+
+**Project Structure Note**: `InteractiveAuto` components MUST be in the client project to be included in the WebAssembly bundle. Shared types like `RenderAction.cs` are kept in client project only - server can access them via project reference.
 
 ### Key Features to Implement
 
@@ -95,15 +96,64 @@ RendererInfo.Name // "Server" or "WebAssembly" depending on context
 - Browser caching and WebAssembly optimization
 
 ## Implementation Priority
-1. **T7.1**: Basic OfferAuto.razor component
+1. **T7.1**: Basic OfferAuto.razor component ✅ COMPLETED
 2. **T7.2**: Visit type detection and tracking
 3. **T7.3**: WebAssembly download progress
 4. **T7.4**: Mode switching visualization
 5. **T7.5**: Educational documentation
 
+## Implementation Decisions ✅ DECIDED
+
+### Location and Structure
+- **File**: `BlazorCookbookApp/Components/Recipe4/OfferAuto.razor`
+- **Route**: `/ch01r04a` 
+- **Render Mode**: `@rendermode InteractiveAuto`
+- **Base Template**: Orient on `OfferServer.razor` structure
+- **Color Scheme**: Follow BlazorCookbook Style Guide standards
+
+### Content Strategy
+- **Title**: "Render modes" (same as other variants)
+- **Summary**: "Adaptive rendering - server-first, then client-side after WASM loads"
+- **Status Card**: "🔍 Adaptive Render Mode Journey"
+- **Action Categories**: Initialization, ServerPhase, ClientTransition, ClientActive, Interaction
+
+## Key Architectural Discoveries ⚠️ IMPORTANT
+
+### Component Lifecycle in InteractiveAuto
+During implementation, we discovered critical behavior about `InteractiveAuto` components:
+
+**Component Instance Recreation**: 
+- `InteractiveAuto` components don't maintain the same instance across render mode transitions
+- Each render phase (Static → Server → WebAssembly) creates a fresh component instance
+- Component state is reset during transitions, losing in-memory journey tracking
+
+**Implications for State Management**:
+- Simple field-based state tracking (`List<RenderModeState>`) doesn't survive transitions
+- Journey tracking requires persistence mechanisms (localStorage, services, or PersistentComponentState)
+- What users see as "one page" is actually multiple component instances
+
+**Educational Value**:
+- This behavior itself is educational - shows how Blazor handles adaptive rendering
+- Demonstrates the complexity of maintaining state across render modes
+- Explains why some Blazor apps use external state management
+
+### UI Design Decisions Based on Discoveries
+
+**Previous Render Modes Display**:
+- Renamed from "Render Mode Journey" to "Previous render modes" for accuracy
+- Only show section when there are actual previous states (not single-state scenarios)
+- Avoid creating complex persistence just for demonstration purposes
+- Focus on explaining the behavior rather than working around it
+
+**Visitor Education**:
+- Document that journey tracking has limitations due to component recreation
+- Explain that this is normal Blazor behavior, not a bug
+- Use this as teaching moment about Blazor architecture
+
 ## Success Criteria
-- [ ] Clear visualization of Server → Client transition
-- [ ] Accurate timing measurements for both contexts
-- [ ] Educational value for understanding Auto mode benefits
-- [ ] Seamless integration with existing Recipe Overview system
-- [ ] Mobile-responsive design matching other components 
+- [x] Clear visualization of current render mode state
+- [x] Educational value for understanding Auto mode behavior and limitations
+- [x] Seamless integration with existing Recipe Overview system
+- [x] Mobile-responsive design matching other components
+- [ ] Documentation of component lifecycle discoveries
+- [ ] Honest representation of what can/cannot be tracked without persistence 
