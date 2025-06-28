@@ -64,11 +64,27 @@
 <!-- Features list -->
 ```
 
+### Component Lifecycle Insight Pattern
+
+```razor
+<!-- Component Lifecycle Explanation -->
+<div class="mt-3 p-3 bg-light rounded">
+    <h6 class="text-muted mb-2">💡 Component Lifecycle Insight</h6>
+    <p class="small mb-1">
+        <strong>Important:</strong> Each render mode transition creates a fresh component instance. 
+        In-memory state (like action history) doesn't survive transitions without persistence mechanisms.
+    </p>
+    <p class="small mb-0 text-muted">
+        This behavior is normal Blazor architecture - what you see as "one page" is actually multiple component instances across render phases.
+    </p>
+</div>
+```
+
 ### Action History Pattern
 
 ```razor
 <div class="mt-3">
-    <h6>Action History:</h6>
+    <h6>Current Session Actions:</h6>
     @foreach(var category in GetActionsByCategory())
     {
         <div class="mb-2">
@@ -111,6 +127,12 @@
 - **Format**: Clear, present-tense descriptions
 - **Examples**: "Component initialization started", "Transitioned to Server mode"
 - **Timing**: Always include duration badges with consistent formatting
+
+### Previous State Display
+
+- **Terminology**: Use singular "Previous state:" not "Previous render modes:"
+- **Conditional Display**: Only show when previous state differs from current state
+- **Logic**: `@if (!string.IsNullOrEmpty(_initialRenderMode) && _initialRenderMode != RendererInfo.Name)`
 
 ## Responsive Design
 

@@ -2,10 +2,6 @@
 
 ## Todo
 
-- [ ] T7.6 Update OfferAuto UI based on component lifecycle discoveries
-- [ ] T7.6.1 Rename "Render Mode Journey" to "Previous render modes"
-- [ ] T7.6.2 Only show previous modes section when there are actual previous states
-- [ ] T7.6.3 Add explanation about component instance recreation behavior
 - [ ] T7.5 Document educational comparison between all three modes
 - [ ] T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED: requires persistence]
 - [ ] T7.3 Add WebAssembly download progress indication [BLOCKED: requires persistence]
@@ -21,6 +17,15 @@
 
 ## Done
 
+- [x] T7.7.4 Update Auto page to use singular "Previous state" terminology ✅ COMPLETED
+- [x] T7.7.3 Add component lifecycle insight to Server page ✅ COMPLETED
+- [x] T7.7.2 Update Server page to use singular "Previous state" and hide when no previous state ✅ COMPLETED
+- [x] T7.7.1 Update Server page title to "Server Render Mode Status" ✅ COMPLETED
+- [x] T7.7 Apply consistent UI improvements to Server page ✅ COMPLETED
+- [x] T7.6.3 Add explanation about component instance recreation behavior ✅ COMPLETED
+- [x] T7.6.2 Only show previous modes section when there are actual previous states ✅ COMPLETED  
+- [x] T7.6.1 Rename "Render Mode Journey" to "Previous render modes" ✅ COMPLETED
+- [x] T7.6 Update OfferAuto UI based on component lifecycle discoveries ✅ COMPLETED
 - [x] T8.3 Remove duplicate RenderAction.cs files ✅ COMPLETED
 - [x] T8.2 Document shared types placement strategy ✅ COMPLETED
 - [x] T8.1 Add Microsoft's recommended project reference pattern (Server → Client) ✅ COMPLETED

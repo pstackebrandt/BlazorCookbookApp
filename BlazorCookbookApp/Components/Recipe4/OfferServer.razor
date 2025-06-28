@@ -22,14 +22,17 @@ else
 
 <div class="card mb-4">
     <div class="card-header bg-dark text-white">
-        <h5 class="mb-0">🔍 Render Mode Journey</h5>
+        <h5 class="mb-0">🔍 Server Render Mode Status</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <p><strong>Initial State:</strong> 
-                   <span class="badge bg-warning text-dark">@_initialRenderMode</span>
-                </p>
+                @if (!string.IsNullOrEmpty(_initialRenderMode) && _initialRenderMode != RendererInfo.Name)
+                {
+                    <p><strong>Previous state:</strong> 
+                       <span class="badge bg-warning text-dark">@_initialRenderMode</span>
+                    </p>
+                }
                 <p><strong>Current State:</strong> 
                    <span class="badge @GetRenderModeClass() fs-6">@RendererInfo.Name</span>
                 </p>
@@ -58,8 +61,20 @@ else
             </div>
         </div>
         
+        <!-- Component Lifecycle Explanation -->
+        <div class="mt-3 p-3 bg-light rounded">
+            <h6 class="text-muted mb-2">💡 Component Lifecycle Insight</h6>
+            <p class="small mb-1">
+                <strong>Important:</strong> Each render mode transition creates a fresh component instance. 
+                In-memory state (like action history) doesn't survive transitions without persistence mechanisms.
+            </p>
+            <p class="small mb-0 text-muted">
+                This behavior is normal Blazor architecture - what you see as "one page" is actually multiple component instances across render phases.
+            </p>
+        </div>
+        
         <div class="mt-3">
-            <h6>Action History:</h6>
+            <h6>Current Session Actions:</h6>
             @foreach(var category in GetActionsByCategory())
             {
                 <div class="mb-2">
