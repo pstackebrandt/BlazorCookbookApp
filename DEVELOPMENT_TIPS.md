@@ -1,10 +1,39 @@
 # Development Tips
 
+## Blazor Project Structure
+
+### Project Reference Structure (Microsoft Recommended)
+
+**Server project should reference Client project** - This is Microsoft's official recommendation for Blazor Web Apps:
+
+- **Deployment**: Server hosts and serves the client application
+- **Bundling**: Server includes the client's WebAssembly bundle in its output  
+- **Shared Types**: Server can access types defined in client project for API contracts
+- **Architecture**: Follows typical web application pattern where server is the entry point
+
+### Avoiding Duplicate Files
+
+- **Shared Types**: Place shared types (like `RenderAction.cs`) in the client project only
+- **Server Access**: Server project can access client types through project reference
+- **Maintenance**: Eliminates duplicate code and maintenance burden
+- **Rule**: Since `InteractiveAuto` components must be in client project, keep shared types there too
+
 ## Blazor Render Modes
 
-### InteractiveWebAssembly Components
+### Component Project Placement Rules
 
-- **Service Registration**: InteractiveWebAssembly components require service registration in both server and client projects
+| Render Mode              | Required Location  | Reason                                        |
+| ------------------------ | ------------------ | --------------------------------------------- |
+| `Static`                 | Server Project     | No client execution needed                    |
+| `InteractiveServer`      | Server Project     | Executes only on server                       |
+| `InteractiveWebAssembly` | **Client Project** | Must be in WASM bundle                        |
+| `InteractiveAuto`        | **Client Project** | Must support both server and client execution |
+
+**Key Rule**: `InteractiveAuto` and `InteractiveWebAssembly` components MUST be in the client project to be included in the WebAssembly bundle for client-side execution.
+
+### InteractiveWebAssembly & InteractiveAuto Components
+
+- **Service Registration**: Require service registration in both server and client projects
   - Components pre-render on the server first, then hydrate on the client
   - Server needs the service for pre-rendering phase
   - Client needs the service for interactive phase
