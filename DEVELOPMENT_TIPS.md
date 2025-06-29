@@ -39,6 +39,23 @@
   - Client needs the service for interactive phase
   - Register the same service in both `BlazorCookbookApp/Program.cs` and `BlazorCookbookApp.Client/Program.cs`
 
+## Testing
+
+### Recipe4 Optimization Testing Commands
+
+```bash
+# When ready to run tests (after stopping Blazor app):
+dotnet test BlazorCookbookApp.Tests
+
+# To run tests continuously during development:
+dotnet test BlazorCookbookApp.Tests --watch
+
+# To see detailed test output:
+dotnet test BlazorCookbookApp.Tests --verbosity normal
+```
+
+**Important**: Stop the running Blazor application before testing to avoid file lock issues.
+
 ## Best Practices
 
 ### Service Implementation
