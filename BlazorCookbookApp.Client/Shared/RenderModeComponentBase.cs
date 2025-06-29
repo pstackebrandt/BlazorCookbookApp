@@ -128,6 +128,18 @@ public abstract class RenderModeComponentBase : ComponentBase
     }
 
     /// <summary>
+    /// Gets only the previous render mode states (excluding current state)
+    /// </summary>
+    /// <returns>List of previous render mode states, or empty if no previous states</returns>
+    protected List<RenderModeState> GetPreviousRenderModeStates()
+    {
+        // Return all states except the last one (current state)
+        return _renderModeJourney.Count > 1 
+            ? _renderModeJourney.Take(_renderModeJourney.Count - 1).ToList()
+            : new List<RenderModeState>();
+    }
+
+    /// <summary>
     /// Determines if the journey section should be shown
     /// </summary>
     /// <returns>True if there are multiple modes or transitions to show</returns>

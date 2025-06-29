@@ -43,7 +43,7 @@ else
                 {
                     <p><strong>Previous state:</strong></p>
                     <div class="mb-2">
-                        @foreach(var state in GetRenderModeJourney())
+                        @foreach(var state in GetPreviousRenderModeStates())
                         {
                             <span class="badge @GetRenderModeClass(state.Mode) me-1 mb-1">
                                 @state.Mode
@@ -52,7 +52,7 @@ else
                                     <small class="ms-1">(@state.Duration)</small>
                                 }
                             </span>
-                            @if (state != GetRenderModeJourney().Last())
+                            @if (state != GetPreviousRenderModeStates().Last())
                             {
                                 <span class="text-muted me-1">→</span>
                             }
@@ -76,13 +76,13 @@ else
             </div>
             <div class="col-md-6">
                 <p><strong>Assigned Mode:</strong> 
-                   <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
+                   <span class="badge bg-secondary text-white fs-6">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</span>
                 </p>
                 <p><strong>Phase Transition:</strong> 
                    <span class="badge bg-secondary text-white">@GetPhaseTransitionTime()</span>
                 </p>
                 <p><strong>Current Phase:</strong> 
-                   <span class="text-muted">@GetCurrentPhase()</span>
+                   <span class="badge bg-success text-white">@GetCurrentPhase()</span>
                 </p>
             </div>
         </div>

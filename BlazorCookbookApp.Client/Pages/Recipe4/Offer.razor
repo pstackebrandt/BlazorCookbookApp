@@ -44,7 +44,7 @@ else
             </div>
             <div class="col-md-6">
                 <p><strong>Assigned Mode:</strong> 
-                   <code class="text-muted">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</code>
+                   <span class="badge bg-secondary text-white fs-6">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</span>
                 </p>
                 <p><strong>Static Phase Duration:</strong> 
                    <span class="badge bg-secondary text-white">@GetStaticPhaseDuration()</span>
