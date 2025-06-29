@@ -2,21 +2,22 @@
 @rendermode InteractiveAuto
 @inject NavigationManager Navigation
 @inject IRecipeUrlService RecipeUrlService
+@inherits RenderModeComponentBase
 @using BlazorCookbookApp.Client.Shared
 
-<PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
-<h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
-<p class="recipe-summary lead">@_summary</p>
+<PageTitle>@RecipeUrlService.GetTitleWithNumbers(PageTitle)</PageTitle>
+<h1>@RecipeUrlService.GetTitleWithNumbers(PageTitle)</h1>
+<p class="recipe-summary lead">@PageSummary</p>
 
 <h2>Detecting rendermode at runtime</h2>
-@if (!RendererInfo.IsInteractive || _isInServerPhase || _isDelayed)
+@if (!GetDisplayInteractive() || _isDelayed)
 {
     <p>🚀 Starting with server-side rendering for fast initial load...</p>
     @if (_isDelayed)
     {
         <p>🕐 <em>Educational delay: Showing static rendering phase for {STATIC_PHASE_DELAY_MS}ms...</em></p>
     }
-    else if (RendererInfo.Name == "Server")
+    else if (GetCurrentRenderMode() == "Server")
     {
         <p>📡 Currently processing on server with SignalR communication.</p>
     }
@@ -38,7 +39,7 @@ else
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                @if (GetRenderModeJourney().Count > 1)
+                @if (ShouldShowJourney())
                 {
                     <p><strong>Previous state:</strong></p>
                     <div class="mb-2">
@@ -98,25 +99,28 @@ else
             </p>
         </div>
         
-        <div class="mt-3">
-            <h6>Current Session Actions:</h6>
-            @foreach(var category in GetActionsByCategory())
-            {
-                <div class="mb-2">
-                    <strong>@category.Key:</strong>
-                    <ul class="list-unstyled ms-3">
-                        @foreach(var action in category.Value)
-                        {
-                            <li>
-                                <span class="badge bg-light text-dark">@action.Time</span>
-                                <span class="badge bg-secondary text-white">@($"{action.DurationMs.ToString("F0")}ms")</span>
-                                @action.Description
-                            </li>
-                        }
-                    </ul>
-                </div>
-            }
-        </div>
+        @if (HasActionHistory)
+        {
+            <div class="mt-3">
+                <h6>Current Session Actions:</h6>
+                @foreach(var category in GetActionsByCategory())
+                {
+                    <div class="mb-2">
+                        <strong>@category.Key:</strong>
+                        <ul class="list-unstyled ms-3">
+                            @foreach(var action in category.Value)
+                            {
+                                <li>
+                                    <span class="badge bg-light text-dark">@action.Time</span>
+                                    <span class="badge bg-secondary text-white">@($"{action.DurationMs.ToString("F0")}ms")</span>
+                                    @action.Description
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
 
@@ -141,119 +145,87 @@ else
 <h2>No errors</h2>
 
 @code {
-    private string _title = "Render mode InteractiveAuto";
-    private string _summary = "Adaptive rendering - server-first, then client-side after WASM loads";
+    // Auto-specific state for server-to-client transitions
     private bool _isInServerPhase = true;
-    private bool _isDelayed = true; // Start with delay to show static phase
-    private DateTime _startTime = DateTime.UtcNow;
-    private DateTime? _interactiveTime = null;
     private DateTime? _clientTransitionTime = null;
-    private string _initialRenderMode = "Static";
-    private List<RenderAction> _actionHistory = new();
-    private List<RenderModeState> _renderModeJourney = new();
-    private const int STATIC_PHASE_DELAY_MS = 1500; // 1.5 seconds to observe static rendering
 
-    protected override void OnInitialized()
+    // Implement abstract properties from base class
+    protected override string PageTitle => "Render mode InteractiveAuto";
+    protected override string PageSummary => "Adaptive rendering - server-first, then client-side after WASM loads";
+
+    protected override void OnInitializedOverride()
     {
         RecipeUrlService.Initialize(Navigation);
-        _startTime = DateTime.UtcNow;
-        _initialRenderMode = RendererInfo.Name ?? "Static";
-        
-        // Track initial render mode in journey
-        AddRenderModeToJourney(_initialRenderMode, "0ms");
         
         AddAction("Component initialization started", RenderActionCategory.Initialization);
-        AddAction($"Initial render mode: {_initialRenderMode}", RenderActionCategory.Initialization);
+        AddAction($"Initial render mode: {GetCurrentRenderMode()}", RenderActionCategory.Initialization);
         AddAction("RecipeUrlService initialized", RenderActionCategory.Initialization);
         AddAction($"Educational delay: {STATIC_PHASE_DELAY_MS}ms to observe static phase", RenderActionCategory.Initialization);
         
         // Auto mode starts with server-side processing
-        if (RendererInfo.Name == "Server" || !RendererInfo.IsInteractive)
+        if (GetCurrentRenderMode() == "Server" || !GetCurrentInteractive())
         {
             AddAction("Starting in server phase for fast initial load", RenderActionCategory.ServerPhase);
         }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override Task OnAfterFirstRenderAsync()
     {
-        if (firstRender)
+        AddAction("First render completed", RenderActionCategory.Initialization);
+        
+        if (GetCurrentInteractive())
         {
-            AddAction("First render completed", RenderActionCategory.Initialization);
-            
-            // Add educational delay to make static phase visible
-            if (_isDelayed)
+            if (GetCurrentRenderMode() == "Server")
             {
-                AddAction("Showing static rendering phase for educational visibility", RenderActionCategory.Initialization);
-                await Task.Delay(STATIC_PHASE_DELAY_MS);
-                _isDelayed = false;
-                AddAction("Static phase delay completed", RenderActionCategory.Transition);
-                StateHasChanged();
+                AddAction("Interactive server processing active", RenderActionCategory.ServerPhase);
+                AddAction("SignalR connection established", RenderActionCategory.ServerPhase);
+                AddAction("WebAssembly download initiated in background", RenderActionCategory.ClientTransition);
             }
-            
-            if (RendererInfo.IsInteractive)
+            else if (GetCurrentRenderMode() == "WebAssembly")
             {
-                _interactiveTime = DateTime.UtcNow;
-                
-                if (RendererInfo.Name == "Server")
-                {
-                    AddRenderModeToJourney("Server", $"{(_interactiveTime.Value - _startTime).TotalMilliseconds:F0}ms");
-                    AddAction("Interactive server processing active", RenderActionCategory.ServerPhase);
-                    AddAction("SignalR connection established", RenderActionCategory.ServerPhase);
-                    AddAction("WebAssembly download initiated in background", RenderActionCategory.ClientTransition);
-                }
-                else if (RendererInfo.Name == "WebAssembly")
-                {
-                    // Direct client transition (likely on subsequent visits)
-                    _clientTransitionTime = DateTime.UtcNow;
-                    _isInServerPhase = false;
-                    AddRenderModeToJourney("WebAssembly", $"{(_interactiveTime.Value - _startTime).TotalMilliseconds:F0}ms");
-                    AddAction("Transitioned directly to WebAssembly mode", RenderActionCategory.ClientTransition);
-                    AddAction("Client-side processing now active", RenderActionCategory.ClientActive);
-                }
-                
-                StateHasChanged();
-            }
-        }
-        else
-        {
-            // Check for server-to-client transition
-            if (_isInServerPhase && RendererInfo.Name == "WebAssembly")
-            {
+                // Direct client transition (likely on subsequent visits)
                 _clientTransitionTime = DateTime.UtcNow;
                 _isInServerPhase = false;
-                AddRenderModeToJourney("WebAssembly", $"{(_clientTransitionTime.Value - _startTime).TotalMilliseconds:F0}ms");
-                AddAction("🎉 Successfully transitioned from Server to WebAssembly!", RenderActionCategory.ClientTransition);
+                AddAction("Transitioned directly to WebAssembly mode", RenderActionCategory.ClientTransition);
                 AddAction("Client-side processing now active", RenderActionCategory.ClientActive);
-                AddAction("Future interactions will be handled locally", RenderActionCategory.ClientActive);
-                StateHasChanged();
             }
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    protected override Task OnAfterSubsequentRenderAsync()
+    {
+        // Check for server-to-client transition
+        if (_isInServerPhase && GetCurrentRenderMode() == "WebAssembly")
+        {
+            _clientTransitionTime = DateTime.UtcNow;
+            _isInServerPhase = false;
+            AddAction("🎉 Successfully transitioned from Server to WebAssembly!", RenderActionCategory.ClientTransition);
+            AddAction("Client-side processing now active", RenderActionCategory.ClientActive);
+            AddAction("Future interactions will be handled locally", RenderActionCategory.ClientActive);
+            StateHasChanged();
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    protected override void OnRenderModeChanged(string? oldMode, string newMode)
+    {
+        // Log render mode transitions
+        if (oldMode != null)
+        {
+            AddAction($"Render mode changed: {oldMode} → {newMode}", RenderActionCategory.Transition);
         }
     }
 
-    private string GetDisplayRenderMode()
+    protected override Task OnEducationalDelayCompleted()
     {
-        // During educational delay, show "Static" to simulate actual static phase
-        return _isDelayed ? "Static" : (RendererInfo.Name ?? "Unknown");
+        AddAction("Static phase delay completed", RenderActionCategory.Transition);
+        return Task.CompletedTask;
     }
 
-    private bool GetDisplayInteractive()
-    {
-        // During educational delay, show false to simulate actual static phase
-        return !_isDelayed && RendererInfo.IsInteractive;
-    }
-
-    private string GetRenderModeClass()
-    {
-        var mode = GetDisplayRenderMode();
-        return mode?.ToLower() switch
-        {
-            "webassembly" => "bg-success text-white",    // Green for WebAssembly
-            "server" => "bg-primary text-white",         // Blue for Server
-            "static" => "bg-warning text-dark",          // Yellow for Static
-            _ => "bg-secondary text-white"               // Gray for unknown
-        };
-    }
-
+    // Auto-specific methods that aren't in base class
     private string GetPhaseTransitionTime()
     {
         if (_clientTransitionTime.HasValue)
@@ -261,12 +233,12 @@ else
             var transitionMs = (_clientTransitionTime.Value - _startTime).TotalMilliseconds;
             return $"Server→Client: {transitionMs.ToString("F0")}ms";
         }
-        else if (_interactiveTime.HasValue && RendererInfo.Name == "Server")
+        else if (_interactiveTime.HasValue && GetCurrentRenderMode() == "Server")
         {
             var serverMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
             return $"Server active: {serverMs.ToString("F0")}ms";
         }
-        else if (RendererInfo.IsInteractive)
+        else if (GetCurrentInteractive())
         {
             return "Measuring transition...";
         }
@@ -275,7 +247,7 @@ else
 
     private string GetCurrentPhase()
     {
-        return RendererInfo.Name?.ToLower() switch
+        return GetCurrentRenderMode()?.ToLower() switch
         {
             "webassembly" => "Client-side processing (optimal performance)",
             "server" => "Server-side processing (preparing for client transition)",
@@ -283,62 +255,11 @@ else
             _ => "Initializing adaptive mode..."
         };
     }
-
-    private void AddAction(string description, RenderActionCategory category)
-    {
-        var now = DateTime.UtcNow;
-        _actionHistory.Add(new RenderAction
-        {
-            Time = now.ToString("HH:mm:ss.fff"),
-            DurationMs = (now - _startTime).TotalMilliseconds,
-            Description = description,
-            Category = category,
-            RenderMode = RendererInfo.Name
-        });
-    }
-
-    private Dictionary<string, List<RenderAction>> GetActionsByCategory()
-    {
-        return _actionHistory
-            .GroupBy(a => a.Category.ToString())
-            .ToDictionary(g => g.Key, g => g.ToList());
-    }
     
     private void Add()
     {
-        var processingLocation = RendererInfo.Name == "WebAssembly" ? "client-side" : "server-side";
+        var processingLocation = GetCurrentRenderMode() == "WebAssembly" ? "client-side" : "server-side";
         AddAction($"Ticket added to cart ({processingLocation})", RenderActionCategory.Interaction);
         Console.WriteLine($"Added to cart! ({processingLocation} processing)");
-    }
-
-    private string GetRenderModeClass(string renderMode)
-    {
-        return renderMode?.ToLower() switch
-        {
-            "webassembly" => "bg-success text-white",    // Green for WebAssembly
-            "server" => "bg-primary text-white",         // Blue for Server
-            "static" => "bg-warning text-dark",          // Yellow for Static
-            _ => "bg-secondary text-white"               // Gray for unknown
-        };
-    }
-
-    private void AddRenderModeToJourney(string mode, string duration)
-    {
-        // Only add if it's different from the last mode to avoid duplicates
-        if (!_renderModeJourney.Any() || _renderModeJourney.Last().Mode != mode)
-        {
-            _renderModeJourney.Add(new RenderModeState { Mode = mode, Duration = duration });
-        }
-    }
-
-    private List<RenderModeState> GetRenderModeJourney()
-    {
-        return _renderModeJourney;
-    }
-
-    private class RenderModeState
-    {
-        public string Mode { get; set; } = "";
-        public string Duration { get; set; } = "";
     }
 } 
