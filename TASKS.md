@@ -31,6 +31,13 @@
 
 ## Done
 
+- [x] T8.0.6 Document test commands in development tips and test README ✅ COMPLETED
+- [x] T8.0.5 Create manual test checklist for UI verification ✅ COMPLETED  
+- [x] T8.0.4 Create test project README with TDD strategy documentation ✅ COMPLETED
+- [x] T8.0.3 Write comprehensive unit tests for RenderModeComponentBase (TDD approach) ✅ COMPLETED
+- [x] T8.0.2 Configure test project with bUnit, project references, and centralized packages ✅ COMPLETED
+- [x] T8.0.1 Create BlazorCookbookApp.Tests project and add to solution ✅ COMPLETED
+- [x] T8.0 Set up test infrastructure for Recipe4 optimization ✅ COMPLETED
 - [x] T7.9.6 Update Auto page title to "Render mode InteractiveAuto" ✅ COMPLETED
 - [x] T7.9.5 Fix Auto page status card to respect educational delay ✅ COMPLETED
 - [x] T7.9.4 Update Server page title to "Render mode InteractiveServer" ✅ COMPLETED

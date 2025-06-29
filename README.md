@@ -1,13 +1,14 @@
-# Blazor Cookbook
+# Blazor Cookbook App
 
-A practical collection of Blazor recipes demonstrating key concepts and patterns for modern web development.
+A comprehensive Blazor application showcasing various recipes and techniques for
+building modern web applications with Blazor WebAssembly and Server.
 
 ## Features
 
-- **Recipe Overview System**: Automatically discovers and displays all recipes with navigation
-- **Client/Server Components**: Examples across both Blazor Server and WebAssembly
-- **Interactive Patterns**: Component parameters, event handling, render modes
-- **Real-time Debugging**: Console logging for development insights
+- **Recipe4**: Render mode demonstrations (WebAssembly, Server) 
+  with authentic timing data and component lifecycle insights
+- **Component Architecture**: Server and Client project structure following
+  Microsoft's recommended patterns
 
 ## Quick Start
 
