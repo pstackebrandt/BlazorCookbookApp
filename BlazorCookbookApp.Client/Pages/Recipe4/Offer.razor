@@ -10,9 +10,9 @@
 @if (!RendererInfo.IsInteractive || _isDelayed)
 {
     <p>This page is not fully loaded locally. That's why it is rendered at the server.</p>
-    @if (RendererInfo.IsInteractive && _isDelayed)
+    @if (_isDelayed)
     {
-        <p><em>Delaying client transition for demo purposes...</em></p>
+        <p>🕐 <em>Educational delay: Showing static rendering phase for {STATIC_PHASE_DELAY_MS}ms...</em></p>
     }
 }
 else
@@ -28,13 +28,13 @@ else
         <div class="row">
             <div class="col-md-6">
                 <p><strong>Render Mode:</strong> 
-                   <span class="badge @GetRenderModeClass() fs-6">@RendererInfo.Name</span>
+                   <span class="badge @GetRenderModeClass() fs-6">@GetDisplayRenderMode()</span>
                 </p>
                 <p><strong>Interactive:</strong> 
-                   <span class="badge @(RendererInfo.IsInteractive ? "bg-success" : "bg-secondary")">
-                       @RendererInfo.IsInteractive
+                   <span class="badge @(GetDisplayInteractive() ? "bg-success" : "bg-secondary")">
+                       @GetDisplayInteractive()
                    </span>
-                   @if (RendererInfo.IsInteractive && _interactiveTime.HasValue)
+                   @if (GetDisplayInteractive() && _interactiveTime.HasValue)
                    {
                        <span class="badge bg-secondary text-white ms-2">
                            Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
@@ -73,11 +73,11 @@ else
 <h2>No errors</h2>
 
 @code {
-    private string _title = "Render modes";
-    private bool _isDelayed = false;
+    private string _title = "Render mode InteractiveWebAssembly";
+    private bool _isDelayed = true; // Start with delay to show static phase
     private DateTime _startTime = DateTime.UtcNow;
     private DateTime? _interactiveTime = null;
-    private const int DEMO_DELAY_MS = 3000;
+    private const int STATIC_PHASE_DELAY_MS = 1500; // 1.5 seconds to observe static rendering
 
     protected override void OnInitialized()
     {
@@ -87,20 +87,40 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && RendererInfo.IsInteractive)
+        if (firstRender)
         {
-            _interactiveTime = DateTime.UtcNow;
+            // Add educational delay to make static phase visible
+            if (_isDelayed)
+            {
+                await Task.Delay(STATIC_PHASE_DELAY_MS);
+                _isDelayed = false;
+                StateHasChanged();
+            }
             
-            // Add demo delay to make server-to-client transition visible
-            await Task.Delay(DEMO_DELAY_MS);
-            _isDelayed = false;
-            StateHasChanged();
+            if (RendererInfo.IsInteractive)
+            {
+                _interactiveTime = DateTime.UtcNow;
+                StateHasChanged();
+            }
         }
+    }
+
+    private string GetDisplayRenderMode()
+    {
+        // During educational delay, show "Static" to simulate actual static phase
+        return _isDelayed ? "Static" : (RendererInfo.Name ?? "Unknown");
+    }
+
+    private bool GetDisplayInteractive()
+    {
+        // During educational delay, show false to simulate actual static phase
+        return !_isDelayed && RendererInfo.IsInteractive;
     }
 
     private string GetRenderModeClass()
     {
-        return RendererInfo.Name?.ToLower() switch
+        var mode = GetDisplayRenderMode();
+        return mode?.ToLower() switch
         {
             "webassembly" => "bg-success text-white", // Green for WebAssembly
             "static" => "bg-warning text-dark",       // Yellow for Static
@@ -113,8 +133,8 @@ else
         if (_interactiveTime.HasValue)
         {
             var totalMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
-            var actualMs = Math.Max(0, totalMs - DEMO_DELAY_MS); // Subtract demo delay
-            return $"{actualMs.ToString("F0")}ms";
+            var actualMs = Math.Max(0, totalMs - STATIC_PHASE_DELAY_MS); // Subtract educational delay
+            return $"{actualMs.ToString("F0")}ms (+ {STATIC_PHASE_DELAY_MS}ms educational delay)";
         }
         else if (RendererInfo.IsInteractive)
         {

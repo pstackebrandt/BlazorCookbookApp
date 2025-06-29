@@ -134,6 +134,25 @@
 - **Conditional Display**: Only show when previous state differs from current state
 - **Logic**: `@if (!string.IsNullOrEmpty(_initialRenderMode) && _initialRenderMode != RendererInfo.Name)`
 
+### Educational Delay Pattern
+
+- **Purpose**: Make static rendering phase visible for educational value
+- **Duration**: `1500ms` (1.5 seconds) consistent across all render mode pages
+- **Implementation**: `private const int STATIC_PHASE_DELAY_MS = 1500;`
+- **Visual Indicator**: `🕐 Educational delay: Showing static rendering phase for {STATIC_PHASE_DELAY_MS}ms...`
+- **Conditional Logic**: `@if (!RendererInfo.IsInteractive || _isDelayed)`
+
+### Status Card Display Methods
+
+- **Purpose**: Ensure status cards respect educational delay and show realistic progression
+- **Display Methods**: 
+  ```csharp
+  private string GetDisplayRenderMode() => _isDelayed ? "Static" : (RendererInfo.Name ?? "Unknown");
+  private bool GetDisplayInteractive() => !_isDelayed && RendererInfo.IsInteractive;
+  ```
+- **Usage**: Use `@GetDisplayRenderMode()` and `@GetDisplayInteractive()` instead of direct `RendererInfo` properties
+- **Color Logic**: Base `GetRenderModeClass()` on `GetDisplayRenderMode()` result
+
 ## Responsive Design
 
 ### Table Layouts

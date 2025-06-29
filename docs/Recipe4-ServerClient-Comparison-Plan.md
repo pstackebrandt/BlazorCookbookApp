@@ -8,19 +8,23 @@ Document and enhance the comparison between `/ch01r04s` (Server) and `/ch01r04` 
 ### Server Version (`/ch01r04s`) ✅ COMPLETED
 - **Location**: `BlazorCookbookApp/Components/Recipe4/OfferServer.razor`
 - **Render Mode**: `@rendermode InteractiveServer`
+- **Title**: "Render mode InteractiveServer"
 - **Features**: Server-side processing, SignalR communication, action history tracking
-- **UI Improvements**: ✅ Component lifecycle insight, singular "Previous state" terminology, conditional display
+- **UI Improvements**: ✅ Component lifecycle insight, educational delay, status card fixes
 
 ### Client Version (`/ch01r04`) ✅ COMPLETED  
 - **Location**: `BlazorCookbookApp.Client/Pages/Recipe4/Offer.razor`
 - **Render Mode**: `@rendermode InteractiveWebAssembly`
+- **Title**: "Render mode InteractiveWebAssembly"
 - **Features**: Client-side processing, WebAssembly execution, local state management
+- **UI Improvements**: ✅ Educational delay, status card fixes
 
 ### Auto Version (`/ch01r04a`) ✅ COMPLETED
 - **Location**: `BlazorCookbookApp.Client/Pages/Recipe4/OfferAuto.razor` 
 - **Render Mode**: `@rendermode InteractiveAuto`
+- **Title**: "Render mode InteractiveAuto"
 - **Features**: Adaptive rendering, server-first then client-side transition
-- **UI Improvements**: ✅ Component lifecycle insight, singular "Previous state" terminology, conditional display
+- **UI Improvements**: ✅ Component lifecycle insight, educational delay, status card fixes
 
 ## UI Consistency Achievements ✅ COMPLETED
 

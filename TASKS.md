@@ -17,6 +17,17 @@
 
 ## Done
 
+- [x] T7.9.6 Update Auto page title to "Render mode InteractiveAuto" ✅ COMPLETED
+- [x] T7.9.5 Fix Auto page status card to respect educational delay ✅ COMPLETED
+- [x] T7.9.4 Update Server page title to "Render mode InteractiveServer" ✅ COMPLETED
+- [x] T7.9.3 Fix Server page status card to respect educational delay ✅ COMPLETED
+- [x] T7.9.2 Update WebAssembly page title to "Render mode InteractiveWebAssembly" ✅ COMPLETED
+- [x] T7.9.1 Fix WebAssembly page status card to respect educational delay ✅ COMPLETED
+- [x] T7.9 Fix status cards to show correct render mode during educational delay ✅ COMPLETED
+- [x] T7.8.3 Update WebAssembly client page with consistent educational delay ✅ COMPLETED
+- [x] T7.8.2 Add educational delay to Auto page with visual indicators ✅ COMPLETED
+- [x] T7.8.1 Add educational delay to Server page with visual indicators ✅ COMPLETED
+- [x] T7.8 Implement educational delay for static phase visibility ✅ COMPLETED
 - [x] T7.7.4 Update Auto page to use singular "Previous state" terminology ✅ COMPLETED
 - [x] T7.7.3 Add component lifecycle insight to Server page ✅ COMPLETED
 - [x] T7.7.2 Update Server page to use singular "Previous state" and hide when no previous state ✅ COMPLETED
