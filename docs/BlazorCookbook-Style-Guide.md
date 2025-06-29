@@ -152,6 +152,7 @@
   ```
 - **Usage**: Use `@GetDisplayRenderMode()` and `@GetDisplayInteractive()` instead of direct `RendererInfo` properties
 - **Color Logic**: Base `GetRenderModeClass()` on `GetDisplayRenderMode()` result
+- **Future**: These methods will be extracted to `RenderModeComponentBase` (see Recipe4-Optimization-Plan.md)
 
 ## Responsive Design
 

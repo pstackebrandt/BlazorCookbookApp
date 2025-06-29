@@ -2,6 +2,20 @@
 
 ## Todo
 
+- [ ] T8 Optimize render mode pages by reducing code duplication
+- [ ] T8.1 Phase 1: Extract common logic into base class
+- [ ] T8.1.1 Create RenderModeComponentBase with common fields and methods
+- [ ] T8.1.2 Convert WebAssembly page to inherit from base class
+- [ ] T8.1.3 Convert Server page to inherit from base class (cross-project)
+- [ ] T8.1.4 Convert Auto page to inherit from base class
+- [ ] T8.2 Phase 2: Extract status card into shared component (if Phase 1 successful)
+- [ ] T8.2.1 Create RenderModeStatusCard component with parameters
+- [ ] T8.2.2 Integrate status card with WebAssembly page
+- [ ] T8.2.3 Integrate status card with Server page
+- [ ] T8.2.4 Integrate status card with Auto page
+- [ ] T8.3 Phase 3: Additional optimizations (optional)
+- [ ] T8.3.1 Extract Component Lifecycle Insight component (if beneficial)
+- [ ] T8.3.2 Extract Educational Delay Indicator component (if beneficial)
 - [ ] T7.5 Document educational comparison between all three modes
 - [ ] T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED: requires persistence]
 - [ ] T7.3 Add WebAssembly download progress indication [BLOCKED: requires persistence]

@@ -27,6 +27,7 @@ A practical collection of Blazor recipes demonstrating key concepts and patterns
 - **`BlazorCookbookApp/`** - Server project with shared components
 - **`BlazorCookbookApp.Client/`** - Client project with WebAssembly components
 - **`docs/`** - Feature documentation and development guides
+  - `Recipe4-Optimization-Plan.md` - Code duplication reduction strategy
 
 ## Sources
 
