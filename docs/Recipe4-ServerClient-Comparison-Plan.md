@@ -1,7 +1,10 @@
 # Recipe4 Server vs Client Comparison Plan
 
 ## Overview
-Document and enhance the comparison between `/ch01r04s` (Server) and `/ch01r04` (Client) render modes to highlight their distinct characteristics and use cases.
+
+Document and enhance the comparison between `/ch01r04s` (Server) and 
+`/ch01r04` (Client) render modes to highlight their distinct characteristics 
+and use cases.
 
 ## Current Implementation Status
 
@@ -368,6 +371,7 @@ public interface ITimingService
 ## Updated Implementation Strategy
 
 ### Authentic Behavior Approach - FINAL
+
 - **Real Timing**: Capture actual render mode transition timing (no artificial delays)
 - **State History**: Track and display initial → current render mode progression
 - **Action Tracking**: Show specific actions happening in each render mode
@@ -377,6 +381,7 @@ public interface ITimingService
 ### Component Architecture - REFINED
 
 #### State Tracking Implementation
+
 ```csharp
 private string _initialRenderMode = "Static";
 private List<RenderAction> _actionHistory = new();
@@ -410,6 +415,7 @@ private void AddAction(string description)
 ```
 
 #### Action Definitions by Render Mode
+
 ```csharp
 private string GetCurrentAction()
 {
@@ -424,7 +430,8 @@ private string GetCurrentAction()
 ```
 
 ### Updated File Organization
-```
+
+```text
 BlazorCookbookApp/Components/Recipe4/
 ├── OfferServer.razor               # /ch01r04s - Real server behavior
 ├── ComparisonPage.razor            # /ch01r04c - Side-by-side real data
@@ -440,12 +447,14 @@ BlazorCookbookApp.Client/Pages/Recipe4/
 ## Educational Value Enhancement
 
 ### Authentic Learning Experience
+
 - **Real Performance Data**: Show actual timing differences between render modes
 - **Action Transparency**: Users see exactly what happens in each mode
 - **Decision Support**: Provide real data for choosing render modes
 - **No Artificial Delays**: Authentic Blazor behavior demonstration
 
 ### Comparison Insights
+
 - **Server**: Fast transition (2-5ms), server processing, SignalR communication
 - **Client**: Slower transition (100-300ms), WebAssembly download, local processing
 - **Trade-offs**: Network latency vs processing location vs user experience
@@ -453,8 +462,9 @@ BlazorCookbookApp.Client/Pages/Recipe4/
 ## Ready for Implementation
 
 ### Implementation Order - UPDATED
+
 1. **Phase 1**: Implement real state tracking in server version
 2. **Phase 2**: Update client version with authentic state tracking
 3. **Phase 3**: Create comparison page showing real behavior differences
 4. **Phase 4**: Test authentic render mode demonstrations
-5. **Phase 5**: Validate educational value and mobile responsiveness 
+5. **Phase 5**: Validate educational value and mobile responsiveness

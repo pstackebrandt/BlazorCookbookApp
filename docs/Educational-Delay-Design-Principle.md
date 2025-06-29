@@ -1,8 +1,12 @@
 # Educational Delay Design Principle
 
+> **⚠️ SUPERSEDED**: This document contains patterns that conflict with the new **Truthful State Design Principle**. See `Truthful-State-Design-Principle.md` for the current approach.
+
 ## Overview
 
 This document establishes the design principle for educational delays in the BlazorCookbook application, specifically for render mode demonstrations.
+
+**NOTE**: The state masking patterns described here are now considered anti-patterns. Educational delays should exist for timing/visibility purposes, but should NOT mask actual component state.
 
 ## Core Principle
 

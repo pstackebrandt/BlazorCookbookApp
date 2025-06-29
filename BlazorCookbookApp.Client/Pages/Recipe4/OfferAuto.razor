@@ -29,7 +29,7 @@
 else
 {
     <p>✨ Now running client-side! Transitioned from server to WebAssembly processing.</p>
-    <p>🏃‍♂️ Subsequent interactions will be lightning fast with no server round-trips.</p>
+    <p>🏃‍♂️ Subsequent interactions will be fast with no server round-trips.</p>
 }
 
 <div class="card mb-4">
@@ -73,6 +73,13 @@ else
                        </span>
                    }
                 </p>
+                @if (ShouldShowJourney())
+                {
+                    <!-- Footnote explanation for pre-rendering -->
+                    <div class="mb-2">
+                        <small class="text-muted">@GetPreRenderingFootnote()</small>
+                    </div>
+                }
             </div>
             <div class="col-md-6">
                 <p><strong>Assigned Mode:</strong> 

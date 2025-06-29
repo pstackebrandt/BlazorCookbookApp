@@ -2,13 +2,44 @@
 
 ## Color Scheme Standards
 
-### Bootstrap Badge Colors
+### Bootstrap Badge Color Semantics
 
-- 🟢 **Green** (`bg-success`): Active states, positive status (Interactive: true, successful operations)
-- 🟡 **Yellow** (`bg-warning`): Static render mode, transitional states, warnings
-- 🔵 **Blue** (`bg-primary`): Server render mode indicators (server-specific features)
-- ⚫ **Gray** (`bg-secondary`): All timing information, neutral states, measurements
-- 🔴 **Red** (`bg-danger`): Error states, failures (when needed)
+Our color system follows a clear visual hierarchy based on relevance and state significance:
+
+- 🟢 **Green** (`bg-success`): **Current results** - Active states, positive status, successful operations, current phase indicators
+  - Examples: Interactive: True, Current Phase: "Client-side processing", successful operations
+  - Meaning: This is the current, expected, successful state
+
+- 🟡 **Yellow** (`bg-warning`): **Previous/Temporary states** - Historical states, transitions, temporary but relevant information
+  - Examples: Previous render modes (Static¹), transitional phases, temporary status indicators
+  - Meaning: This was relevant in the past or is temporarily significant
+
+- ⚫ **Gray** (`bg-secondary`): **Specific but less relevant** - Technical details, measurements, metadata that's noteworthy but not primary
+  - Examples: Timing information, assigned render modes, duration badges, technical specifications
+  - Meaning: More noteworthy than common text, but supporting information rather than primary status
+
+- 🔵 **Blue** (`bg-primary`): **Reserved for future use** - Available for special categorization as needs arise
+  - Currently unused - reserved for future semantic needs
+  - Meaning: To be determined based on application requirements
+
+- 🔴 **Red** (`bg-danger`): **Errors and failures** - Error states, failures, critical issues (when needed)
+  - Examples: Error messages, failed operations, critical warnings
+  - Meaning: Something went wrong or requires immediate attention
+
+### Color Application Guidelines
+
+**Decision Framework**: When choosing badge colors, ask:
+1. **Is this the current, active state?** → 🟢 **Green**
+2. **Is this previous/historical but relevant?** → 🟡 **Yellow** 
+3. **Is this technical detail/metadata?** → ⚫ **Gray**
+4. **Is this an error/failure?** → 🔴 **Red**
+5. **Special case requiring future categorization?** → 🔵 **Blue** (reserved)
+
+**Practical Examples**:
+- `<span class="badge bg-success">Server</span>` ← Current render mode
+- `<span class="badge bg-warning">Static¹</span>` ← Previous state with footnote
+- `<span class="badge bg-secondary">InteractiveServerRenderMode</span>` ← Technical assignment
+- `<span class="badge bg-secondary">1234ms</span>` ← Timing measurement
 
 ### Card Styling
 
@@ -142,46 +173,35 @@
 - **Visual Indicator**: `🕐 Educational delay: Showing static rendering phase for {STATIC_PHASE_DELAY_MS}ms...`
 - **Conditional Logic**: `@if (!RendererInfo.IsInteractive || _isDelayed)`
 
-#### **CRITICAL PRINCIPLE: Educational Delays Must Be Real**
+#### **CRITICAL PRINCIPLE: Truthful State Display**
 
-**Rule**: Educational delays MUST be actual execution delays using `await Task.Delay()`, not visual-only simulations.
+> **⚠️ UPDATED**: See `Truthful-State-Design-Principle.md` for the current approach.
+
+**Rule**: Component state displays MUST show actual, truthful state at every moment, not artificial or simulated state.
 
 **Implementation Requirements:**
-- ✅ **Real State Delay**: Use `await Task.Delay(STATIC_PHASE_DELAY_MS)` in component lifecycle
-- ✅ **Delayed State Changes**: Component state updates occur AFTER delay completes
-- ✅ **Delayed UI Updates**: Call `StateHasChanged()` AFTER delay, not before
-- ✅ **Authentic Timing**: Delay affects actual component lifecycle measurements
+- ✅ **Truthful State Display**: Always show actual render mode and interactive status
+- ✅ **Educational Context**: Provide learning context through explanations, not state masking
+- ✅ **Timing Transparency**: Separate real timing from educational delays
+- ✅ **Authentic Journey**: Track observable component state transitions
 
 **Code Pattern:**
 ```csharp
-protected override async Task OnAfterRenderAsync(bool firstRender)
-{
-    if (firstRender && _isDelayed)
-    {
-        await Task.Delay(STATIC_PHASE_DELAY_MS);  // REAL delay
-        _isDelayed = false;
-        StateHasChanged();  // UI updates AFTER delay
-    }
-}
+// CORRECT: Always show actual state
+protected string GetActualRenderMode() => GetCurrentRenderMode() ?? "Unknown";
+protected bool GetActualInteractive() => GetCurrentInteractive();
+
+// Educational context through explanation, not state masking
+<div class="alert alert-info">
+    <strong>📚 Educational Context:</strong> This component started with server-side pre-rendering...
+</div>
 ```
 
 **Rationale:**
-- **Educational Value**: Users experience authentic Blazor component lifecycle timing
-- **Realistic Simulation**: Mimics actual static rendering phase duration
-- **Accurate Measurements**: Provides genuine performance data when delay is subtracted
-- **Observable Transitions**: Makes fast render mode changes visible for learning
-
-### Status Card Display Methods
-
-- **Purpose**: Ensure status cards respect educational delay and show realistic progression
-- **Display Methods**: 
-  ```csharp
-  private string GetDisplayRenderMode() => _isDelayed ? "Static" : (RendererInfo.Name ?? "Unknown");
-  private bool GetDisplayInteractive() => !_isDelayed && RendererInfo.IsInteractive;
-  ```
-- **Usage**: Use `@GetDisplayRenderMode()` and `@GetDisplayInteractive()` instead of direct `RendererInfo` properties
-- **Color Logic**: Base `GetRenderModeClass()` on `GetDisplayRenderMode()` result
-- **Future**: These methods will be extracted to `RenderModeComponentBase` (see Recipe4-Optimization-Plan.md)
+- **Accurate Learning**: Users learn actual Blazor component behavior
+- **Debugging Skills**: Users see what they would see in real applications
+- **Performance Awareness**: Real timing data separated from artificial delays
+- **Transparent Education**: Clear distinction between real behavior and educational aids
 
 ## Responsive Design
 

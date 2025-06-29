@@ -31,9 +31,10 @@ public abstract class RenderModeComponentBase : ComponentBase
     protected DateTime? _interactiveTime = null;
     
     /// <summary>
-    /// Educational delay duration in milliseconds to make static phase visible
+    /// Symbolic delay duration in milliseconds (minimal but present for timing consistency)
+    /// NOTE: This delay affects timing but should NOT mask actual component state
     /// </summary>
-    protected const int STATIC_PHASE_DELAY_MS = 1500;
+    protected const int STATIC_PHASE_DELAY_MS = 1;
     
     /// <summary>
     /// Action history for tracking component lifecycle events (optional - used by Server/Auto pages)
@@ -74,18 +75,18 @@ public abstract class RenderModeComponentBase : ComponentBase
     /// <returns>Current render mode for display purposes</returns>
     protected string GetDisplayRenderMode()
     {
-        // During educational delay, show "Static" to simulate actual static phase
-        return _isDelayed ? "Static" : (GetCurrentRenderMode() ?? "Unknown");
+        // Always show actual render mode (truthful state display)
+        return GetCurrentRenderMode() ?? "Unknown";
     }
 
     /// <summary>
-    /// Gets the interactive status, showing false during educational delay
+    /// Gets the actual interactive status (truthful state display)
     /// </summary>
-    /// <returns>Whether component appears interactive to user</returns>
+    /// <returns>Whether component is actually interactive</returns>
     protected bool GetDisplayInteractive()
     {
-        // During educational delay, show false to simulate actual static phase
-        return !_isDelayed && GetCurrentInteractive();
+        // Always show actual interactive status
+        return GetCurrentInteractive();
     }
 
     /// <summary>
@@ -99,7 +100,10 @@ public abstract class RenderModeComponentBase : ComponentBase
     }
 
     /// <summary>
-    /// Gets CSS class for render mode badge with specific mode override
+    /// Gets CSS class for render mode badge based on color semantics:
+    /// - Green: Current active states
+    /// - Yellow: Previous/temporary states  
+    /// - Gray: Technical details, less relevant but noteworthy
     /// </summary>
     /// <param name="renderMode">Specific render mode to get class for</param>
     /// <returns>Bootstrap CSS classes for the specified render mode</returns>
@@ -107,10 +111,16 @@ public abstract class RenderModeComponentBase : ComponentBase
     {
         return renderMode?.ToLower() switch
         {
-            "webassembly" => "bg-success text-white",    // Green for WebAssembly
-            "server" => "bg-primary text-white",         // Blue for Server
-            "static" => "bg-warning text-dark",          // Yellow for Static
-            _ => "bg-secondary text-white"               // Gray for unknown
+            // Current active states (Green)
+            "webassembly" => "bg-success text-white",    // Current: WebAssembly processing
+            "server" => "bg-success text-white",         // Current: Server processing
+            
+            // Previous/temporary states (Yellow)
+            "static" => "bg-warning text-dark",          // Previous: Static pre-rendering
+            var mode when mode?.StartsWith("static") == true => "bg-warning text-dark", // Previous: Static¹, Static², etc.
+            
+            // Technical details (Gray)
+            _ => "bg-secondary text-white"               // Technical: Unknown or metadata
         };
     }
 
@@ -129,23 +139,49 @@ public abstract class RenderModeComponentBase : ComponentBase
 
     /// <summary>
     /// Gets only the previous render mode states (excluding current state)
+    /// Includes pre-rendering state as first entry with footnote marker
     /// </summary>
     /// <returns>List of previous render mode states, or empty if no previous states</returns>
     protected List<RenderModeState> GetPreviousRenderModeStates()
     {
-        // Return all states except the last one (current state)
-        return _renderModeJourney.Count > 1 
-            ? _renderModeJourney.Take(_renderModeJourney.Count - 1).ToList()
-            : new List<RenderModeState>();
+        var previousStates = new List<RenderModeState>();
+        
+        // Add pre-rendering state as first entry with footnote marker
+        previousStates.Add(new RenderModeState 
+        { 
+            Mode = "Static¹", 
+            Duration = "pre-render" 
+        });
+        
+        // Add actual previous states (excluding current state)
+        if (_renderModeJourney.Count > 1)
+        {
+            var actualPrevious = _renderModeJourney.Take(_renderModeJourney.Count - 1).ToList();
+            previousStates.AddRange(actualPrevious);
+        }
+        
+        return previousStates;
     }
 
     /// <summary>
     /// Determines if the journey section should be shown
+    /// Always true now since we include pre-rendering state
     /// </summary>
-    /// <returns>True if there are multiple modes or transitions to show</returns>
+    /// <returns>True if there are modes or transitions to show</returns>
     protected bool ShouldShowJourney()
     {
-        return _renderModeJourney.Count > 1;
+        // Always show journey since we include pre-rendering state
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the footnote explanation for the pre-rendering state
+    /// </summary>
+    /// <returns>Footnote text explaining the pre-rendering phase</returns>
+    protected string GetPreRenderingFootnote()
+    {
+        return "¹ Static: Server-side pre-rendering phase that occurred before component initialization. " +
+               "This phase generates the initial HTML that users see before interactivity begins.";
     }
 
     /// <summary>
