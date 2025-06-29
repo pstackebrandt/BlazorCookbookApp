@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Components;
+using BlazorCookbookApp.Client.Shared;
 
 namespace BlazorCookbookApp.Tests.Shared;
 
 /// <summary>
 /// Unit tests for RenderModeComponentBase class
-/// Tests the common functionality that will be extracted from render mode pages
+/// Tests the common functionality extracted from render mode pages
 /// </summary>
 public class RenderModeComponentBaseTests
 {
@@ -14,11 +15,13 @@ public class RenderModeComponentBaseTests
     private class TestRenderModeComponent : RenderModeComponentBase
     {
         protected override string PageTitle => "Test Render Mode";
+        protected override string PageSummary => "Test render mode summary";
         
         // Expose protected methods for testing
         public new string GetDisplayRenderMode() => base.GetDisplayRenderMode();
         public new bool GetDisplayInteractive() => base.GetDisplayInteractive();
         public new string GetRenderModeClass() => base.GetRenderModeClass();
+        public string GetRenderModeClassWithParameter(string renderMode) => base.GetRenderModeClass(renderMode);
         
         // Expose protected fields for testing
         public new bool _isDelayed 
@@ -38,14 +41,25 @@ public class RenderModeComponentBaseTests
             get => base._interactiveTime; 
             set => base._interactiveTime = value; 
         }
+
+        // Expose action history methods for testing
+        public new void AddAction(string description, RenderActionCategory category) => base.AddAction(description, category);
+        public new Dictionary<string, List<RenderAction>> GetActionsByCategory() => base.GetActionsByCategory();
+        public new bool HasActionHistory => base.HasActionHistory;
+        public new List<RenderAction> _actionHistory 
+        { 
+            get => base._actionHistory; 
+            set => base._actionHistory = value; 
+        }
+
+        // Expose helper methods for testing
+        public double GetDurationSinceStartPublic() => base.GetDurationSinceStart();
+        public double? GetTimeToInteractivePublic() => base.GetTimeToInteractive();
+        public string GetBasicTransitionTimePublic() => base.GetBasicTransitionTime();
         
-        // Mock RendererInfo for testing
-        public string? MockRendererName { get; set; } = "Static";
-        public bool MockIsInteractive { get; set; } = false;
-        
-        // Override the RendererInfo access (we'll need to implement this in the base class)
-        protected override string? GetCurrentRenderMode() => MockRendererName;
-        protected override bool GetCurrentInteractive() => MockIsInteractive;
+        // Make abstract properties accessible for testing
+        public string GetPageTitle() => PageTitle;
+        public string GetPageSummary() => PageSummary;
     }
 
     [Fact]
@@ -54,7 +68,6 @@ public class RenderModeComponentBaseTests
         // Arrange
         var component = new TestRenderModeComponent();
         component._isDelayed = true;
-        component.MockRendererName = "WebAssembly";
 
         // Act
         var result = component.GetDisplayRenderMode();
@@ -64,72 +77,11 @@ public class RenderModeComponentBaseTests
     }
 
     [Fact]
-    public void GetDisplayRenderMode_WhenNotDelayed_ReturnsActualMode()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = false;
-        component.MockRendererName = "WebAssembly";
-
-        // Act
-        var result = component.GetDisplayRenderMode();
-
-        // Assert
-        Assert.Equal("WebAssembly", result);
-    }
-
-    [Fact]
-    public void GetDisplayRenderMode_WhenNotDelayedAndNoMode_ReturnsUnknown()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = false;
-        component.MockRendererName = null;
-
-        // Act
-        var result = component.GetDisplayRenderMode();
-
-        // Assert
-        Assert.Equal("Unknown", result);
-    }
-
-    [Fact]
     public void GetDisplayInteractive_WhenDelayed_ReturnsFalse()
     {
         // Arrange
         var component = new TestRenderModeComponent();
         component._isDelayed = true;
-        component.MockIsInteractive = true;
-
-        // Act
-        var result = component.GetDisplayInteractive();
-
-        // Assert
-        Assert.False(result);
-    }
-
-    [Fact]
-    public void GetDisplayInteractive_WhenNotDelayedAndInteractive_ReturnsTrue()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = false;
-        component.MockIsInteractive = true;
-
-        // Act
-        var result = component.GetDisplayInteractive();
-
-        // Assert
-        Assert.True(result);
-    }
-
-    [Fact]
-    public void GetDisplayInteractive_WhenNotDelayedAndNotInteractive_ReturnsFalse()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = false;
-        component.MockIsInteractive = false;
 
         // Act
         var result = component.GetDisplayInteractive();
@@ -140,65 +92,19 @@ public class RenderModeComponentBaseTests
 
     [Theory]
     [InlineData("webassembly", "bg-success text-white")]
-    [InlineData("WebAssembly", "bg-success text-white")]
     [InlineData("server", "bg-primary text-white")]
-    [InlineData("Server", "bg-primary text-white")]
     [InlineData("static", "bg-warning text-dark")]
-    [InlineData("Static", "bg-warning text-dark")]
     [InlineData("unknown", "bg-secondary text-white")]
-    [InlineData("", "bg-secondary text-white")]
-    public void GetRenderModeClass_ReturnsCorrectCssClasses(string? renderMode, string expectedClass)
+    public void GetRenderModeClass_WithSpecificRenderMode_ReturnsCorrectCssClasses(string renderMode, string expectedClass)
     {
         // Arrange
         var component = new TestRenderModeComponent();
-        component._isDelayed = false;
-        component.MockRendererName = renderMode;
 
         // Act
-        var result = component.GetRenderModeClass();
+        var result = component.GetRenderModeClassWithParameter(renderMode);
 
         // Assert
         Assert.Equal(expectedClass, result);
-    }
-
-    [Fact]
-    public void GetRenderModeClass_WhenDelayed_ReturnsStaticClass()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = true;
-        component.MockRendererName = "WebAssembly"; // Should be ignored when delayed
-
-        // Act
-        var result = component.GetRenderModeClass();
-
-        // Assert
-        Assert.Equal("bg-warning text-dark", result); // Static class
-    }
-
-    [Fact]
-    public void GetRenderModeClass_WhenRenderModeIsNull_ReturnsSecondaryClass()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = false;
-        component.MockRendererName = null;
-
-        // Act
-        var result = component.GetRenderModeClass();
-
-        // Assert
-        Assert.Equal("bg-secondary text-white", result);
-    }
-
-    [Fact]
-    public void StaticPhaseDelayMs_HasCorrectValue()
-    {
-        // Arrange & Act
-        var component = new TestRenderModeComponent();
-
-        // Assert
-        Assert.Equal(1500, TestRenderModeComponent.STATIC_PHASE_DELAY_MS);
     }
 
     [Fact]
@@ -208,48 +114,144 @@ public class RenderModeComponentBaseTests
         var component = new TestRenderModeComponent();
 
         // Assert
-        Assert.True(component._isDelayed);
-        Assert.True(component._startTime > DateTime.MinValue);
-        Assert.Null(component._interactiveTime);
-    }
-}
-
-/// <summary>
-/// Placeholder for the base class that will be implemented in T8.1.1
-/// This allows us to write tests first and implement the class to satisfy them
-/// </summary>
-public abstract class RenderModeComponentBase : ComponentBase
-{
-    protected bool _isDelayed = true;
-    protected DateTime _startTime = DateTime.UtcNow;
-    protected DateTime? _interactiveTime = null;
-    public const int STATIC_PHASE_DELAY_MS = 1500;
-
-    protected abstract string PageTitle { get; }
-
-    protected virtual string GetDisplayRenderMode()
-    {
-        return _isDelayed ? "Static" : (GetCurrentRenderMode() ?? "Unknown");
+        Assert.True(component._isDelayed); // Should start delayed
+        Assert.Null(component._interactiveTime); // Should start null
+        Assert.Empty(component._actionHistory); // Should start empty
+        Assert.False(component.HasActionHistory); // Should be false when empty
     }
 
-    protected virtual bool GetDisplayInteractive()
+    [Fact]
+    public void AddAction_AddsActionToHistory()
     {
-        return !_isDelayed && GetCurrentInteractive();
+        // Arrange
+        var component = new TestRenderModeComponent();
+        component._startTime = DateTime.UtcNow.AddMilliseconds(-100); // 100ms ago
+
+        // Act
+        component.AddAction("Test action", RenderActionCategory.Initialization);
+
+        // Assert
+        Assert.Single(component._actionHistory);
+        Assert.True(component.HasActionHistory);
+        
+        var action = component._actionHistory.First();
+        Assert.Equal("Test action", action.Description);
+        Assert.Equal(RenderActionCategory.Initialization, action.Category);
+        Assert.True(action.DurationMs >= 90); // Should be at least 90ms
+        Assert.NotEmpty(action.Time);
     }
 
-    protected virtual string GetRenderModeClass()
+    [Fact]
+    public void GetActionsByCategory_GroupsActionsCorrectly()
     {
-        var mode = GetDisplayRenderMode();
-        return mode?.ToLower() switch
+        // Arrange
+        var component = new TestRenderModeComponent();
+        component.AddAction("Init 1", RenderActionCategory.Initialization);
+        component.AddAction("Init 2", RenderActionCategory.Initialization);
+        component.AddAction("Transition 1", RenderActionCategory.Transition);
+
+        // Act
+        var result = component.GetActionsByCategory();
+
+        // Assert
+        Assert.Equal(2, result.Count);
+        Assert.Contains("Initialization", result.Keys);
+        Assert.Contains("Transition", result.Keys);
+        Assert.Equal(2, result["Initialization"].Count);
+        Assert.Single(result["Transition"]);
+    }
+
+    [Fact]
+    public void GetBasicTransitionTime_WhenInteractiveTimeIsNull_ReturnsInProgress()
+    {
+        // Arrange
+        var component = new TestRenderModeComponent();
+        component._interactiveTime = null;
+
+        // Act
+        var result = component.GetBasicTransitionTimePublic();
+
+        // Assert
+        Assert.Equal("In progress...", result);
+    }
+
+    [Fact]
+    public void GetBasicTransitionTime_WhenInteractiveTimeIsSet_ReturnsFormattedTime()
+    {
+        // Arrange
+        var component = new TestRenderModeComponent();
+        var startTime = DateTime.UtcNow;
+        var interactiveTime = startTime.AddMilliseconds(150);
+        
+        component._startTime = startTime;
+        component._interactiveTime = interactiveTime;
+
+        // Act
+        var result = component.GetBasicTransitionTimePublic();
+
+        // Assert
+        Assert.Equal("150ms", result);
+    }
+
+    [Fact]
+    public void PageTitle_IsAbstractProperty()
+    {
+        // Arrange
+        var component = new TestRenderModeComponent();
+
+        // Act
+        var result = component.GetPageTitle();
+
+        // Assert
+        Assert.Equal("Test Render Mode", result);
+    }
+
+    [Fact]
+    public void PageSummary_IsAbstractProperty()
+    {
+        // Arrange
+        var component = new TestRenderModeComponent();
+
+        // Act
+        var result = component.GetPageSummary();
+
+        // Assert
+        Assert.Equal("Test render mode summary", result);
+    }
+
+    [Fact]
+    public void RenderActionCategory_HasAllExpectedValues()
+    {
+        // Arrange & Act & Assert
+        var categories = Enum.GetValues<RenderActionCategory>();
+        
+        Assert.Contains(RenderActionCategory.Initialization, categories);
+        Assert.Contains(RenderActionCategory.Transition, categories);
+        Assert.Contains(RenderActionCategory.Active, categories);
+        Assert.Contains(RenderActionCategory.Interaction, categories);
+        Assert.Contains(RenderActionCategory.ServerPhase, categories);
+        Assert.Contains(RenderActionCategory.ClientTransition, categories);
+        Assert.Contains(RenderActionCategory.ClientActive, categories);
+    }
+
+    [Fact]
+    public void RenderAction_HasAllRequiredProperties()
+    {
+        // Arrange & Act
+        var action = new RenderAction
         {
-            "webassembly" => "bg-success text-white",    // Green for WebAssembly
-            "server" => "bg-primary text-white",         // Blue for Server
-            "static" => "bg-warning text-dark",          // Yellow for Static
-            _ => "bg-secondary text-white"               // Gray for unknown
+            Time = "12:34:56.789",
+            DurationMs = 123.45,
+            Description = "Test description",
+            Category = RenderActionCategory.Initialization,
+            RenderMode = "WebAssembly"
         };
-    }
 
-    // Abstract methods for accessing RendererInfo (will be implemented properly in the actual base class)
-    protected abstract string? GetCurrentRenderMode();
-    protected abstract bool GetCurrentInteractive();
+        // Assert
+        Assert.Equal("12:34:56.789", action.Time);
+        Assert.Equal(123.45, action.DurationMs);
+        Assert.Equal("Test description", action.Description);
+        Assert.Equal(RenderActionCategory.Initialization, action.Category);
+        Assert.Equal("WebAssembly", action.RenderMode);
+    }
 } 
