@@ -69,7 +69,7 @@ else
                    @if (GetDisplayInteractive() && _interactiveTime.HasValue)
                    {
                        <span class="badge bg-secondary text-white ms-2">
-                           Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
+                           @GetTimingWithEducationalDelay(_interactiveTime, "Interactive after ")
                        </span>
                    }
                 </p>
@@ -230,13 +230,11 @@ else
     {
         if (_clientTransitionTime.HasValue)
         {
-            var transitionMs = (_clientTransitionTime.Value - _startTime).TotalMilliseconds;
-            return $"Server→Client: {transitionMs.ToString("F0")}ms";
+            return GetTimingWithEducationalDelay(_clientTransitionTime, "Server→Client: ");
         }
         else if (_interactiveTime.HasValue && GetCurrentRenderMode() == "Server")
         {
-            var serverMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
-            return $"Server active: {serverMs.ToString("F0")}ms";
+            return GetTimingWithEducationalDelay(_interactiveTime, "Server active: ");
         }
         else if (GetCurrentInteractive())
         {

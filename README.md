@@ -5,8 +5,10 @@ building modern web applications with Blazor WebAssembly and Server.
 
 ## Features
 
-- **Recipe4**: Render mode demonstrations (WebAssembly, Server) 
+- **Recipe4**: Render mode demonstrations (WebAssembly, Server, Auto)
   with authentic timing data and component lifecycle insights
+- **Educational Delays**: Real execution delays (not visual-only) that provide
+  authentic Blazor performance education and observable render mode transitions
 - **Component Architecture**: Server and Client project structure following
   Microsoft's recommended patterns
 
@@ -29,6 +31,8 @@ building modern web applications with Blazor WebAssembly and Server.
 - **`BlazorCookbookApp.Client/`** - Client project with WebAssembly components
 - **`docs/`** - Feature documentation and development guides
   - `Recipe4-Optimization-Plan.md` - Code duplication reduction strategy
+  - `Educational-Delay-Design-Principle.md` - Real delay implementation standards
+  - `BlazorCookbook-Style-Guide.md` - UI consistency and coding standards
 
 ## Sources
 

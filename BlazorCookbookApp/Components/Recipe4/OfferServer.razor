@@ -46,7 +46,7 @@ else
                    @if (GetDisplayInteractive() && _interactiveTime.HasValue)
                    {
                        <span class="badge bg-secondary text-white ms-2">
-                           Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
+                           Interactive after @(((_interactiveTime.Value - _startTime).TotalMilliseconds - STATIC_PHASE_DELAY_MS).ToString("F0"))ms (+ @(STATIC_PHASE_DELAY_MS)ms educational delay)
                        </span>
                    }
                 </p>
@@ -194,8 +194,9 @@ else
     {
         if (_interactiveTime.HasValue)
         {
-            var actualMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
-            return $"{actualMs.ToString("F0")}ms";
+            var totalMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
+            var actualMs = Math.Max(0, totalMs - STATIC_PHASE_DELAY_MS);
+            return $"Static→Server: {actualMs:F0}ms (+ {STATIC_PHASE_DELAY_MS}ms educational delay)";
         }
         else if (RendererInfo.IsInteractive)
         {

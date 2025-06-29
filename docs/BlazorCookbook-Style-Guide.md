@@ -142,6 +142,35 @@
 - **Visual Indicator**: `🕐 Educational delay: Showing static rendering phase for {STATIC_PHASE_DELAY_MS}ms...`
 - **Conditional Logic**: `@if (!RendererInfo.IsInteractive || _isDelayed)`
 
+#### **CRITICAL PRINCIPLE: Educational Delays Must Be Real**
+
+**Rule**: Educational delays MUST be actual execution delays using `await Task.Delay()`, not visual-only simulations.
+
+**Implementation Requirements:**
+- ✅ **Real State Delay**: Use `await Task.Delay(STATIC_PHASE_DELAY_MS)` in component lifecycle
+- ✅ **Delayed State Changes**: Component state updates occur AFTER delay completes
+- ✅ **Delayed UI Updates**: Call `StateHasChanged()` AFTER delay, not before
+- ✅ **Authentic Timing**: Delay affects actual component lifecycle measurements
+
+**Code Pattern:**
+```csharp
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender && _isDelayed)
+    {
+        await Task.Delay(STATIC_PHASE_DELAY_MS);  // REAL delay
+        _isDelayed = false;
+        StateHasChanged();  // UI updates AFTER delay
+    }
+}
+```
+
+**Rationale:**
+- **Educational Value**: Users experience authentic Blazor component lifecycle timing
+- **Realistic Simulation**: Mimics actual static rendering phase duration
+- **Accurate Measurements**: Provides genuine performance data when delay is subtracted
+- **Observable Transitions**: Makes fast render mode changes visible for learning
+
 ### Status Card Display Methods
 
 - **Purpose**: Ensure status cards respect educational delay and show realistic progression

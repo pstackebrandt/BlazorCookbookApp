@@ -37,7 +37,7 @@ else
                    @if (GetDisplayInteractive() && _interactiveTime.HasValue)
                    {
                        <span class="badge bg-secondary text-white ms-2">
-                           Interactive after @((_interactiveTime.Value - _startTime).TotalMilliseconds.ToString("F0"))ms
+                           Interactive after @(((_interactiveTime.Value - _startTime).TotalMilliseconds - STATIC_PHASE_DELAY_MS).ToString("F0"))ms (+ @(STATIC_PHASE_DELAY_MS)ms educational delay)
                        </span>
                    }
                 </p>

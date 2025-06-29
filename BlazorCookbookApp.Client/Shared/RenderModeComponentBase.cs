@@ -6,6 +6,10 @@ namespace BlazorCookbookApp.Client.Shared;
 /// <summary>
 /// Base class for render mode demonstration components, providing common functionality
 /// for educational delays, render mode detection, status display, and journey tracking.
+/// 
+/// DESIGN PRINCIPLE: Educational delays are REAL execution delays that affect actual 
+/// component lifecycle timing, not just visual display changes. This provides authentic 
+/// Blazor performance education and observable render mode transitions.
 /// </summary>
 public abstract class RenderModeComponentBase : ComponentBase
 {
@@ -279,6 +283,12 @@ public abstract class RenderModeComponentBase : ComponentBase
             // Always check for render mode changes on subsequent renders
             DetectAndTrackRenderModeChanges();
             
+            // Track interactive time on subsequent renders too (important for Auto mode transitions)
+            if (GetCurrentInteractive() && !_interactiveTime.HasValue)
+            {
+                _interactiveTime = DateTime.UtcNow;
+            }
+            
             // Call virtual method for page-specific subsequent render logic
             await OnAfterSubsequentRenderAsync();
         }
@@ -291,7 +301,11 @@ public abstract class RenderModeComponentBase : ComponentBase
     #region Educational Delay Handling
 
     /// <summary>
-    /// Handles the educational delay to show static rendering phase
+    /// Handles the educational delay to show static rendering phase.
+    /// 
+    /// IMPORTANT: This is a REAL execution delay that pauses component lifecycle
+    /// for educational purposes. It affects actual state transitions and timing
+    /// measurements, not just visual display.
     /// </summary>
     /// <returns>Async task</returns>
     protected virtual async Task HandleEducationalDelayAsync()
@@ -389,6 +403,36 @@ public abstract class RenderModeComponentBase : ComponentBase
         {
             var actualMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
             return $"{actualMs.ToString("F0")}ms";
+        }
+        
+        try
+        {
+            if (GetCurrentInteractive())
+            {
+                return "Measuring...";
+            }
+        }
+        catch (InvalidOperationException)
+        {
+            // RendererInfo is not available in unit tests - this is expected
+        }
+        
+        return "In progress...";
+    }
+
+    /// <summary>
+    /// Gets timing display with educational delay separated for consistency across all pages
+    /// </summary>
+    /// <param name="transitionTime">The time when transition occurred</param>
+    /// <param name="prefix">Optional prefix for the timing display (e.g., "Server→Client: ")</param>
+    /// <returns>Formatted timing string with educational delay separated</returns>
+    protected string GetTimingWithEducationalDelay(DateTime? transitionTime, string prefix = "")
+    {
+        if (transitionTime.HasValue)
+        {
+            var totalMs = (transitionTime.Value - _startTime).TotalMilliseconds;
+            var actualMs = Math.Max(0, totalMs - STATIC_PHASE_DELAY_MS);
+            return $"{prefix}{actualMs:F0}ms (+ {STATIC_PHASE_DELAY_MS}ms educational delay)";
         }
         
         try

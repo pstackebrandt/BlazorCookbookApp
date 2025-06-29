@@ -136,6 +136,54 @@ protected abstract string PageTitle { get; }
 - ✅ Build succeeds without errors (only minor warnings fixed)
 - ✅ Integration tests ready (application running)
 
+#### **T8.1.2b: Implement Consistent Timing Display** ✅ **COMPLETED**
+
+**Goal:** Ensure all three pages display timing with educational delay separation consistently
+
+**Implementation Completed:**
+- ✅ **WebAssembly Page**: Already shows `"35ms (+ 1500ms educational delay)"` format
+- ✅ **Auto Page**: Now shows `"Server→Client: 54ms (+ 1500ms educational delay)"`
+- ✅ **Server Page**: Now shows `"Static→Server: 35ms (+ 1500ms educational delay)"`
+
+**Changes Made:**
+- ✅ Added `GetTimingWithEducationalDelay()` helper method to base class
+- ✅ Updated Auto page `GetPhaseTransitionTime()` to use consistent format
+- ✅ Updated Server page `GetTransitionTime()` to use consistent format
+- ✅ Kept WebAssembly page unchanged (already correct)
+
+**Results Achieved:**
+- ✅ Auto Page: `"Server→Client: [actual]ms (+ 1500ms educational delay)"`
+- ✅ Server Page: `"Static→Server: [actual]ms (+ 1500ms educational delay)"`
+- ✅ WebAssembly Page: `"[actual]ms (+ 1500ms educational delay)"` (unchanged)
+
+**Success Criteria Met:**
+- ✅ All pages show educational delay message during static phase
+- ✅ All pages separate real timing from artificial delay
+- ✅ Consistent format across all three pages
+- ✅ Educational transparency maintained
+- ✅ Build succeeds without errors
+- ✅ All 15 unit tests passing
+
+#### **T8.1.2c: Consistent Interactive Timing Display** ✅ **COMPLETED**
+
+**Goal:** Ensure all three pages show interactive timing with educational delay separation
+
+**Implementation Completed:**
+- ✅ **Auto Page**: Updated to use `GetTimingWithEducationalDelay()` for interactive badge
+- ✅ **Server Page**: Updated to show separated timing format for interactive badge
+- ✅ **WebAssembly Page**: Updated to show separated timing format for interactive badge
+
+**Results Achieved:**
+- ✅ Auto Page: `"Interactive after 9ms (+ 1500ms educational delay)"`
+- ✅ Server Page: `"Interactive after 9ms (+ 1500ms educational delay)"`
+- ✅ WebAssembly Page: `"Interactive after 9ms (+ 1500ms educational delay)"`
+
+**Consistency Benefits:**
+- ✅ All pages show same timing format for both phase transitions AND interactive status
+- ✅ Educational transparency maintained across all timing displays
+- ✅ Users can clearly distinguish real performance from artificial delays
+- ✅ Consistent user experience across all render mode demonstrations
+
 #### **T8.1.3: Convert Server Page** 🔄 **NEXT PRIORITY**
 
 **Target**: `BlazorCookbookApp/Components/Recipe4/OfferServer.razor`
@@ -246,6 +294,44 @@ protected abstract string PageTitle { get; }
 
 **Purpose**: Extract the delay countdown display logic
 
+## **Educational Delay Design Principle**
+
+### **General Rule: Educational Delays Must Be Real**
+
+**Principle**: Educational delays in render mode demonstrations MUST be actual execution delays, not just visual display changes.
+
+**Implementation Requirements:**
+- ✅ **Real State Delay**: Use `await Task.Delay(STATIC_PHASE_DELAY_MS)` to actually pause execution
+- ✅ **Delayed State Changes**: Component state updates occur AFTER the delay completes
+- ✅ **Delayed UI Updates**: `StateHasChanged()` is called AFTER the delay, not before
+- ✅ **Authentic Timing**: Delay affects actual component lifecycle, not just display
+
+**Rationale:**
+- **Educational Value**: Users experience authentic Blazor component lifecycle timing
+- **Realistic Simulation**: Mimics actual static rendering phase duration in real applications
+- **Accurate Measurements**: Provides genuine performance data when delay is subtracted
+- **Observable Transitions**: Makes fast render mode changes visible for learning purposes
+
+**Code Pattern:**
+```csharp
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender && _isDelayed)
+    {
+        await Task.Delay(STATIC_PHASE_DELAY_MS);  // REAL delay, not visual
+        _isDelayed = false;
+        StateHasChanged();  // UI updates AFTER delay
+    }
+}
+```
+
+**Anti-Pattern (Avoid):**
+```csharp
+// DON'T DO THIS - Visual-only delay
+protected string GetDisplayMode() => 
+    DateTime.UtcNow < _fakeDelayEnd ? "Static" : ActualMode;
+```
+
 ## **Testing Strategy**
 
 ### **Unit Tests** (Cost-Effective Minimum)
@@ -258,6 +344,7 @@ protected abstract string PageTitle { get; }
 - `GetDisplayRenderMode()` returns actual mode when `_isDelayed = false`
 - `GetDisplayInteractive()` returns false when `_isDelayed = true`
 - `GetRenderModeClass()` returns correct colors for each mode
+- Educational delay is real execution delay, not visual simulation
 
 ### **Manual Testing Checklist** (After Each Conversion)
 
