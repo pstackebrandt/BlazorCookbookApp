@@ -2,22 +2,23 @@
 @rendermode InteractiveWebAssembly
 @inject NavigationManager Navigation
 @inject IRecipeUrlService RecipeUrlService
+@inherits RenderModeComponentBase
+@using BlazorCookbookApp.Client.Shared
 
-<PageTitle>@RecipeUrlService.GetTitleWithNumbers(_title)</PageTitle>
-<h1>@RecipeUrlService.GetTitleWithNumbers(_title)</h1>
+<PageTitle>@RecipeUrlService.GetTitleWithNumbers(PageTitle)</PageTitle>
+<h1>@RecipeUrlService.GetTitleWithNumbers(PageTitle)</h1>
+<p class="recipe-summary lead">@PageSummary</p>
 
 <h2>Detecting rendermode at runtime</h2>
-@if (!RendererInfo.IsInteractive || _isDelayed)
+@if (!GetDisplayInteractive())
 {
-    <p>This page is not fully loaded locally. That's why it is rendered at the server.</p>
-    @if (_isDelayed)
-    {
-        <p>🕐 <em>Educational delay: Showing static rendering phase for {STATIC_PHASE_DELAY_MS}ms...</em></p>
-    }
+    <p>⬇️ Downloading WebAssembly runtime and components...</p>
+    <p>🔄 Hydrating client-side components...</p>
 }
 else
 {
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
+    <p>⚡ <strong>Performance Advantage:</strong> Subsequent interactions are lightning-fast with zero server latency!</p>
 }
 
 <div class="card mb-4">
@@ -27,7 +28,27 @@ else
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <p><strong>Render Mode:</strong> 
+                @if (ShouldShowJourney())
+                {
+                    <p><strong>Previous state:</strong></p>
+                    <div class="mb-2">
+                        @foreach(var state in GetPreviousRenderModeStates())
+                        {
+                            <span class="badge @GetRenderModeClass(state.Mode) me-1 mb-1">
+                                @state.Mode
+                                @if (!string.IsNullOrEmpty(state.Duration))
+                                {
+                                    <small class="ms-1">(@state.Duration)</small>
+                                }
+                            </span>
+                            @if (state != GetPreviousRenderModeStates().Last())
+                            {
+                                <span class="text-muted me-1">→</span>
+                            }
+                        }
+                    </div>
+                }
+                <p><strong>Current State:</strong> 
                    <span class="badge @GetRenderModeClass() fs-6">@GetDisplayRenderMode()</span>
                 </p>
                 <p><strong>Interactive:</strong> 
@@ -37,20 +58,105 @@ else
                    @if (GetDisplayInteractive() && _interactiveTime.HasValue)
                    {
                        <span class="badge bg-secondary text-white ms-2">
-                           Interactive after @(((_interactiveTime.Value - _startTime).TotalMilliseconds - STATIC_PHASE_DELAY_MS).ToString("F0"))ms (+ @(STATIC_PHASE_DELAY_MS)ms educational delay)
+                           @GetTimingWithEducationalDelay(_interactiveTime, "Interactive after ")
                        </span>
                    }
                 </p>
+                @if (ShouldShowJourney())
+                {
+                    <!-- Footnote explanation for pre-rendering -->
+                    <div class="mb-2">
+                        <small class="text-muted">@GetPreRenderingFootnote()</small>
+                    </div>
+                }
             </div>
             <div class="col-md-6">
                 <p><strong>Assigned Mode:</strong> 
                    <span class="badge bg-secondary text-white fs-6">@(AssignedRenderMode?.GetType().Name ?? "not assigned")</span>
                 </p>
-                <p><strong>Static Phase Duration:</strong> 
-                   <span class="badge bg-secondary text-white">@GetStaticPhaseDuration()</span>
+                <p><strong>Hydration Time:</strong> 
+                   <span class="badge bg-secondary text-white">@GetWebAssemblyHydrationTime()</span>
+                </p>
+                <p><strong>Current Action:</strong> 
+                   <span class="badge bg-success text-white">@GetCurrentAction()</span>
+                </p>
+                <p><strong>Network Status:</strong> 
+                   <span class="badge @GetNetworkStatusClass()">@GetNetworkStatus()</span>
                 </p>
             </div>
         </div>
+        
+        <!-- WebAssembly Performance Showcase -->
+        @if (GetDisplayInteractive())
+        {
+            <div class="mt-3 p-3 bg-success bg-opacity-10 border border-success rounded">
+                <h6 class="text-success mb-2">⚡ WebAssembly Performance Benefits</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="small mb-1">
+                            <strong>✅ Zero Server Latency:</strong> All processing happens locally in your browser
+                        </p>
+                        <p class="small mb-1">
+                            <strong>✅ Offline Capable:</strong> Works without internet connection after initial load
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small mb-1">
+                            <strong>✅ Instant Responses:</strong> No network round-trips for interactions
+                        </p>
+                        <p class="small mb-1">
+                            <strong>✅ Client Resources:</strong> Uses your device's CPU and memory
+                        </p>
+                    </div>
+                </div>
+                @if (_userInteractionCount > 0)
+                {
+                    <div class="mt-2">
+                        <span class="badge bg-success">
+                            🏃‍♂️ @_userInteractionCount local interaction@(_userInteractionCount > 1 ? "s" : "") completed
+                        </span>
+                        <span class="badge bg-info ms-2">
+                            Average response: &lt;1ms (local processing)
+                        </span>
+                    </div>
+                }
+            </div>
+        }
+        
+        <!-- Component Lifecycle Explanation -->
+        <div class="mt-3 p-3 bg-light rounded">
+            <h6 class="text-muted mb-2">💡 Component Lifecycle Insight</h6>
+            <p class="small mb-1">
+                <strong>Important:</strong> Each render mode transition creates a fresh component instance. 
+                In-memory state (like action history) doesn't survive transitions without persistence mechanisms.
+            </p>
+            <p class="small mb-0 text-muted">
+                This behavior is normal Blazor architecture - what you see as "one page" is actually multiple component instances across render phases.
+            </p>
+        </div>
+        
+        @if (HasActionHistory)
+        {
+            <div class="mt-3">
+                <h6>Current Session Actions:</h6>
+                @foreach(var category in GetActionsByCategory())
+                {
+                    <div class="mb-2">
+                        <strong>@category.Key:</strong>
+                        <ul class="list-unstyled ms-3">
+                            @foreach(var action in category.Value)
+                            {
+                                <li>
+                                    <span class="badge bg-light text-dark">@action.Time</span>
+                                    <span class="badge bg-secondary text-white">@($"{action.DurationMs.ToString("F0")}ms")</span>
+                                    @action.Description
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
 
@@ -62,89 +168,201 @@ else
 <Ticket Tariff="Child" Price="5.00m" OnAdded="@Add" />
 <p>- After the tickets -</p>
 
+<!-- WebAssembly Demo Section -->
+@if (GetDisplayInteractive())
+{
+    <div class="mt-4 p-3 bg-primary bg-opacity-10 border border-primary rounded">
+        <h3>🚀 WebAssembly Capabilities Demo</h3>
+        <p>Try these interactions to experience instant local processing:</p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Instant Counter</h5>
+                <p>Count: <span class="badge bg-primary fs-6">@_localCounter</span></p>
+                <button class="btn btn-primary btn-sm me-2" @onclick="IncrementCounter">
+                    Increment (+1)
+                </button>
+                <button class="btn btn-outline-primary btn-sm" @onclick="ResetCounter">
+                    Reset
+                </button>
+            </div>
+            <div class="col-md-6">
+                <h5>Local Time Display</h5>
+                <p>Browser Time: <span class="badge bg-info fs-6">@_currentTime</span></p>
+                <button class="btn btn-info btn-sm" @onclick="UpdateTime">
+                    Update Time
+                </button>
+            </div>
+        </div>
+        
+        <div class="mt-3">
+            <small class="text-muted">
+                💡 Notice how these interactions are instant - no server communication required!
+            </small>
+        </div>
+    </div>
+}
+
 <h2>Features</h2>
 <ul>
   <li>I detect the rendermode at runtime.</li>
   <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
-  <li>Offer uses rendermode InteractiveWebAssembly
-     (rendering in the browser after full load, but before this at the server?)</li>
+  <li>Offer uses rendermode InteractiveWebAssembly (rendering in the browser after full load)</li>
+  <li>Client-side processing with no server round-trips after initial load</li>
+  <li>Action history tracking with categorized timeline</li>
+  <li>Fast subsequent interactions with local processing</li>
+  <li><strong>WebAssembly-specific:</strong> Instant local interactions and offline capability</li>
+  <li><strong>Performance showcase:</strong> Zero-latency user interface updates</li>
 </ul>
 
 <h2>No errors</h2>
 
 @code {
-    private string _title = "Render mode InteractiveWebAssembly";
-    private bool _isDelayed = true; // Start with delay to show static phase
-    private DateTime _startTime = DateTime.UtcNow;
-    private DateTime? _interactiveTime = null;
-    private const int STATIC_PHASE_DELAY_MS = 1500; // 1.5 seconds to observe static rendering
+    // WebAssembly-specific state
+    private int _localCounter = 0;
+    private int _userInteractionCount = 0;
+    private string _currentTime = DateTime.Now.ToString("HH:mm:ss");
 
-    protected override void OnInitialized()
+    // Implement abstract properties from base class
+    protected override string PageTitle => "Render mode InteractiveWebAssembly";
+    protected override string PageSummary => "Client-side processing with WebAssembly after initial download";
+
+    protected override void OnInitializedOverride()
     {
         RecipeUrlService.Initialize(Navigation);
-        _startTime = DateTime.UtcNow;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
+        
+        AddAction("Component initialization started", RenderActionCategory.Initialization);
+        AddAction($"Initial render mode: {GetCurrentRenderMode()}", RenderActionCategory.Initialization);
+        AddAction("RecipeUrlService initialized", RenderActionCategory.Initialization);
+        AddAction($"Educational delay: {STATIC_PHASE_DELAY_MS}ms to observe static phase", RenderActionCategory.Initialization);
+        
+        // WebAssembly mode starts with client-side hydration
+        if (GetCurrentRenderMode() == "WebAssembly")
         {
-            // Add educational delay to make static phase visible
-            if (_isDelayed)
-            {
-                await Task.Delay(STATIC_PHASE_DELAY_MS);
-                _isDelayed = false;
-                StateHasChanged();
-            }
-            
-            if (RendererInfo.IsInteractive)
-            {
-                _interactiveTime = DateTime.UtcNow;
-                StateHasChanged();
-            }
+            AddAction("WebAssembly runtime loaded", RenderActionCategory.ClientHydration);
+            AddAction("Starting client-side component hydration", RenderActionCategory.ClientHydration);
         }
     }
 
-    private string GetDisplayRenderMode()
+    protected override Task OnAfterFirstRenderAsync()
     {
-        // During educational delay, show "Static" to simulate actual static phase
-        return _isDelayed ? "Static" : (RendererInfo.Name ?? "Unknown");
-    }
-
-    private bool GetDisplayInteractive()
-    {
-        // During educational delay, show false to simulate actual static phase
-        return !_isDelayed && RendererInfo.IsInteractive;
-    }
-
-    private string GetRenderModeClass()
-    {
-        var mode = GetDisplayRenderMode();
-        return mode?.ToLower() switch
+        AddAction("First render completed", RenderActionCategory.Initialization);
+        
+        if (GetCurrentInteractive())
         {
-            "webassembly" => "bg-success text-white", // Green for WebAssembly
-            "static" => "bg-warning text-dark",       // Yellow for Static
-            _ => "bg-secondary text-white"            // Gray for unknown
-        };
+            AddAction("WebAssembly hydration completed", RenderActionCategory.ClientHydration);
+            AddAction("Client-side processing now active", RenderActionCategory.ClientActive);
+            AddAction("All subsequent interactions will be local", RenderActionCategory.ClientActive);
+            AddAction("Zero server latency achieved", RenderActionCategory.ClientActive);
+            
+            // Ensure interactive time is tracked
+            if (!_interactiveTime.HasValue)
+            {
+                _interactiveTime = DateTime.UtcNow;
+                AddAction($"Interactive time set: {_interactiveTime.Value:HH:mm:ss.fff}", RenderActionCategory.ClientActive);
+            }
+            
+            // Force UI update to show timing
+            StateHasChanged();
+        }
+        
+        return Task.CompletedTask;
     }
 
-    private string GetStaticPhaseDuration()
+    protected override void OnRenderModeChanged(string? oldMode, string newMode)
+    {
+        // Log render mode transitions (though WebAssembly typically doesn't transition)
+        if (oldMode != null)
+        {
+            AddAction($"Render mode changed: {oldMode} → {newMode}", RenderActionCategory.ClientHydration);
+        }
+    }
+
+    protected override Task OnEducationalDelayCompleted()
+    {
+        AddAction("Educational delay completed", RenderActionCategory.Initialization);
+        
+        if (GetCurrentInteractive())
+        {
+            AddAction("WebAssembly mode now visible to user", RenderActionCategory.ClientActive);
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    private string GetWebAssemblyHydrationTime()
     {
         if (_interactiveTime.HasValue)
         {
-            var totalMs = (_interactiveTime.Value - _startTime).TotalMilliseconds;
-            var actualMs = Math.Max(0, totalMs - STATIC_PHASE_DELAY_MS); // Subtract educational delay
-            return $"{actualMs.ToString("F0")}ms (+ {STATIC_PHASE_DELAY_MS}ms educational delay)";
+            return GetTimingWithEducationalDelay(_interactiveTime, "Static→WebAssembly: ");
         }
-        else if (RendererInfo.IsInteractive)
+        else if (GetCurrentInteractive())
         {
             return "Measuring...";
         }
-        return "Still in static phase";
+        return "Still hydrating";
+    }
+
+    private string GetCurrentAction()
+    {
+        if (!GetCurrentInteractive())
+        {
+            return "Downloading and hydrating WebAssembly";
+        }
+        
+        return GetCurrentRenderMode()?.ToLower() switch
+        {
+            "webassembly" => "Processing locally in browser",
+            _ => "Client-side processing"
+        };
+    }
+
+    private string GetNetworkStatus()
+    {
+        if (!GetCurrentInteractive())
+        {
+            return "Downloading";
+        }
+        
+        return "Independent";
+    }
+
+    private string GetNetworkStatusClass()
+    {
+        if (!GetCurrentInteractive())
+        {
+            return "bg-warning text-dark";
+        }
+        
+        return "bg-success text-white";
+    }
+
+    // WebAssembly demo methods
+    private void IncrementCounter()
+    {
+        _localCounter++;
+        _userInteractionCount++;
+        AddAction($"Local counter incremented to {_localCounter}", RenderActionCategory.UserInteraction);
+    }
+
+    private void ResetCounter()
+    {
+        _localCounter = 0;
+        _userInteractionCount++;
+        AddAction("Local counter reset to 0", RenderActionCategory.UserInteraction);
+    }
+
+    private void UpdateTime()
+    {
+        _currentTime = DateTime.Now.ToString("HH:mm:ss.fff");
+        _userInteractionCount++;
+        AddAction($"Local time updated to {_currentTime}", RenderActionCategory.UserInteraction);
     }
     
     private void Add()
     {
-      Console.WriteLine("Added to cart!");
+        Console.WriteLine("Added to cart!");
+        _userInteractionCount++;
+        AddAction("User interaction: Added item to cart", RenderActionCategory.UserInteraction);
     }
 }

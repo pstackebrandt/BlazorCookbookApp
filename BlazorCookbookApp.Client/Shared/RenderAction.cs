@@ -70,5 +70,15 @@ public enum RenderActionCategory
     /// <summary>
     /// Client-side processing phase (Auto mode).
     /// </summary>
-    ClientActive
+    ClientActive,
+    
+    /// <summary>
+    /// WebAssembly runtime hydration phase.
+    /// </summary>
+    ClientHydration,
+    
+    /// <summary>
+    /// User interaction events.
+    /// </summary>
+    UserInteraction
 } 
