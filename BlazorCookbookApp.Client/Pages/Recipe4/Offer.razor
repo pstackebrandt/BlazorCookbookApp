@@ -18,7 +18,7 @@
 else
 {
     <p>Page is fully loaded locally. Now it is rendered at the client.</p>
-    <p>⚡ <strong>Performance Advantage:</strong> Subsequent interactions are lightning-fast with zero server latency!</p>
+    <p>⚡ <strong>Performance Advantage:</strong> Subsequent interactions have zero server latency!</p>
 }
 
 <div class="card mb-4">
@@ -64,7 +64,7 @@ else
                 </p>
                 @if (ShouldShowJourney())
                 {
-                    <!-- Footnote explanation for pre-rendering -->
+                    <!-- Explain Static¹ footnote for educational clarity -->
                     <div class="mb-2">
                         <small class="text-muted">@GetPreRenderingFootnote()</small>
                     </div>
@@ -86,44 +86,39 @@ else
             </div>
         </div>
         
-        <!-- WebAssembly Performance Showcase -->
+        <!-- Show WebAssembly benefits and link to demo page -->
         @if (GetDisplayInteractive())
         {
             <div class="mt-3 p-3 bg-success bg-opacity-10 border border-success rounded">
                 <h6 class="text-success mb-2">⚡ WebAssembly Performance Benefits</h6>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="small mb-1">
-                            <strong>✅ Zero Server Latency:</strong> All processing happens locally in your browser
-                        </p>
-                        <p class="small mb-1">
-                            <strong>✅ Offline Capable:</strong> Works without internet connection after initial load
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="small mb-1">
-                            <strong>✅ Instant Responses:</strong> No network round-trips for interactions
-                        </p>
-                        <p class="small mb-1">
-                            <strong>✅ Client Resources:</strong> Uses your device's CPU and memory
-                        </p>
-                    </div>
-                </div>
+                <p class="small mb-2">
+                    <strong>✅ Zero Server Latency:</strong> All processing happens locally<br>
+                    <strong>✅ Offline Capable:</strong> Works without internet after initial load<br>
+                    <strong>✅ Instant Responses:</strong> No network round-trips for interactions
+                </p>
                 @if (_userInteractionCount > 0)
                 {
-                    <div class="mt-2">
+                    <div class="mb-3">
                         <span class="badge bg-success">
-                            🏃‍♂️ @_userInteractionCount local interaction@(_userInteractionCount > 1 ? "s" : "") completed
+                            🏃‍♂️ @_userInteractionCount cart interaction@(_userInteractionCount > 1 ? "s" : "") completed
                         </span>
                         <span class="badge bg-info ms-2">
-                            Average response: &lt;1ms (local processing)
+                            Response time: &lt;1ms (local processing)
                         </span>
                     </div>
                 }
+                <div class="text-center">
+                    <a href="/ch01r04wademo" class="btn btn-primary btn-lg">
+                        🚀 Try WebAssembly Demo →
+                    </a>
+                    <p class="small text-muted mt-2 mb-0">
+                        Experience hands-on WebAssembly capabilities and instant local processing
+                    </p>
+                </div>
             </div>
         }
         
-        <!-- Component Lifecycle Explanation -->
+        <!-- Explain component instance behavior across render modes -->
         <div class="mt-3 p-3 bg-light rounded">
             <h6 class="text-muted mb-2">💡 Component Lifecycle Insight</h6>
             <p class="small mb-1">
@@ -168,62 +163,27 @@ else
 <Ticket Tariff="Child" Price="5.00m" OnAdded="@Add" />
 <p>- After the tickets -</p>
 
-<!-- WebAssembly Demo Section -->
-@if (GetDisplayInteractive())
-{
-    <div class="mt-4 p-3 bg-primary bg-opacity-10 border border-primary rounded">
-        <h3>🚀 WebAssembly Capabilities Demo</h3>
-        <p>Try these interactions to experience instant local processing:</p>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <h5>Instant Counter</h5>
-                <p>Count: <span class="badge bg-primary fs-6">@_localCounter</span></p>
-                <button class="btn btn-primary btn-sm me-2" @onclick="IncrementCounter">
-                    Increment (+1)
-                </button>
-                <button class="btn btn-outline-primary btn-sm" @onclick="ResetCounter">
-                    Reset
-                </button>
-            </div>
-            <div class="col-md-6">
-                <h5>Local Time Display</h5>
-                <p>Browser Time: <span class="badge bg-info fs-6">@_currentTime</span></p>
-                <button class="btn btn-info btn-sm" @onclick="UpdateTime">
-                    Update Time
-                </button>
-            </div>
-        </div>
-        
-        <div class="mt-3">
-            <small class="text-muted">
-                💡 Notice how these interactions are instant - no server communication required!
-            </small>
-        </div>
-    </div>
-}
+
 
 <h2>Features</h2>
 <ul>
-  <li>I detect the rendermode at runtime.</li>
-  <li>Offer component page sends parameters and code for an event to Ticket component instances</li>
-  <li>Offer uses rendermode InteractiveWebAssembly (rendering in the browser after full load)</li>
-  <li>Client-side processing with no server round-trips after initial load</li>
-  <li>Action history tracking with categorized timeline</li>
-  <li>Fast subsequent interactions with local processing</li>
-  <li><strong>WebAssembly-specific:</strong> Instant local interactions and offline capability</li>
-  <li><strong>Performance showcase:</strong> Zero-latency user interface updates</li>
+  <li><strong>Render Mode Detection:</strong> Detects and displays current render mode at runtime</li>
+  <li><strong>Component Communication:</strong> Offer page sends parameters and event handlers to Ticket components</li>
+  <li><strong>WebAssembly Rendering:</strong> Uses InteractiveWebAssembly mode (renders in browser after download)</li>
+  <li><strong>Client-side Processing:</strong> No server round-trips after initial WebAssembly load</li>
+  <li><strong>Action History:</strong> Tracks component lifecycle events with categorized timeline</li>
+  <li><strong>Performance Benefits:</strong> Zero server latency for user interactions after hydration</li>
+  <li><strong>Educational Insights:</strong> Shows authentic component state and lifecycle behavior</li>
+  <li><strong>Interactive Demo:</strong> Dedicated demo page for hands-on WebAssembly exploration</li>
 </ul>
 
 <h2>No errors</h2>
 
 @code {
-    // WebAssembly-specific state
-    private int _localCounter = 0;
+    // Track user interactions with cart functionality
     private int _userInteractionCount = 0;
-    private string _currentTime = DateTime.Now.ToString("HH:mm:ss");
 
-    // Implement abstract properties from base class
+    // Page configuration - inherits from RenderModeComponentBase for lifecycle tracking
     protected override string PageTitle => "Render mode InteractiveWebAssembly";
     protected override string PageSummary => "Client-side processing with WebAssembly after initial download";
 
@@ -236,7 +196,7 @@ else
         AddAction("RecipeUrlService initialized", RenderActionCategory.Initialization);
         AddAction($"Educational delay: {STATIC_PHASE_DELAY_MS}ms to observe static phase", RenderActionCategory.Initialization);
         
-        // WebAssembly mode starts with client-side hydration
+        // Track WebAssembly-specific initialization
         if (GetCurrentRenderMode() == "WebAssembly")
         {
             AddAction("WebAssembly runtime loaded", RenderActionCategory.ClientHydration);
@@ -271,7 +231,7 @@ else
 
     protected override void OnRenderModeChanged(string? oldMode, string newMode)
     {
-        // Log render mode transitions (though WebAssembly typically doesn't transition)
+        // Track render mode changes (rare for WebAssembly mode)
         if (oldMode != null)
         {
             AddAction($"Render mode changed: {oldMode} → {newMode}", RenderActionCategory.ClientHydration);
@@ -337,27 +297,7 @@ else
         return "bg-success text-white";
     }
 
-    // WebAssembly demo methods
-    private void IncrementCounter()
-    {
-        _localCounter++;
-        _userInteractionCount++;
-        AddAction($"Local counter incremented to {_localCounter}", RenderActionCategory.UserInteraction);
-    }
 
-    private void ResetCounter()
-    {
-        _localCounter = 0;
-        _userInteractionCount++;
-        AddAction("Local counter reset to 0", RenderActionCategory.UserInteraction);
-    }
-
-    private void UpdateTime()
-    {
-        _currentTime = DateTime.Now.ToString("HH:mm:ss.fff");
-        _userInteractionCount++;
-        AddAction($"Local time updated to {_currentTime}", RenderActionCategory.UserInteraction);
-    }
     
     private void Add()
     {

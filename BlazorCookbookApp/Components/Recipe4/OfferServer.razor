@@ -72,7 +72,7 @@ else
                 </p>
                 @if (ShouldShowJourney())
                 {
-                    <!-- Footnote explanation for pre-rendering -->
+                    <!-- Explain Static¹ footnote for educational clarity -->
                     <div class="mb-2">
                         <small class="text-muted">@GetPreRenderingFootnote()</small>
                     </div>
@@ -91,7 +91,7 @@ else
             </div>
         </div>
         
-        <!-- Component Lifecycle Explanation -->
+        <!-- Explain component instance behavior across render modes -->
         <div class="mt-3 p-3 bg-light rounded">
             <h6 class="text-muted mb-2">💡 Component Lifecycle Insight</h6>
             <p class="small mb-1">
@@ -148,7 +148,7 @@ else
 <h2>No errors</h2>
 
 @code {
-    // Implement abstract properties from base class
+    // Page configuration - inherits from RenderModeComponentBase for lifecycle tracking
     protected override string PageTitle => "Render mode InteractiveServer";
     protected override string PageSummary => "Server-side processing with SignalR communication for real-time updates";
 
@@ -168,7 +168,7 @@ else
         
         if (GetCurrentInteractive())
         {
-            // Ensure interactive time is tracked (base class should handle this, but make sure)
+            // Track when server mode becomes interactive
             if (!_interactiveTime.HasValue)
             {
                 _interactiveTime = DateTime.UtcNow;
@@ -180,7 +180,7 @@ else
             AddAction("Interactive features now available", RenderActionCategory.Active);
             AddAction("Server-side processing ready", RenderActionCategory.Active);
             
-            // Force UI update to show timing
+            // Update UI to show server mode status
             StateHasChanged();
         }
         
@@ -189,7 +189,7 @@ else
 
     protected override void OnRenderModeChanged(string? oldMode, string newMode)
     {
-        // Log render mode transitions
+        // Track render mode transitions for server mode
         if (oldMode != null)
         {
             AddAction($"Render mode changed: {oldMode} → {newMode}", RenderActionCategory.Transition);

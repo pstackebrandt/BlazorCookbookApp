@@ -8,6 +8,8 @@ building modern web applications with Blazor WebAssembly and Server.
 - **Overview**: Dynamic content overview.
 - **Recipe4**: Render mode demonstrations (WebAssembly, Server, Auto)
   with authentic timing data and component lifecycle insights
+- **WebAssembly Demo**: Interactive demonstration page showcasing WebAssembly
+  capabilities with real-time performance metrics and hands-on examples
 
 ## Quick Start
 
