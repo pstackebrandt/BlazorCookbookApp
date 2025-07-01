@@ -1,0 +1,61 @@
+// Lint rule copied from https://github.com/pstackebrandt/ModernWeb/blob/f41d3cec3e479a21eabc9cfc120ceceadec0cf0b/.markdownlint.json
+{
+    "default": true,
+    "MD013": {
+        "line_length": 120,
+        "code_blocks": false,
+        "tables": false
+    },
+    "MD024": {
+        "siblings_only": true
+    },
+    "MD025": {
+        "front_matter_title": "title"
+    },
+    "MD033": false,
+    "MD041": false,
+    "MD022": false,
+    "MD026": {
+        "punctuation": ".,;:!?"
+    },
+    "MD029": {
+        "style": "ordered"
+    },
+    "MD030": {
+        "ul_single": 1,
+        "ol_single": 1
+    },
+    "MD031": false,
+    "MD032": false,
+    "MD034": false,
+    "MD035": {
+        "style": "---"
+    },
+    "MD036": false,
+    "MD037": false,
+    "MD038": false,
+    "MD039": false,
+    "MD040": false,
+    "MD042": false,
+    "MD043": false,
+    "MD044": {
+        "names": ["Obsidian", "Markdown", "GitHub"]
+    },
+    "MD045": false,
+    "MD046": {
+        "style": "fenced"
+    },
+    "MD047": false,
+    "MD048": {
+        "style": "backtick"
+    },
+    "MD049": {
+        "style": "asterisk"
+    },
+    "MD050": {
+        "style": "asterisk"
+    },
+    "MD051": false,
+    "MD052": false,
+    "MD053": false
+} 
