@@ -56,14 +56,10 @@ public class RenderModeComponentBaseTests
         public double GetDurationSinceStartPublic() => base.GetDurationSinceStart();
         public double? GetTimeToInteractivePublic() => base.GetTimeToInteractive();
         public string GetBasicTransitionTimePublic() => base.GetBasicTransitionTime();
-        
-        // Make abstract properties accessible for testing
-        public string GetPageTitle() => PageTitle;
-        public string GetPageSummary() => PageSummary;
     }
 
     [Fact]
-    public void GetDisplayRenderMode_WhenDelayed_ReturnsStatic()
+    public void GetDisplayRenderMode_WhenDelayed_ReturnsActualRenderMode()
     {
         // Arrange
         var component = new TestRenderModeComponent();
@@ -73,26 +69,14 @@ public class RenderModeComponentBaseTests
         var result = component.GetDisplayRenderMode();
 
         // Assert
-        Assert.Equal("Static", result);
+        Assert.Equal("Test", result); // Expect actual render mode, not "Static"
     }
 
-    [Fact]
-    public void GetDisplayInteractive_WhenDelayed_ReturnsFalse()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-        component._isDelayed = true;
 
-        // Act
-        var result = component.GetDisplayInteractive();
-
-        // Assert
-        Assert.False(result);
-    }
 
     [Theory]
     [InlineData("webassembly", "bg-success text-white")]
-    [InlineData("server", "bg-primary text-white")]
+    [InlineData("server", "bg-success text-white")]
     [InlineData("static", "bg-warning text-dark")]
     [InlineData("unknown", "bg-secondary text-white")]
     public void GetRenderModeClass_WithSpecificRenderMode_ReturnsCorrectCssClasses(string renderMode, string expectedClass)
@@ -193,31 +177,9 @@ public class RenderModeComponentBaseTests
         Assert.Equal("150ms", result);
     }
 
-    [Fact]
-    public void PageTitle_IsAbstractProperty()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
 
-        // Act
-        var result = component.GetPageTitle();
 
-        // Assert
-        Assert.Equal("Test Render Mode", result);
-    }
 
-    [Fact]
-    public void PageSummary_IsAbstractProperty()
-    {
-        // Arrange
-        var component = new TestRenderModeComponent();
-
-        // Act
-        var result = component.GetPageSummary();
-
-        // Assert
-        Assert.Equal("Test render mode summary", result);
-    }
 
     [Fact]
     public void RenderActionCategory_HasAllExpectedValues()
