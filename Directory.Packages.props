@@ -1,38 +1,32 @@
 <Project>
-
-    <!--Last updated package versions: April 9, 2025.-->
-  
-    <PropertyGroup>
-      <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-      <MicrosoftPackageVersion>9.0.5</MicrosoftPackageVersion>
-      <EFCoreVersion>$(MicrosoftPackageVersion)</EFCoreVersion>
-      <AspNetCoreVersion>$(MicrosoftPackageVersion)</AspNetCoreVersion>
-      <MsExtensionsVersion>$(MicrosoftPackageVersion)</MsExtensionsVersion>
-      <MsExtConfigVersion>$(MsExtensionsVersion)</MsExtConfigVersion>
-    </PropertyGroup>
-  
-    <ItemGroup Label="For EF Core 9.">
-      <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EFCoreVersion)" />
-      <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="$(EFCoreVersion)" />
-    </ItemGroup>
-  
-    <ItemGroup Label="For unit testing.">
-      <PackageVersion Include="bunit" Version="1.31.3" />
-      <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-      <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-      <PackageVersion Include="xunit" Version="2.9.3" />
-      <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
-    </ItemGroup>
-  
-    <ItemGroup Label="For Blazor.">
-      <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="$(AspNetCoreVersion)" />
-      <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="$(AspNetCoreVersion)" />
-      <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="$(AspNetCoreVersion)" />
-    </ItemGroup>
-  
-    <ItemGroup Label="For web services.">
-      <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspNetCoreVersion)" />
-      <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="$(MsExtensionsVersion)" />
-    </ItemGroup>
-  
-  </Project>
+  <!--Last updated package versions: April 9, 2025.-->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <MicrosoftPackageVersion>9.0.5</MicrosoftPackageVersion>
+    <EFCoreVersion>$(MicrosoftPackageVersion)</EFCoreVersion>
+    <AspNetCoreVersion>$(MicrosoftPackageVersion)</AspNetCoreVersion>
+    <MsExtensionsVersion>$(MicrosoftPackageVersion)</MsExtensionsVersion>
+    <MsExtConfigVersion>$(MsExtensionsVersion)</MsExtConfigVersion>
+  </PropertyGroup>
+  <ItemGroup Label="For EF Core 9.">
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EFCoreVersion)" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="$(EFCoreVersion)" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+  </ItemGroup>
+  <ItemGroup Label="For unit testing.">
+    <PackageVersion Include="bunit" Version="1.31.3" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
+  </ItemGroup>
+  <ItemGroup Label="For Blazor.">
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="$(AspNetCoreVersion)" />
+  </ItemGroup>
+  <ItemGroup Label="For web services.">
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="$(MsExtensionsVersion)" />
+  </ItemGroup>
+</Project>

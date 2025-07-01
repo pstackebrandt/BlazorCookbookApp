@@ -2,8 +2,67 @@
 
 ## Purpose
 
-Automatically discovers and displays all Blazor Cookbook recipes in a centralized overview table on the home page.
+Automatically discovers and displays all Blazor Cookbook recipes in a centralized overview table on a dedicated browse page.
 Eliminates manual maintenance by scanning source code for recipe patterns.
+
+## **🔄 ARCHITECTURAL CHANGE: HOME PAGE SEPARATION**
+
+### **New Page Structure (Planned)**
+- **Home Page (`/`)**: Project introduction, getting started, featured recipes
+- **Browse Recipes Page (`/recipes`)**: Complete recipe overview table with auto-discovery
+- **Title**: "Browse Recipes"
+
+### **Rationale**
+- **Better UX**: Separate informational content from functional tools
+- **Focused Purpose**: Home explains the project, Recipes page provides functionality  
+- **Scalability**: Recipes page can grow with search/filter features
+- **Web Conventions**: `/recipes` is intuitive and expected by users
+
+### **Implementation Impact**
+- **RecipeScanner**: Remains unchanged (core logic preserved)
+- **Home.razor**: Will be restructured for project introduction
+- **New Recipes.razor**: Will receive current overview table functionality
+- **Navigation**: Update NavMenu to include "Browse Recipes" link
+
+### **Testing Strategy for Restructuring**
+
+#### **Phase 1: Pre-Change Testing (Minimal - Core Logic Only)**
+**Goal**: Protect business logic during restructuring
+**Scope**: Test only the components that will remain unchanged
+```bash
+# Test core business logic before changes
+dotnet test --filter "RecipeScanner*"
+dotnet test --filter "*RecipeInfo*"
+dotnet test --filter "*RecipeUrlService*"
+```
+
+**Focus Areas**:
+- ✅ Recipe discovery and pattern matching
+- ✅ Summary extraction logic
+- ✅ Service registration and dependency injection
+- ✅ Data model integrity (RecipeInfo)
+
+**Skip**: Current UI components, page interactions, navigation flow
+
+#### **Phase 2: Post-Change Testing (Comprehensive)**
+**Goal**: Validate new structure works correctly
+**Scope**: Full test coverage of new architecture
+```bash
+# Test complete new structure
+dotnet test  # Full test suite
+```
+
+**Focus Areas**:
+- ✅ Browse Recipes page functionality
+- ✅ Home page introduction content
+- ✅ Navigation flow: Home → Recipes → Individual recipes
+- ✅ RecipeScanner integration with new page
+- ✅ End-to-end recipe discovery and display
+
+**Rationale**:
+- **Efficient**: Don't test UI that's being removed
+- **Safe**: Core business logic is protected
+- **Practical**: Focus effort on final structure rather than temporary states
 
 ## Intent
 
