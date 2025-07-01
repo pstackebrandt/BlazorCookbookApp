@@ -3,7 +3,6 @@
 ## Todo
 
 - [ ] T10 Update Recipe Overview Page
-- [ ] T10.1 Ensure WebAssembly demo page appears in Recipe Overview
 - [ ] T10.2 Update Recipe Overview to show clear distinction between render mode pages and demo
 - [ ] T10.3 Verify Recipe Overview integration with all Recipe4 variants
 - [ ] T10.4 Test Recipe Overview responsive layout and navigation
@@ -30,6 +29,7 @@
 
 ## Done
 
+- [x] T10.1 Ensure WebAssembly demo page appears in Recipe Overview ✅ COMPLETED
 - [x] T9.5 Update comments in all render mode files ✅ COMPLETED
 - [x] T9 Create WebAssembly Features Demo Page ✅ COMPLETED
 - [x] T9.1 Create WebAssembly Demo Page ✅ COMPLETED

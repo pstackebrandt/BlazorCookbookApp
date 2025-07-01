@@ -26,7 +26,7 @@ Eliminates manual maintenance by scanning source code for recipe patterns.
 
 ### 🔄 PENDING UPDATES
 
-- [ ] Ensure WebAssembly demo page (`/ch01r04wademo`) appears in overview
+- [x] Ensure WebAssembly demo page (`/ch01r04wademo`) appears in overview ✅ COMPLETED
 - [ ] Update Recipe Overview to show clear distinction between render mode pages and demo
 - [ ] Verify Recipe Overview integration with all Recipe4 variants
 - [ ] Test Recipe Overview responsive layout and navigation
@@ -184,11 +184,11 @@ Each table row includes both:
 
 ## Pending Tasks (T10 Series)
 
-### T10.1: WebAssembly Demo Integration
+### T10.1: WebAssembly Demo Integration ✅ COMPLETED
 
-- Ensure `/ch01r04wademo` appears in Recipe Overview
-- Verify proper variant detection for "wademo" suffix
-- Test navigation to demo page from overview
+- [x] Ensure `/ch01r04wademo` appears in Recipe Overview
+- [x] Verify proper variant detection for "wademo" suffix  
+- [x] Test navigation to demo page from overview
 
 ### T10.2: Render Mode Distinction
 
@@ -214,6 +214,7 @@ Each table row includes both:
 
 ## Future Enhancements
 
+### **Phase 1: Current System Improvements**
 - **Caching**: Store results to avoid rescanning unchanged files
 - **File Watching**: Auto-refresh when files change
 - **Filtering**: Search/filter recipes by chapter or keyword
@@ -221,14 +222,23 @@ Each table row includes both:
 - **Validation**: Verify recipe routes actually work
 - **Visual Grouping**: Special handling for render mode demonstrations
 
+### **Phase 2: Enhanced Table Structure (From Enhancement Plan)**
+- **Separate Name/Summary Columns**: `Chapter | Recipe | Name | Action | Location | Summary | Variant`
+- **RECIPE_TITLE/RECIPE_SUMMARY Constants**: Extract metadata from Razor constants instead of H1 tags
+- **Responsive Truncation**: Smart summary truncation (50 chars mobile, 80 chars tablet)
+- **Enhanced RecipeScanner**: Parse constants with regex patterns:
+  ```csharp
+  private const string RECIPE_TITLE = "Render modes";
+  private const string RECIPE_SUMMARY = "Client-side rendering with WebAssembly download";
+  ```
+
+### **Phase 3: Advanced Features**
+- **Content Audit System**: Comprehensive name/summary standardization across all recipes
+- **Recipe Metadata Validation**: Ensure all recipes have proper RECIPE_TITLE/RECIPE_SUMMARY
+- **Enhanced Mobile Experience**: Expandable summaries, touch-friendly navigation
+- **Recipe Categories**: Group by topics beyond just chapters
+
 ## Files Involved
 
 ### Existing Files
-1. `Services/RecipeInfo.cs` - Model class
-2. `Services/RecipeScanner.cs` - Scanner service  
-3. `Program.cs` - Service registration
-4. `Components/Pages/Home.razor` - Recipe overview display
-5. `wwwroot/app.css` - Table styling
-
-### Documentation Files
-- This document: `docs/Recipe-Overview-Plan.md` - Comprehensive plan and architecture
+1. `
