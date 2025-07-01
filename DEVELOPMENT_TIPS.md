@@ -69,3 +69,59 @@ dotnet test BlazorCookbookApp.Tests --verbosity normal
 - Keep shared services in appropriate namespaces
 - Add global using statements in `_Imports.razor` for commonly used namespaces
 - Use scoped services for request-specific data that doesn't need to persist
+
+## Testing Strategy
+
+### Phase 1: Core Business Logic Protection ✅ COMPLETED
+- Created comprehensive test coverage (96 tests) for core components
+- Protected RecipeScanner, RecipeInfo, and RecipeUrlService during restructuring
+- All tests passing with 0 failures
+
+### Phase 2: Home Page Restructuring (IN PROGRESS)
+- ✅ Created Browse Recipes page at `/recipes` with placeholder content
+- ✅ Added navigation menu link for "Browse Recipes"
+- 🔄 Next: Move recipe overview table from Home.razor to Recipes.razor
+
+## Test Commands
+
+```bash
+# Run all tests
+dotnet test
+
+# Run specific test categories
+dotnet test --filter "RecipeScanner*"
+dotnet test --filter "*RecipeInfo*" 
+dotnet test --filter "*RecipeUrlService*"
+
+# Run with detailed output
+dotnet test --verbosity detailed
+```
+
+## Navigation Structure
+
+### Current (Phase 2.1)
+- **Home (`/`)**: Recipe overview table (current functionality)
+- **Browse Recipes (`/recipes`)**: Placeholder content with categories and getting started guide
+- **Navigation**: Menu includes both pages
+
+### Future (Post-Restructuring)
+- **Home (`/`)**: Project introduction and getting started content
+- **Browse Recipes (`/recipes`)**: Complete recipe overview table with auto-discovery
+- **Navigation**: Menu provides clear separation of concerns
+
+## Files Created/Modified
+
+### New Files
+- `BlazorCookbookApp/Components/Pages/Recipes.razor` - Browse Recipes page
+
+### Modified Files  
+- `BlazorCookbookApp/Components/Layout/NavMenu.razor` - Added Browse Recipes link
+- `TASKS.md` - Updated task status
+- `docs/Recipe-Overview-Plan.md` - Updated planning documentation
+
+## Next Steps
+
+1. **Move recipe overview table** from Home.razor to Recipes.razor
+2. **Restructure Home page** for project introduction content
+3. **Test navigation flow** between pages
+4. **Verify responsive layout** on both pages

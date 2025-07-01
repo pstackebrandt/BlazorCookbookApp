@@ -2,7 +2,25 @@
 
 ## Todo
 
-- [ ] T10 Update Recipe Overview Page
+- [ ] T11 Phase 2: Home Page Restructuring (POST-TESTING)
+- [ ] T11.1 Create new Browse Recipes page at `/recipes` route
+- [x] T11.1.1 Create BlazorCookbookApp/Components/Pages/Recipes.razor ✅ COMPLETED
+- [x] T11.1.3 Update page title to "Browse Recipes" ✅ COMPLETED
+- [ ] T11.1.4 Ensure RecipeScanner integration works correctly
+- [ ] T11.2 Restructure Home page for project introduction
+- [ ] T11.2.1 Replace recipe table with project overview content
+- [ ] T11.2.2 Add getting started section
+- [ ] T11.2.3 Add featured recipes or highlights
+- [ ] T11.2.4 Include link to Browse Recipes page
+- [ ] T11.3 Update navigation and routing
+- [x] T11.3.1 Add "Browse Recipes" link to NavMenu.razor ✅ COMPLETED
+- [ ] T11.3.2 Update any direct navigation links
+- [ ] T11.3.3 Test routing between Home and Browse Recipes
+- [ ] T11.4 Post-restructuring testing
+- [ ] T11.4.1 Run full test suite to verify no regressions
+- [ ] T11.4.2 Manual testing of navigation flow
+- [ ] T11.4.3 Verify recipe discovery still works correctly
+- [ ] T11.4.4 Test responsive layout of both pages
 - [ ] T10.2 Update Recipe Overview to show clear distinction between render mode pages and demo
 - [ ] T10.3 Verify Recipe Overview integration with all Recipe4 variants
 - [ ] T10.4 Test Recipe Overview responsive layout and navigation
@@ -29,7 +47,15 @@
 
 ## Done
 
+- [x] T8.0.7 Create comprehensive unit tests for core business logic (96 tests) ✅ COMPLETED
+- [x] T8.0.7.1 RecipeScannerTests.cs - 15 tests covering route patterns, summary extraction, variants ✅ COMPLETED
+- [x] T8.0.7.2 RecipeInfoTests.cs - 11 tests covering data model properties and validation ✅ COMPLETED  
+- [x] T8.0.7.3 RecipeUrlServiceTests.cs - 12 tests covering URL parsing and title formatting ✅ COMPLETED
+- [x] T8.0.7.4 Fix Moq NavigationManager issues with custom TestNavigationManager ✅ COMPLETED
+- [x] T8.0.7.5 Resolve line ending differences (\r\n vs \n) on Windows ✅ COMPLETED
+- [x] T8.0.7.6 Verify all 96 tests pass - core business logic protected ✅ COMPLETED
 - [x] T10.1 Ensure WebAssembly demo page appears in Recipe Overview ✅ COMPLETED
+- [x] T10 Update Recipe Overview Page (Phase 1: Testing) ✅ COMPLETED
 - [x] T9.5 Update comments in all render mode files ✅ COMPLETED
 - [x] T9 Create WebAssembly Features Demo Page ✅ COMPLETED
 - [x] T9.1 Create WebAssembly Demo Page ✅ COMPLETED

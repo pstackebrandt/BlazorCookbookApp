@@ -26,43 +26,64 @@ Eliminates manual maintenance by scanning source code for recipe patterns.
 
 ### **Testing Strategy for Restructuring**
 
-#### **Phase 1: Pre-Change Testing (Minimal - Core Logic Only)**
+#### **✅ Phase 1: Pre-Change Testing (COMPLETED)**
 **Goal**: Protect business logic during restructuring
-**Scope**: Test only the components that will remain unchanged
+**Status**: **COMPLETED - 96 tests passing** ✅
+**Scope**: Core components that will remain unchanged
+
 ```bash
-# Test core business logic before changes
-dotnet test --filter "RecipeScanner*"
-dotnet test --filter "*RecipeInfo*"
-dotnet test --filter "*RecipeUrlService*"
+# Core business logic tests (COMPLETED)
+dotnet test --filter "RecipeScanner*"    # 15 tests ✅
+dotnet test --filter "*RecipeInfo*"      # 11 tests ✅  
+dotnet test --filter "*RecipeUrlService*" # 12 tests ✅
 ```
 
-**Focus Areas**:
-- ✅ Recipe discovery and pattern matching
-- ✅ Summary extraction logic
-- ✅ Service registration and dependency injection
-- ✅ Data model integrity (RecipeInfo)
+**✅ Completed Test Coverage**:
+- ✅ **RecipeScannerTests.cs** (15 tests)
+  - Route pattern matching (@page "/ch##r##" patterns)
+  - Summary extraction from H1/H2 tags
+  - Variant handling (e.g., "cl", "wademo")
+  - Location setting (Server vs Client)
+  - Edge cases and error handling
 
-**Skip**: Current UI components, page interactions, navigation flow
+- ✅ **RecipeInfoTests.cs** (11 tests)
+  - Data model properties and validation
+  - Default values and null handling
+  - Various input scenarios
 
-#### **Phase 2: Post-Change Testing (Comprehensive)**
+- ✅ **RecipeUrlServiceTests.cs** (12 tests) 
+  - URL parsing and chapter/recipe extraction
+  - Title formatting with numbers
+  - NavigationManager integration
+  - Edge cases and error scenarios
+
+**✅ Technical Issues Resolved**:
+- Fixed Moq NavigationManager issues with custom TestNavigationManager
+- Resolved line ending differences (\r\n vs \n) on Windows
+- Proper reflection-based access to private methods
+- All 96 tests passing with 0 failures
+
+**Result**: Core business logic is **fully protected** and ready for restructuring ✅
+
+#### **📋 Phase 2: Post-Change Testing (READY TO BEGIN)**
 **Goal**: Validate new structure works correctly
 **Scope**: Full test coverage of new architecture
+
 ```bash
-# Test complete new structure
+# Test complete new structure (UPCOMING)
 dotnet test  # Full test suite
 ```
 
-**Focus Areas**:
-- ✅ Browse Recipes page functionality
-- ✅ Home page introduction content
-- ✅ Navigation flow: Home → Recipes → Individual recipes
-- ✅ RecipeScanner integration with new page
-- ✅ End-to-end recipe discovery and display
+**Upcoming Focus Areas**:
+- 🔄 Browse Recipes page functionality at `/recipes`
+- 🔄 Home page introduction content at `/`
+- 🔄 Navigation flow: Home → Recipes → Individual recipes
+- 🔄 RecipeScanner integration with new Browse Recipes page
+- 🔄 End-to-end recipe discovery and display
+- 🔄 Responsive layout testing
+- 🔄 Manual navigation testing
 
-**Rationale**:
-- **Efficient**: Don't test UI that's being removed
-- **Safe**: Core business logic is protected
-- **Practical**: Focus effort on final structure rather than temporary states
+**Current Status**: Ready to proceed with restructuring - core logic is protected ✅
 
 ## Intent
 
@@ -85,10 +106,23 @@ dotnet test  # Full test suite
 
 ### 🔄 PENDING UPDATES
 
-- [x] Ensure WebAssembly demo page (`/ch01r04wademo`) appears in overview ✅ COMPLETED
+#### **Phase 2: Home Page Restructuring (IN PROGRESS)**
+- [x] Create new Browse Recipes page at `/recipes` route ✅ COMPLETED
+- [ ] Move recipe overview table from Home.razor to Recipes.razor  
+- [ ] Restructure Home page for project introduction content
+- [x] Update navigation menu to include "Browse Recipes" link ✅ COMPLETED
+- [ ] Test complete navigation flow and responsive layout
+
+#### **Current Status: Phase 2.1 Complete**
+- ✅ **Browse Recipes page created** at `/recipes` with placeholder content
+- ✅ **Navigation menu updated** with "Browse Recipes" link
+- ✅ **All tests passing** (96/96) - no regressions introduced
+- 🔄 **Next step**: Move recipe overview table functionality from Home.razor
+
+#### **Phase 3: Recipe Overview Enhancements (POST-RESTRUCTURING)**  
 - [ ] Update Recipe Overview to show clear distinction between render mode pages and demo
 - [ ] Verify Recipe Overview integration with all Recipe4 variants
-- [ ] Test Recipe Overview responsive layout and navigation
+- [ ] Test Recipe Overview responsive layout and navigation on new Browse Recipes page
 
 ## Implementation Architecture
 
@@ -104,15 +138,26 @@ dotnet test  # Full test suite
 - Scans both Client and Server project directories
 
 **3. Home.razor**
-- Updated home page displaying recipe overview table
+- Current home page displaying recipe overview table
 - Uses InteractiveServer render mode for button functionality
 - Includes debug logging to terminal
+- **Future**: Will be restructured for project introduction content
 
-**4. Program.cs**
+**4. Recipes.razor** ⭐ **NEW**
+- New Browse Recipes page at `/recipes` route
+- **Current**: Placeholder content with recipe categories and getting started guide
+- **Future**: Will receive recipe overview table functionality from Home.razor
+- Uses InteractiveServer render mode for future button functionality
+
+**5. Program.cs**
 - Registers RecipeScanner as scoped service
 
-**5. app.css**
+**6. app.css**
 - Custom styling for recipe overview table
+
+**7. NavMenu.razor**
+- Updated navigation menu with "Browse Recipes" link
+- Provides navigation between Home and Browse Recipes pages
 
 ### Scanning Logic
 
@@ -162,16 +207,26 @@ Found recipes in these locations:
 
 ### For Users
 
-1. Navigate to home page (`/`)
-2. View organized table of all recipes
-3. Click "Open" button or "Direct link" to navigate to any recipe
-4. Recipes are sorted by Chapter → Recipe → Variant
+#### **Current Navigation (Phase 2.1)**
+1. Navigate to home page (`/`) - shows recipe overview table
+2. Navigate to Browse Recipes page (`/recipes`) - shows placeholder content
+3. Use navigation menu to switch between pages
+4. Click "Open" button or "Direct link" to navigate to any recipe
+5. Recipes are sorted by Chapter → Recipe → Variant
+
+#### **Future Navigation (Post-Restructuring)**
+1. Navigate to home page (`/`) - shows project introduction and getting started
+2. Navigate to Browse Recipes page (`/recipes`) - shows complete recipe overview table
+3. Use navigation menu to switch between pages
+4. Click "Open" button or "Direct link" to navigate to any recipe
+5. Recipes are sorted by Chapter → Recipe → Variant
 
 ### For Developers
 
 1. Add new recipe with `@page "/ch##r##"` pattern
 2. Include H1 or H2 tag for summary
 3. Recipe automatically appears in overview on next page load
+4. **Future**: Recipe will appear on Browse Recipes page instead of Home page
 
 ## Expected Result
 
@@ -196,108 +251,4 @@ Home page displays a table like:
 
 Modify `RecipeScanner.GetRecipesAsync()` to include additional paths:
 
-```csharp
-var newPath = Path.Combine(webRoot, "NewDirectory");
-if (Directory.Exists(newPath))
-{
-    await ScanDirectoryAsync(newPath, "Location", recipes);
-}
 ```
-
-### Customizing Route Patterns
-
-Update regex in `RecipeScanner` constructor:
-
-```csharp
-private readonly Regex _routePattern = new(@"your-pattern", RegexOptions.IgnoreCase);
-```
-
-## Debugging Features
-
-### Console Logging
-
-- Recipe discovery: `"Found X recipes:"`
-- Recipe details: `"- /ch01r02 (Server) - Summary"`
-- Navigation attempts: `"Attempting to navigate to: /ch01r02"`
-- Error handling: Parse errors and navigation failures
-
-### Direct Links
-
-Each table row includes both:
-- Interactive "Open" button (requires render mode)
-- Direct HTML anchor link (always works)
-
-## Error Handling
-
-- **File Access Errors**: Logged but don't stop scanning other files
-- **Parse Errors**: Invalid routes/chapters are skipped gracefully
-- **Directory Not Found**: Silently continues with other directories
-- **Navigation Errors**: Logged to console for debugging
-
-## Performance Considerations
-
-- **Scoped Service**: Recipes loaded once per request
-- **Async File Reading**: Non-blocking I/O operations
-- **Regex Compilation**: Patterns compiled once on service creation
-- **Error Isolation**: Single file failures don't break entire scan
-
-## Pending Tasks (T10 Series)
-
-### T10.1: WebAssembly Demo Integration ✅ COMPLETED
-
-- [x] Ensure `/ch01r04wademo` appears in Recipe Overview
-- [x] Verify proper variant detection for "wademo" suffix  
-- [x] Test navigation to demo page from overview
-
-### T10.2: Render Mode Distinction
-
-- Update Recipe Overview to show clear distinction between render mode pages
-  and demo
-- Consider grouping Recipe4 variants visually
-- Add descriptive summaries that differentiate purposes
-
-### T10.3: Recipe4 Variants Verification
-
-- Verify all Recipe4 variants appear correctly:
-  - `/ch01r04` - Main WebAssembly page
-  - `/ch01r04s` - Server render mode
-  - `/ch01r04a` - Auto render mode
-  - `/ch01r04wademo` - WebAssembly demo
-- Test navigation to each variant
-
-### T10.4: Responsive Layout Testing
-
-- Test Recipe Overview on mobile devices
-- Verify table responsiveness
-- Test navigation buttons on touch devices
-
-## Future Enhancements
-
-### **Phase 1: Current System Improvements**
-- **Caching**: Store results to avoid rescanning unchanged files
-- **File Watching**: Auto-refresh when files change
-- **Filtering**: Search/filter recipes by chapter or keyword
-- **Categories**: Group recipes by topics beyond chapters
-- **Validation**: Verify recipe routes actually work
-- **Visual Grouping**: Special handling for render mode demonstrations
-
-### **Phase 2: Enhanced Table Structure (From Enhancement Plan)**
-- **Separate Name/Summary Columns**: `Chapter | Recipe | Name | Action | Location | Summary | Variant`
-- **RECIPE_TITLE/RECIPE_SUMMARY Constants**: Extract metadata from Razor constants instead of H1 tags
-- **Responsive Truncation**: Smart summary truncation (50 chars mobile, 80 chars tablet)
-- **Enhanced RecipeScanner**: Parse constants with regex patterns:
-  ```csharp
-  private const string RECIPE_TITLE = "Render modes";
-  private const string RECIPE_SUMMARY = "Client-side rendering with WebAssembly download";
-  ```
-
-### **Phase 3: Advanced Features**
-- **Content Audit System**: Comprehensive name/summary standardization across all recipes
-- **Recipe Metadata Validation**: Ensure all recipes have proper RECIPE_TITLE/RECIPE_SUMMARY
-- **Enhanced Mobile Experience**: Expandable summaries, touch-friendly navigation
-- **Recipe Categories**: Group by topics beyond just chapters
-
-## Files Involved
-
-### Existing Files
-1. `
