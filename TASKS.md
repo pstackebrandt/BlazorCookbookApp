@@ -2,7 +2,11 @@
 
 ## Todo
 
-
+- [ ] T10 Update Recipe Overview Page
+- [ ] T10.1 Ensure WebAssembly demo page appears in Recipe Overview
+- [ ] T10.2 Update Recipe Overview to show clear distinction between render mode pages and demo
+- [ ] T10.3 Verify Recipe Overview integration with all Recipe4 variants
+- [ ] T10.4 Test Recipe Overview responsive layout and navigation
 - [ ] T8 Optimize render mode pages by reducing code duplication
 - [ ] T8.1 Phase 1: Extract common logic into base class
 - [ ] T8.1.1 Create RenderModeComponentBase with common fields and methods
@@ -21,17 +25,12 @@
 - [ ] T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED: requires persistence]
 - [ ] T7.3 Add WebAssembly download progress indication [BLOCKED: requires persistence]
 - [ ] T7.2 Implement first-visit vs subsequent-visit behavior tracking [BLOCKED: requires persistence]
-- [ ] T6 Create Recipe4 Server vs Client comparison implementation
-- [ ] T6.2 Update client version with authentic state tracking and distinct page title
-- [ ] T6.3 Create comparison page with responsive layout (/ch01r04c)
-- [ ] T6.7 Test Recipe Overview integration for all three versions
-- [ ] T6.8 Test mobile responsiveness and stacked layout
-- [ ] T6.9 Validate educational value with authentic behavior
 
 ## In Progress
 
 ## Done
 
+- [x] T9.5 Update comments in all render mode files ✅ COMPLETED
 - [x] T9 Create WebAssembly Features Demo Page ✅ COMPLETED
 - [x] T9.1 Create WebAssembly Demo Page ✅ COMPLETED
 - [x] T9.1.1 Create WebAssemblyDemo.razor with interactive features ✅ COMPLETED
@@ -103,6 +102,15 @@
 - [x] T1 Optimize page Rendermodes ch1r4
 - [x] T1.1 Make better visible what the page is about
 - [x] T1.2 Separate render mode detection from the page title
+
+## Deferred
+
+- [ ] T6 Create Recipe4 Server vs Client comparison implementation [DEFERRED: Not current priority]
+- [ ] T6.2 Update client version with authentic state tracking and distinct page title [DEFERRED]
+- [ ] T6.3 Create comparison page with responsive layout (/ch01r04c) [DEFERRED]
+- [ ] T6.7 Test Recipe Overview integration for all three versions [DEFERRED]
+- [ ] T6.8 Test mobile responsiveness and stacked layout [DEFERRED]
+- [ ] T6.9 Validate educational value with authentic behavior [DEFERRED]
 
 ## Notes
 

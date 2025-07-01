@@ -6,23 +6,32 @@
 
 Our color system follows a clear visual hierarchy based on relevance and state significance:
 
-- 🟢 **Green** (`bg-success`): **Current results** - Active states, positive status, successful operations, current phase indicators
-  - Examples: Interactive: True, Current Phase: "Client-side processing", successful operations
+- 🟢 **Green** (`bg-success`): **Current results** - Active states, positive
+  status, successful operations, current phase indicators
+  - Examples: Interactive: True, Current Phase: "Client-side processing",
+    successful operations
   - Meaning: This is the current, expected, successful state
 
-- 🟡 **Yellow** (`bg-warning`): **Previous/Temporary states** - Historical states, transitions, temporary but relevant information
-  - Examples: Previous render modes (Static¹), transitional phases, temporary status indicators
+- 🟡 **Yellow** (`bg-warning`): **Previous/Temporary states** - Historical
+  states, transitions, temporary but relevant information
+  - Examples: Previous render modes (Static¹), transitional phases,
+    temporary status indicators
   - Meaning: This was relevant in the past or is temporarily significant
 
-- ⚫ **Gray** (`bg-secondary`): **Specific but less relevant** - Technical details, measurements, metadata that's noteworthy but not primary
-  - Examples: Timing information, assigned render modes, duration badges, technical specifications
-  - Meaning: More noteworthy than common text, but supporting information rather than primary status
+- ⚫ **Gray** (`bg-secondary`): **Specific but less relevant** - Technical
+  details, measurements, metadata that's noteworthy but not primary
+  - Examples: Timing information, assigned render modes, duration badges,
+    technical specifications
+  - Meaning: More noteworthy than common text, but supporting information
+    rather than primary status
 
-- 🔵 **Blue** (`bg-primary`): **Reserved for future use** - Available for special categorization as needs arise
+- 🔵 **Blue** (`bg-primary`): **Reserved for future use** - Available for
+  special categorization as needs arise
   - Currently unused - reserved for future semantic needs
   - Meaning: To be determined based on application requirements
 
-- 🔴 **Red** (`bg-danger`): **Errors and failures** - Error states, failures, critical issues (when needed)
+- 🔴 **Red** (`bg-danger`): **Errors and failures** - Error states,
+  failures, critical issues (when needed)
   - Examples: Error messages, failed operations, critical warnings
   - Meaning: Something went wrong or requires immediate attention
 
@@ -30,7 +39,7 @@ Our color system follows a clear visual hierarchy based on relevance and state s
 
 **Decision Framework**: When choosing badge colors, ask:
 1. **Is this the current, active state?** → 🟢 **Green**
-2. **Is this previous/historical but relevant?** → 🟡 **Yellow** 
+2. **Is this previous/historical but relevant?** → 🟡 **Yellow**
 3. **Is this technical detail/metadata?** → ⚫ **Gray**
 4. **Is this an error/failure?** → 🔴 **Red**
 5. **Special case requiring future categorization?** → 🔵 **Blue** (reserved)

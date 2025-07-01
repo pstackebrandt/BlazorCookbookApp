@@ -181,4 +181,5 @@ private string GetTimingDisplay()
 ---
 
 **This principle revolutionizes Blazor education by showing authentic behavior
-instead of artificial simulations, enabling real learning and debugging skills.**
+instead of artificial simulations, enabling real learning and debugging
+skills.**
