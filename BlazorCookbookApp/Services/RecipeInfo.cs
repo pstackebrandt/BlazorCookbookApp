@@ -27,6 +27,9 @@ public class RecipeInfo
     /// <summary>Recipe description extracted from PageSummary property</summary>
     public string Summary { get; set; } = string.Empty;
     
+    /// <summary>Star rating for the recipe (1-5 stars, where 4+ stars are featured)</summary>
+    public int Stars { get; set; } = 3;
+    
     /// <summary>Full file path to the .razor file</summary>
     public string FilePath { get; set; } = string.Empty;
 } 

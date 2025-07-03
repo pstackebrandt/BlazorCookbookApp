@@ -2,9 +2,6 @@
 
 ## Todo
 
-- [ ] T10.2 Phase 3: Recipe Overview Enhancements
-- [ ] T10.2.4 Step 4: Update Documentation (concise)
-
 - [ ] T12 Overview Page Structural and Optical Improvements
 - [ ] T12.2 Implement structural improvements for better data display
 - [ ] T12.2.1 Add summary truncation for long text
@@ -40,6 +37,20 @@
 
 ## Done
 
+- [x] T10.2.4 Step 4: Update Documentation (concise) ✅ COMPLETED
+- [x] T10.2 Phase 3: Recipe Overview Enhancements ✅ COMPLETED
+- [x] T13.8 Update RecipeScannerTests for property-based extraction ✅ COMPLETED
+- [x] T13.7 Test featured section functionality ✅ COMPLETED
+- [x] T13.6 Update RecipeInfo model to include Stars field ✅ COMPLETED
+- [x] T13.5 Implement star display formatting (★★★★☆) ✅ COMPLETED
+- [x] T13.4 Add Stars column to main recipe table ✅ COMPLETED
+- [x] T13.3 Create featured recipes section component ✅ COMPLETED
+- [x] T13.2 Update RecipeScanner to extract PageStars property ✅ COMPLETED
+- [x] T13.1.3 Add PageStars property to remaining recipes (3 stars default) ✅ COMPLETED
+- [x] T13.1.2 Add PageStars property to WebAssembly demo (4 stars) ✅ COMPLETED
+- [x] T13.1.1 Add PageStars property to Recipe4 variants (5 stars each) ✅ COMPLETED
+- [x] T13.1 Add PageStars property to all recipe pages ✅ COMPLETED
+- [x] T13 Implement star rating system for recipe prioritization ✅ COMPLETED
 - [x] T10.2.2 Step 2: Test Recipe Overview Integration (automatic) ✅ COMPLETED
 - [x] T10.2.1.4 Update WebAssembly Demo page title to "WebAssembly Demo: Features Showcase" ✅ COMPLETED
 - [x] T10.2.1.3 Update Auto page title to "Auto: Adaptive Server-to-Client" ✅ COMPLETED

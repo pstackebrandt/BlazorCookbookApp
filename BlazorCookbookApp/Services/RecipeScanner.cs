@@ -18,6 +18,9 @@ public class RecipeScanner
     
     // Extract PageSummary property (both public and protected override patterns)
     private readonly Regex _pageSummaryPattern = new(@"(?:public\s+string\s+PageSummary\s*\{\s*get;\s*set;\s*\}\s*=\s*""([^""]*)""|protected\s+override\s+string\s+PageSummary\s*=>\s*""([^""]*)""\s*;)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+    
+    // Extract PageStars property (both public and protected override patterns)
+    private readonly Regex _pageStarsPattern = new(@"(?:public\s+int\s+PageStars\s*\{\s*get;\s*set;\s*\}\s*=\s*(\d+)|protected\s+override\s+int\s+PageStars\s*=>\s*(\d+)\s*;)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
     public RecipeScanner(IWebHostEnvironment environment)
     {
@@ -115,6 +118,7 @@ public class RecipeScanner
 
         var title = ExtractPageTitle(content);
         var summary = ExtractPageSummary(content);
+        var stars = ExtractPageStars(content);
         var filename = Path.GetFileNameWithoutExtension(filePath);
 
         return new RecipeInfo
@@ -126,6 +130,7 @@ public class RecipeScanner
             Location = location,
             Title = title,
             Summary = summary,
+            Stars = stars,
             FilePath = filename
         };
     }
@@ -170,5 +175,30 @@ public class RecipeScanner
         }
 
         return "unknown";
+    }
+
+    /// <summary>
+    /// Extracts recipe star rating from PageStars property.
+    /// Returns 3 (default) if property not found.
+    /// </summary>
+    private int ExtractPageStars(string content)
+    {
+        var match = _pageStarsPattern.Match(content);
+        if (match.Success)
+        {
+            // Check both capture groups (public property and protected override)
+            var starsStr = match.Groups[1].Value.Trim();
+            if (string.IsNullOrEmpty(starsStr))
+            {
+                starsStr = match.Groups[2].Value.Trim();
+            }
+            
+            if (int.TryParse(starsStr, out var stars) && stars >= 1 && stars <= 5)
+            {
+                return stars;
+            }
+        }
+
+        return 3; // Default 3 stars if not found or invalid
     }
 } 

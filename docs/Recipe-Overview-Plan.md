@@ -97,115 +97,54 @@ dotnet test  # Full test suite
 ### ✅ COMPLETED FEATURES
 
 - ✅ Automatic scanning of .razor files for @page patterns
-- ✅ Extract summaries from H1 headers in recipe files
+- ✅ Extract titles and summaries from PageTitle/PageSummary properties
 - ✅ Direct navigation to recipe pages on click
 - ✅ Include non-standard patterns (like /ch01r03cl)
 - ✅ Display as structured table format
 - ✅ Show Client vs Server project location
-- ✅ Simple implementation for quick results
+- ✅ Star rating system with featured recipes section
+- ✅ Property-based extraction (no fallback to H1/H2)
+- ✅ Comprehensive test coverage (104 tests passing)
 
-### 🔄 PENDING UPDATES
+### 🔄 NEXT PRIORITIES
 
-#### **Phase 2: Home Page Restructuring (COMPLETED)**
-- [x] Create new Browse Recipes page at `/recipes` route ✅ COMPLETED
-- [x] Move recipe overview table from Home.razor to Recipes.razor ✅ COMPLETED
-- [x] Restructure Home page for project introduction content ✅ COMPLETED
-- [x] Update navigation menu to include "Browse Recipes" link ✅ COMPLETED
-- [x] Test complete navigation flow and responsive layout ✅ COMPLETED
+#### **Phase 6: Overview Page Enhancements (READY TO BEGIN)**
+**Current Status**: Star rating system complete, ready for structural improvements
 
-#### **Current Status: Phase 2 Complete**
-- ✅ **Browse Recipes page created** at `/recipes` with full recipe overview table
-- ✅ **Home page restructured** with project introduction and getting started content
-- ✅ **Navigation menu updated** with "Browse Recipes" link
-- ✅ **All tests passing** (96/96) - no regressions introduced
-- ✅ **RecipeScanner integration verified** - functionality moved successfully
-- ✅ **UI improvements completed** - removed Coming Soon alert and direct links
-- 🔄 **Next step**: Manual testing and responsive layout verification
+**Next Steps**:
+1. **T12.2.1** Summary truncation for long text
+2. **T12.2.2** Responsive table design for mobile
+3. **T12.2.3** Basic sorting functionality (Chapter/Recipe/Location)
+4. **T12.2.4** Search/filter functionality
+5. **T12.2.5.5** Responsive column priority (mobile/tablet/desktop)
+6. **T12.3.3** Optimize table spacing and visual hierarchy
 
-#### **Phase 3: Recipe Overview Enhancements (POST-RESTRUCTURING)**
-**Goal**: Improve recipe overview clarity and user experience with better titles and distinctions
+#### **✅ COMPLETED PHASES**
 
-**Current Recipe4 Variants Analysis**:
-- `/ch01r04` - WebAssembly render mode (Client) - "Render mode InteractiveWebAssembly"
-- `/ch01r04s` - Server render mode (Server) - "Render mode InteractiveServer"
-- `/ch01r04a` - Auto render mode (Client) - "Render mode InteractiveAuto"
-- `/ch01r04wademo` - WebAssembly Features Demo (Client) - "Interactive WebAssembly Features Demo"
+**Phase 2: Home Page Restructuring (✅ COMPLETED)**
+- Browse Recipes page created at `/recipes` with full recipe overview table
+- Home page restructured with project introduction and getting started content
+- Navigation menu updated with "Browse Recipes" link
+- All tests passing - no regressions introduced
 
-**Issues to Address**:
-1. **Poor Distinction**: All render mode pages have similar titles that don't clearly explain their purpose
-2. **Demo Confusion**: The WebAssembly demo page purpose isn't clear from the title
-3. **Missing Context**: Users can't easily understand the differences between render modes
+**Phase 3: Recipe Overview Enhancements (✅ COMPLETED)**
+- All recipe pages now have PageTitle and PageSummary properties
+- RecipeScanner updated to extract from properties only (no H1/H2 fallback)
+- Column structure enhanced: Chapter | Recipe | Title | Action | Summary | Location | Stars | Filename
+- Property-based extraction shows "unknown" for missing properties
 
-**Step-by-Step Enhancement Plan**:
+**Phase 4: Property Implementation (✅ COMPLETED)**
+- PageTitle and PageSummary properties added to all 10 recipe pages
+- Descriptive titles and summaries for better user experience
+- Recipe4 variants have clear distinctions between render modes vs demo
 
-**Step 1: Improve Recipe4 Titles and Summaries**
-this is done!
-- Update PageTitle and PageSummary properties in all Recipe4 variants
-- Make titles more descriptive and user-friendly (shorter versions recommended)
-- Add clear distinctions between render modes vs demo
-- **Recommended Titles**:
-  - WebAssembly: "WebAssembly: Client-side Processing"
-  - Server: "Server: Server-side Processing"
-  - Auto: "Auto: Adaptive Server-to-Client"
-  - Demo: "WebAssembly Demo: Features Showcase"
-- **Expected Result**: Clear, descriptive titles that explain each page's purpose
+**Phase 5: Star Rating System (✅ COMPLETED)**
+- Star rating system (1-5 stars) with developer-controlled assignments
+- Featured recipes section for 4+ star recipes
+- Visual star display (★★★★☆) in main recipe table
+- Comprehensive test coverage (104 tests passing)
 
-**Step 2: Test Recipe Overview Integration**
-- Run tests to ensure RecipeScanner still works with updated titles
-- Verify the overview table displays improved information
-- Check that all Recipe4 variants appear correctly
-- **Expected Result**: All tests pass, overview table shows improved information
-
-**Step 3: Manual Testing and Responsive Layout**
-- Test navigation flow between Home → Browse Recipes → Individual recipes
-- Verify responsive layout on different screen sizes
-- Test all Recipe4 variants work correctly
-- **Expected Result**: Smooth navigation and responsive design
-
-**Step 4: Update Documentation**
-- Update planning docs to reflect Phase 3 completion
-- Document the improved recipe overview experience
-- **Expected Result**: Complete documentation of enhancements
-
-**Current Status**: ✅ **Phase 3 COMPLETED** - Recipe4 titles improved and tested
-
-**T12.2.5.1 & T12.2.5.2 Status**: ✅ **COMPLETED** - All recipe pages now have PageTitle and PageSummary properties
-
-**Pages Updated with Properties**:
-- Recipe2: "Simple Offer Page" / "Demonstrates basic component usage with simple Ticket component"
-- Recipe3: "Components in Server Project" / "Shows component usage with WebAssembly render mode in server project"  
-- Recipe3cl: "Components in Client Project" / "Demonstrates component parameters and event handling in client project"
-- Recipe5: "Required Component Parameters" / "Ensures component parameters are required at compile time using warnings as errors"
-- Recipe6: "Cascading Parameters" / "Demonstrates cascading values to pass data to child components automatically"
-- Recipe7: "Customizable Component Content" / "Shows how to create components with customizable content using RenderFragment"
-- WebAssemblyDemo: "WebAssembly Demo: Features Showcase" / "Hands-on demonstration of WebAssembly capabilities with instant local processing"
-
-**New Column Structure (Planned)**:
-| Chapter | Recipe | Title             | Action | Summary                      | Location | Filename    |
-| ------- | ------ | ----------------- | ------ | ---------------------------- | -------- | ----------- |
-| 1       | 2      | Simple Offer Page | [Open] | Uses simple Ticket component | Server   | Offer       |
-| 1       | 4      | WebAssembly Mode  | [Open] | Client-side processing demo  | Client   | Offer       |
-| 1       | 4      | unknown           | [Open] | unknown                      | Server   | OfferServer |
-
-**Scanner Behavior**:
-- Extract **only** `PageTitle` and `PageSummary` properties from recipe pages
-- Show "unknown" if properties are missing (indicates need to add them)
-- No fallback to H1/H2 extraction
-- Filename shows name without extension or path (e.g., "Offer", "OfferServer")
-
-**Property Format**:
-```csharp
-public string PageTitle { get; set; } = "My Recipe Title";
-public string PageSummary { get; set; } = "Brief description of what this recipe demonstrates";
-```
-
-**Implementation Strategy**:
-1. First scan all recipe pages to identify which need properties
-2. Add PageTitle and PageSummary properties to all recipe pages
-3. Update RecipeScanner to extract from properties only
-4. Verify existing Recipe4 properties are properly formatted
-
-## **Phase 4: Overview Page Enhancements (NEXT)**
+## **Phase 6: Overview Page Enhancements (NEXT)**
 
 ### **Priority 1: Structural Improvements**
 - **T12.2.1** Summary truncation for long text
@@ -225,6 +164,52 @@ public string PageSummary { get; set; } = "Brief description of what this recipe
 ### **Priority 3: Code Quality (Later)**
 - **T12.1.1** Console logging cleanup (remove debug statements that are not needed)
 - **T12.1.2** Error handling enhancement (show user-visible error messages, if this is useful)
+
+## **Phase 5: Star Rating System (✅ COMPLETED)**
+
+### **Purpose**
+Help visitors identify more comprehensive and educationally valuable recipes through a developer-controlled star rating system. Featured recipes (4+ stars) get prominent placement to encourage visitors to try bigger, more impactful recipes first.
+
+### **Feature Specification**
+- **Rating Scale**: 1-5 stars, developer-controlled
+- **Default Value**: 3 stars for most recipes
+- **Featured Threshold**: 4+ stars (4 and 5 star recipes)
+- **Visual Display**: ★★★★☆ or ★★★★★ (stars without numbers)
+- **Missing Property**: Show "unrated" for recipes without PageStars property
+
+### **Initial Star Assignments**
+- **5 Stars**: Render mode pages (Recipe4 variants) - high educational value and complexity
+- **4 Stars**: WebAssembly demo - good showcase of capabilities
+- **3 Stars**: All other recipes (default) - standard educational value
+
+### **Page Layout Changes**
+1. **Featured Section** (above main table):
+   - Shows recipes with 4+ stars
+   - Condensed columns: Title | Action | Summary | Location
+   - Prominent placement to encourage trying bigger recipes first
+
+2. **Main Table** (updated):
+   - New column order: Chapter | Recipe | Title | Action | Summary | Location | **Stars** | Filename
+   - Keep existing Chapter → Recipe sorting (no sorting by stars)
+   - Featured recipes appear in both sections
+
+### **Implementation Status: ✅ COMPLETED**
+- ✅ **T13.1** Add PageStars property to all recipe pages
+- ✅ **T13.2** Update RecipeScanner to extract PageStars property
+- ✅ **T13.3** Create featured recipes section component
+- ✅ **T13.4** Add Stars column to main recipe table
+- ✅ **T13.5** Implement star display formatting (★★★★☆)
+- ✅ **T13.6** Update RecipeInfo model to include Stars field
+- ✅ **T13.7** Test featured section functionality
+- ✅ **T13.8** Update RecipeScannerTests for property-based extraction
+
+### **Final Status: ✅ PHASE 5 COMPLETE**
+The star rating system is fully implemented and tested:
+- **104 tests passing** (including 33 updated RecipeScannerTests)
+- **Featured recipes section** prominently displays 4+ star recipes
+- **Star display** working in main recipe table (★★★★☆ format)
+- **Property-based extraction** from PageStars properties
+- **Application running** successfully at localhost:5000/recipes
 
 ## Implementation Architecture
 
@@ -333,20 +318,29 @@ Found recipes in these locations:
 
 ## Expected Result
 
-Home page displays a table like:
+Browse Recipes page displays a featured section followed by the main table:
 
-| Chapter | Recipe | Variant | Location | Summary                                        | Action |
-| ------- | ------ | ------- | -------- | ---------------------------------------------- | ------ |
-| 1       | 2      |         | Server   | Simple Offer page uses simple Ticket component | [Open] |
-| 1       | 3      |         | Server   | Components in Server project                   | [Open] |
-| 1       | 3      | cl      | Client   | Components in Client project                   | [Open] |
-| 1       | 4      |         | Client   | Render mode InteractiveWebAssembly             | [Open] |
-| 1       | 4      | s       | Server   | Render mode InteractiveServer                  | [Open] |
-| 1       | 4      | a       | Client   | Render mode InteractiveAuto                    | [Open] |
-| 1       | 4      | wademo  | Client   | Interactive WebAssembly Features Demo          | [Open] |
-| 1       | 5      |         | Client   | Ensuring component parameter is required       | [Open] |
-| 1       | 6      |         | Client   | Selling Tickets with cascading parameters      | [Open] |
-| 1       | 7      |         | Client   | Creating components with customizable content  | [Open] |
+### Featured Recipes (4+ Stars)
+| Title                               | Action | Summary                                        | Location |
+| ----------------------------------- | ------ | ---------------------------------------------- | -------- |
+| WebAssembly: Client-side Processing | [Open] | Client-side processing demo                    | Client   |
+| Server: Server-side Processing      | [Open] | Server-side processing demo                    | Server   |
+| Auto: Adaptive Server-to-Client     | [Open] | Adaptive render mode switching demo            | Client   |
+| WebAssembly Demo: Features Showcase | [Open] | Hands-on demonstration of WebAssembly features | Client   |
+
+### All Recipes
+| Chapter | Recipe | Title                               | Action | Summary                                           | Location | Stars | Filename        |
+| ------- | ------ | ----------------------------------- | ------ | ------------------------------------------------- | -------- | ----- | --------------- |
+| 1       | 2      | Simple Offer Page                   | [Open] | Demonstrates basic component usage                | Server   | ★★★☆☆ | Offer           |
+| 1       | 3      | Components in Server Project        | [Open] | Shows component usage with WebAssembly mode       | Server   | ★★★☆☆ | Offer           |
+| 1       | 3      | Components in Client Project        | [Open] | Demonstrates component parameters and events      | Client   | ★★★☆☆ | Offer           |
+| 1       | 4      | WebAssembly: Client-side Processing | [Open] | Client-side processing demo                       | Client   | ★★★★★ | Offer           |
+| 1       | 4      | Server: Server-side Processing      | [Open] | Server-side processing demo                       | Server   | ★★★★★ | OfferServer     |
+| 1       | 4      | Auto: Adaptive Server-to-Client     | [Open] | Adaptive render mode switching demo               | Client   | ★★★★★ | OfferAuto       |
+| 1       | 4      | WebAssembly Demo: Features Showcase | [Open] | Hands-on demonstration of WebAssembly features    | Client   | ★★★★☆ | WebAssemblyDemo |
+| 1       | 5      | Required Component Parameters       | [Open] | Ensures parameters are required at compile time   | Client   | ★★★☆☆ | Offer           |
+| 1       | 6      | Cascading Parameters                | [Open] | Demonstrates cascading values to child components | Client   | ★★★☆☆ | SellingTickets  |
+| 1       | 7      | Customizable Component Content      | [Open] | Shows components with customizable content        | Client   | ★★★☆☆ | Offer           |
 
 ## Configuration
 

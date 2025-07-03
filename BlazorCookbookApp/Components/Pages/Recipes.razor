@@ -25,6 +25,51 @@
             }
             else
             {
+                <!-- Featured Recipes Section (4+ stars) -->
+                @if (GetFeaturedRecipes().Any())
+                {
+                    <div class="mb-5">
+                        <h3 class="text-primary mb-3">⭐ Featured Recipes</h3>
+                        <p class="text-muted mb-3">
+                            These recipes showcase comprehensive examples and valuable patterns.
+                        </p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Action</th>
+                                        <th>Summary</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var recipe in GetFeaturedRecipes())
+                                    {
+                                        <tr>
+                                            <td><strong>@recipe.Title</strong></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" @onclick="() => NavigateToRecipe(recipe.Route)">
+                                                    Open
+                                                </button>
+                                            </td>
+                                            <td>@recipe.Summary</td>
+                                            <td>
+                                                <span class="badge @(recipe.Location == "Client" ? "bg-primary" : "bg-secondary")">
+                                                    @recipe.Location
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                
+                <!-- Main Recipe Table -->
+                <h3 class="mb-3">All Recipes</h3>
                 <div class="recipe-overview">
                     <table class="table table-striped">
                         <thead>
@@ -35,6 +80,7 @@
                                 <th>Action</th>
                                 <th>Summary</th>
                                 <th>Location</th>
+                                <th>Stars</th>
                                 <th>Filename</th>
                             </tr>
                         </thead>
@@ -56,6 +102,7 @@
                                             @recipe.Location
                                         </span>
                                     </td>
+                                    <td>@GetStarDisplay(recipe.Stars)</td>
                                     <td>@recipe.FilePath</td>
                                 </tr>
                             }
@@ -105,5 +152,32 @@
         {
             Console.WriteLine($"Navigation error: {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// Formats star rating as visual stars (★★★★☆).
+    /// </summary>
+    /// <param name="stars">Star rating (1-5)</param>
+    /// <returns>Visual star representation</returns>
+    private string GetStarDisplay(int stars)
+    {
+        if (stars < 1 || stars > 5)
+            return "unrated";
+        
+        var filledStars = new string('★', stars);
+        var emptyStars = new string('☆', 5 - stars);
+        return filledStars + emptyStars;
+    }
+
+    /// <summary>
+    /// Gets featured recipes (4+ stars) for the featured section.
+    /// </summary>
+    /// <returns>List of featured recipes</returns>
+    private List<RecipeInfo> GetFeaturedRecipes()
+    {
+        if (recipes == null)
+            return new List<RecipeInfo>();
+        
+        return recipes.Where(r => r.Stars >= 4).ToList();
     }
 } 

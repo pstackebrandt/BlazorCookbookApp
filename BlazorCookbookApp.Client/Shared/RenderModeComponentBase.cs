@@ -65,6 +65,11 @@ public abstract class RenderModeComponentBase : ComponentBase
     /// </summary>
     protected abstract string PageSummary { get; }
     
+    /// <summary>
+    /// Star rating for the recipe (1-5 stars, where 4+ stars are featured)
+    /// </summary>
+    protected abstract int PageStars { get; }
+    
     #endregion
 
     #region Common Display Methods

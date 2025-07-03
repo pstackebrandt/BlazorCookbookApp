@@ -39,7 +39,7 @@ public class RecipeScannerTests
         Assert.Equal(expectedRecipe, result.Recipe);
         Assert.Equal(expectedVariant, result.Variant);
         Assert.Equal("Client", result.Location);
-        Assert.Equal("/test/file.razor", result.FilePath);
+        Assert.Equal("file", result.FilePath);
     }
 
     [Theory]
@@ -74,15 +74,14 @@ public class RecipeScannerTests
     }
 
     [Theory]
-    [InlineData("<h1>Simple Title</h1>", "Simple Title")]
-    [InlineData("<h1>Multi\r\n                 line\r\n                 title</h1>", "Multi\r\n                 line\r\n                 title")]
-    [InlineData("<h1><strong>Bold</strong> Title</h1>", "Bold Title")]
-    [InlineData("<h1>Title with <span>nested</span> tags</h1>", "Title with nested tags")]
-    [InlineData("<h2>H2 Title</h2>", "H2 Title")]
-    public void ExtractSummary_WithValidH1Tag_ExtractsCleanText(string h1Content, string expectedSummary)
+    [InlineData("public string PageSummary { get; set; } = \"Simple Title\";", "Simple Title")]
+    [InlineData("public string PageSummary { get; set; } = \"Multi line title\";", "Multi line title")]
+    [InlineData("protected override string PageSummary => \"Override Title\";", "Override Title")]
+    [InlineData("public string PageSummary { get; set; } = \"Title with nested tags\";", "Title with nested tags")]
+    public void ExtractSummary_WithValidPageSummaryProperty_ExtractsCorrectValue(string propertyContent, string expectedSummary)
     {
         // Arrange
-        var content = $"@page \"/ch01r02\"\n{h1Content}";
+        var content = $"@page \"/ch01r02\"\n@code {{\n{propertyContent}\n}}";
 
         // Act
         var result = ParseRecipeFile(content, "/test/file.razor", "Client");
@@ -93,23 +92,23 @@ public class RecipeScannerTests
     }
 
     [Theory]
-    [InlineData("<h2>Fallback Title</h2>", "Fallback Title")]
-    [InlineData("<h2>H2 with <em>emphasis</em></h2>", "H2 with emphasis")]
-    public void ExtractSummary_WithNoH1ButH2_ExtractsH2Content(string h2Content, string expectedSummary)
+    [InlineData("public string PageTitle { get; set; } = \"Fallback Title\";", "Fallback Title")]
+    [InlineData("protected override string PageTitle => \"Override Title\";", "Override Title")]
+    public void ExtractTitle_WithValidPageTitleProperty_ExtractsCorrectValue(string propertyContent, string expectedTitle)
     {
         // Arrange
-        var content = $"@page \"/ch01r02\"\n<p>Some content</p>\n{h2Content}";
+        var content = $"@page \"/ch01r02\"\n@code {{\n{propertyContent}\n}}";
 
         // Act
         var result = ParseRecipeFile(content, "/test/file.razor", "Client");
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(expectedSummary, result.Summary);
+        Assert.Equal(expectedTitle, result.Title);
     }
 
     [Fact]
-    public void ExtractSummary_WithNoHeadingTags_ReturnsDefaultMessage()
+    public void ExtractSummary_WithNoPageSummaryProperty_ReturnsUnknown()
     {
         // Arrange
         var content = "@page \"/ch01r02\"\n<p>Just paragraph content</p>";
@@ -119,7 +118,21 @@ public class RecipeScannerTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal("No summary available", result.Summary);
+        Assert.Equal("unknown", result.Summary);
+    }
+
+    [Fact]
+    public void ExtractTitle_WithNoPageTitleProperty_ReturnsUnknown()
+    {
+        // Arrange
+        var content = "@page \"/ch01r02\"\n<p>Just paragraph content</p>";
+
+        // Act
+        var result = ParseRecipeFile(content, "/test/file.razor", "Client");
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("unknown", result.Title);
     }
 
     [Theory]
@@ -128,7 +141,7 @@ public class RecipeScannerTests
     public void ParseRecipeFile_WithDifferentLocations_SetsLocationCorrectly(string location)
     {
         // Arrange
-        var content = "@page \"/ch01r02\"\n<h1>Test</h1>";
+        var content = "@page \"/ch01r02\"\n@code { public string PageTitle { get; set; } = \"Test\"; }";
 
         // Act
         var result = ParseRecipeFile(content, "/test/file.razor", location);
@@ -139,8 +152,8 @@ public class RecipeScannerTests
     }
 
     [Theory]
-    [InlineData("@page \"/ch01r02\"\n<h1>Test</h1>", true)]
-    [InlineData("@page \"/invalid\"\n<h1>Test</h1>", false)]
+    [InlineData("@page \"/ch01r02\"\n@code { public string PageTitle { get; set; } = \"Test\"; }", true)]
+    [InlineData("@page \"/invalid\"\n@code { public string PageTitle { get; set; } = \"Test\"; }", false)]
     [InlineData("No valid content", false)]
     public void ParseRecipeFile_WithVariousContent_ReturnsExpectedResult(string content, bool shouldReturnResult)
     {
@@ -166,9 +179,13 @@ public class RecipeScannerTests
             @page ""/ch02r05custom""
             @using SomeNamespace
             
-            <h1>Complex Recipe Title</h1>
+            @code {
+                public string PageTitle { get; set; } = ""Complex Recipe Title"";
+                public string PageSummary { get; set; } = ""Complex recipe summary"";
+                public int PageStars { get; set; } = 4;
+            }
+            
             <p>Some description content</p>
-            <h2>Secondary heading</h2>
         ";
 
         // Act
@@ -181,7 +198,59 @@ public class RecipeScannerTests
         Assert.Equal(5, result.Recipe);
         Assert.Equal("custom", result.Variant);
         Assert.Equal("Server", result.Location);
-        Assert.Equal("Complex Recipe Title", result.Summary);
+        Assert.Equal("Complex Recipe Title", result.Title);
+        Assert.Equal("Complex recipe summary", result.Summary);
+        Assert.Equal(4, result.Stars);
+        Assert.Equal("file", result.FilePath);
+    }
+
+    [Theory]
+    [InlineData("public int PageStars { get; set; } = 5;", 5)]
+    [InlineData("protected override int PageStars => 4;", 4)]
+    [InlineData("public int PageStars { get; set; } = 1;", 1)]
+    [InlineData("public int PageStars { get; set; } = 3;", 3)]
+    public void ExtractStars_WithValidPageStarsProperty_ExtractsCorrectValue(string propertyContent, int expectedStars)
+    {
+        // Arrange
+        var content = $"@page \"/ch01r02\"\n@code {{\n{propertyContent}\n}}";
+
+        // Act
+        var result = ParseRecipeFile(content, "/test/file.razor", "Client");
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedStars, result.Stars);
+    }
+
+    [Fact]
+    public void ExtractStars_WithNoPageStarsProperty_ReturnsDefault()
+    {
+        // Arrange
+        var content = "@page \"/ch01r02\"\n<p>Just paragraph content</p>";
+
+        // Act
+        var result = ParseRecipeFile(content, "/test/file.razor", "Client");
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(3, result.Stars); // Default value
+    }
+
+    [Theory]
+    [InlineData("public int PageStars { get; set; } = 0;", 3)] // Out of range, should default to 3
+    [InlineData("public int PageStars { get; set; } = 6;", 3)] // Out of range, should default to 3
+    [InlineData("public int PageStars { get; set; } = -1;", 3)] // Out of range, should default to 3
+    public void ExtractStars_WithInvalidPageStarsValue_ReturnsDefault(string propertyContent, int expectedStars)
+    {
+        // Arrange
+        var content = $"@page \"/ch01r02\"\n@code {{\n{propertyContent}\n}}";
+
+        // Act
+        var result = ParseRecipeFile(content, "/test/file.razor", "Client");
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedStars, result.Stars);
     }
 
     // Helper method to access private ParseRecipeFile method using reflection

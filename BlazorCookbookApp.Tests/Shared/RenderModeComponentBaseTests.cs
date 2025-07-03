@@ -16,6 +16,7 @@ public class RenderModeComponentBaseTests
     {
         protected override string PageTitle => "Test Render Mode";
         protected override string PageSummary => "Test render mode summary";
+        protected override int PageStars => 3;
         
         // Expose protected methods for testing
         public new string GetDisplayRenderMode() => base.GetDisplayRenderMode();
