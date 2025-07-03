@@ -2,38 +2,16 @@
 
 ## Todo
 
-- [ ] T11.4 Phase 2: Home Page Restructuring (POST-TESTING)
-- [ ] T11.4.2 Manual testing of navigation flow
-- [ ] T11.4.3 Verify recipe discovery still works correctly
-- [ ] T11.4.4 Test responsive layout of both pages
-- [ ] T11.3.2 Update any direct navigation links
-- [ ] T11.3.3 Test routing between Home and Browse Recipes
 - [ ] T10.2 Phase 3: Recipe Overview Enhancements
-- [ ] T10.2.1 Step 1: Improve Recipe4 Titles and Summaries
-- [ ] T10.2.1.1 Update WebAssembly page title to "WebAssembly Render Mode: Client-side Processing"
-- [ ] T10.2.1.2 Update Server page title to "Server Render Mode: Server-side Processing"
-- [ ] T10.2.1.3 Update Auto page title to "Auto Render Mode: Adaptive Server-to-Client"
-- [ ] T10.2.1.4 Update WebAssembly Demo page title to "WebAssembly Demo: Interactive Features Showcase"
-- [ ] T10.2.2 Step 2: Test Recipe Overview Integration
-- [ ] T10.2.2.1 Run tests to ensure RecipeScanner works with updated titles
-- [ ] T10.2.2.2 Verify overview table displays improved information
-- [ ] T10.2.2.3 Check all Recipe4 variants appear correctly
-- [ ] T10.2.3 Step 3: Manual Testing and Responsive Layout
-- [ ] T10.2.3.1 Test navigation flow: Home → Browse Recipes → Individual recipes
-- [ ] T10.2.3.2 Verify responsive layout on different screen sizes
-- [ ] T10.2.3.3 Test all Recipe4 variants work correctly
-- [ ] T10.2.4 Step 4: Update Documentation
-- [ ] T10.2.4.1 Update planning docs to reflect Phase 3 completion
-- [ ] T10.2.4.2 Document improved recipe overview experience
-- [ ] T10.3 Verify Recipe Overview integration with all Recipe4 variants
-- [ ] T10.4 Test Recipe Overview responsive layout and navigation
-- [ ] T8 Optimize render mode pages by reducing code duplication
-- [ ] T8.1 Phase 1: Extract common logic into base class
-- [ ] T8.1.1 Create RenderModeComponentBase with common fields and methods
-- [ ] T8.1.2 Convert WebAssembly page to inherit from base class
-- [ ] T8.1.3 Convert Server page to inherit from base class (cross-project)
-- [ ] T8.1.4 Convert Auto page to inherit from base class
-- [ ] T8.2 Phase 2: Extract status card into shared component (if Phase 1 successful)
+- [ ] T10.2.4 Step 4: Update Documentation (concise)
+- [ ] T12 Overview Page Structural and Optical Improvements
+- [ ] T12.1 Fix existing bugs in overview functionality
+- [ ] T12.2 Implement structural improvements for better data display
+- [ ] T12.3 Apply optical improvements for better user experience
+- [ ] T12.4 Add responsive design enhancements
+- [ ] T12.5 Improve table layout and information architecture
+- [ ] T8 Optimize render mode pages by reducing code duplication [AFTER OVERVIEW UPDATES]
+- [ ] T8.2 Phase 2: Extract status card into shared component (base class already exists)
 - [ ] T8.2.1 Create RenderModeStatusCard component with parameters
 - [ ] T8.2.2 Integrate status card with WebAssembly page
 - [ ] T8.2.3 Integrate status card with Server page
@@ -41,15 +19,30 @@
 - [ ] T8.3 Phase 3: Additional optimizations (optional)
 - [ ] T8.3.1 Extract Component Lifecycle Insight component (if beneficial)
 - [ ] T8.3.2 Extract Educational Delay Indicator component (if beneficial)
-- [ ] T7.5 Document educational comparison between all three modes
+- [ ] T7.5 Document educational comparison between all three modes [AFTER OVERVIEW UPDATES]
 - [ ] T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED: requires persistence]
-- [ ] T7.3 Add WebAssembly download progress indication [BLOCKED: requires persistence]
-- [ ] T7.2 Implement first-visit vs subsequent-visit behavior tracking [BLOCKED: requires persistence]
 
 ## In Progress
 
 ## Done
 
+- [x] T10.2.2 Step 2: Test Recipe Overview Integration (automatic) ✅ COMPLETED
+- [x] T10.2.1.4 Update WebAssembly Demo page title to "WebAssembly Demo: Features Showcase" ✅ COMPLETED
+- [x] T10.2.1.3 Update Auto page title to "Auto: Adaptive Server-to-Client" ✅ COMPLETED
+- [x] T10.2.1.2 Update Server page title to "Server: Server-side Processing" ✅ COMPLETED
+- [x] T10.2.1.1 Update WebAssembly page title to "WebAssembly: Client-side Processing" ✅ COMPLETED
+- [x] T10.2.1 Step 1: Improve Recipe4 Titles and Summaries ✅ COMPLETED
+- [x] T8.1 Phase 1: Extract common logic into base class ✅ COMPLETED
+- [x] T8.1.1 Create RenderModeComponentBase with common fields and methods ✅ COMPLETED
+- [x] T8.1.2 Convert WebAssembly page to inherit from base class ✅ COMPLETED
+- [x] T8.1.3 Convert Server page to inherit from base class (cross-project) ✅ COMPLETED
+- [x] T8.1.4 Convert Auto page to inherit from base class ✅ COMPLETED
+- [x] T11.4.4 Test responsive layout of both pages ✅ COMPLETED
+- [x] T11.4.3 Verify recipe discovery still works correctly ✅ COMPLETED
+- [x] T11.4.2 Manual testing of navigation flow ✅ COMPLETED
+- [x] T11.3.3 Test routing between Home and Browse Recipes ✅ COMPLETED
+- [x] T11.3.2 Update any direct navigation links ✅ COMPLETED
+- [x] T11.4.1 Run full test suite to verify no regressions ✅ COMPLETED
 - [x] T11.5 UI Improvements ✅ COMPLETED
 - [x] T11.5.1 Remove "Coming Soon" alert from Recipes page ✅ COMPLETED
 - [x] T11.5.2 Remove direct links from recipe table (keep only Open buttons) ✅ COMPLETED
