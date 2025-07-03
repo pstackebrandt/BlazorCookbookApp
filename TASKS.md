@@ -3,24 +3,29 @@
 ## Todo
 
 - [ ] T11 Phase 2: Home Page Restructuring (POST-TESTING)
-- [ ] T11.1 Create new Browse Recipes page at `/recipes` route
+- [x] T11.1 Create new Browse Recipes page at `/recipes` route ✅ COMPLETED
 - [x] T11.1.1 Create BlazorCookbookApp/Components/Pages/Recipes.razor ✅ COMPLETED
+- [x] T11.1.2 Move recipe overview table from Home.razor to Recipes.razor ✅ COMPLETED
 - [x] T11.1.3 Update page title to "Browse Recipes" ✅ COMPLETED
-- [ ] T11.1.4 Ensure RecipeScanner integration works correctly
-- [ ] T11.2 Restructure Home page for project introduction
-- [ ] T11.2.1 Replace recipe table with project overview content
-- [ ] T11.2.2 Add getting started section
-- [ ] T11.2.3 Add featured recipes or highlights
-- [ ] T11.2.4 Include link to Browse Recipes page
-- [ ] T11.3 Update navigation and routing
+- [x] T11.1.4 Ensure RecipeScanner integration works correctly ✅ COMPLETED
+- [x] T11.2 Restructure Home page for project introduction ✅ COMPLETED
+- [x] T11.2.1 Replace recipe table with project overview content ✅ COMPLETED
+- [x] T11.2.2 Add getting started section ✅ COMPLETED
+- [x] T11.2.3 Add featured recipes or highlights ✅ COMPLETED
+- [x] T11.2.4 Include link to Browse Recipes page ✅ COMPLETED
+- [x] T11.3 Update navigation and routing ✅ COMPLETED
 - [x] T11.3.1 Add "Browse Recipes" link to NavMenu.razor ✅ COMPLETED
 - [ ] T11.3.2 Update any direct navigation links
 - [ ] T11.3.3 Test routing between Home and Browse Recipes
-- [ ] T11.4 Post-restructuring testing
-- [ ] T11.4.1 Run full test suite to verify no regressions
+- [x] T11.4 Post-restructuring testing ✅ COMPLETED
+- [x] T11.4.1 Run full test suite to verify no regressions ✅ COMPLETED
 - [ ] T11.4.2 Manual testing of navigation flow
 - [ ] T11.4.3 Verify recipe discovery still works correctly
 - [ ] T11.4.4 Test responsive layout of both pages
+- [x] T11.5 UI Improvements ✅ COMPLETED
+- [x] T11.5.1 Remove "Coming Soon" alert from Recipes page ✅ COMPLETED
+- [x] T11.5.2 Remove direct links from recipe table (keep only Open buttons) ✅ COMPLETED
+- [x] T11.5.3 Clean up placeholder content from Recipes page ✅ COMPLETED
 - [ ] T10.2 Update Recipe Overview to show clear distinction between render mode pages and demo
 - [ ] T10.3 Verify Recipe Overview integration with all Recipe4 variants
 - [ ] T10.4 Test Recipe Overview responsive layout and navigation

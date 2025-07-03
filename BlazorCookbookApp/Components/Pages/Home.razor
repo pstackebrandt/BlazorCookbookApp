@@ -1,101 +1,81 @@
 ﻿@page "/"
 @rendermode InteractiveServer
-@using BlazorCookbookApp.Services
-@inject RecipeScanner RecipeScanner
-@inject NavigationManager Navigation
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Home - Blazor Cookbook</PageTitle>
 
-<h1>Blazor Cookbook</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>Blazor Cookbook</h1>
+            <p class="lead">
+                Welcome to your Blazor Cookbook! A comprehensive collection of recipes demonstrating 
+                Blazor concepts, patterns, and best practices.
+            </p>
 
-<p>Welcome to your Blazor Cookbook! Here are all the implemented recipes:</p>
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">About This Project</h5>
+                            <p class="card-text">
+                                The Blazor Cookbook is designed to help developers learn and master Blazor 
+                                through practical examples. Each recipe focuses on specific concepts and 
+                                provides working code that you can study, modify, and build upon.
+                            </p>
+                            <p class="card-text">
+                                Recipes are organized by chapters covering different aspects of Blazor development, 
+                                from basic component creation to advanced patterns and real-world applications.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-@if (recipes == null)
-{
-    <p><em>Loading recipes...</em></p>
-}
-else if (!recipes.Any())
-{
-    <p><em>No recipes found.</em></p>
-}
-else
-{
-    <div class="recipe-overview">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Chapter</th>
-                    <th>Recipe</th>
-                    <th>Variant</th>
-                    <th>Location</th>
-                    <th>Summary</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var recipe in recipes)
-                {
-                    <tr>
-                        <td>@recipe.Chapter</td>
-                        <td>@recipe.Recipe</td>
-                        <td>@(recipe.Variant ?? "")</td>
-                        <td>
-                            <span class="badge @(recipe.Location == "Client" ? "bg-primary" : "bg-secondary")">
-                                @recipe.Location
-                            </span>
-                        </td>
-                        <td>@recipe.Summary</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary" @onclick="() => NavigateToRecipe(recipe.Route)">
-                                Open
-                            </button>
-                            <br />
-                            <small><a href="@recipe.Route" class="text-muted">Direct link</a></small>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Quick Start</h5>
+                            <p class="card-text">
+                                Ready to explore? Browse all available recipes:
+                            </p>
+                            <a href="/recipes" class="btn btn-primary">Browse Recipes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Getting Started</h5>
+                            <p class="card-text">
+                                New to Blazor? Start with these foundational recipes:
+                            </p>
+                            <ul>
+                                <li><strong>Recipe 1.2:</strong> Simple component composition</li>
+                                <li><strong>Recipe 1.3:</strong> Server vs Client components</li>
+                                <li><strong>Recipe 1.4:</strong> Render modes demonstration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Recipe Categories</h5>
+                            <p class="card-text">
+                                Recipes are organized by chapters covering different aspects of Blazor development:
+                            </p>
+                            <ul>
+                                <li><strong>Chapter 1:</strong> Core Components and Concepts</li>
+                                <li><strong>Chapter 2:</strong> Advanced Patterns (Coming Soon)</li>
+                                <li><strong>Chapter 3:</strong> Real-world Applications (Coming Soon)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-}
-
-@code {
-    private List<RecipeInfo>? recipes;
-
-    /// <summary>
-    /// Load all recipes on page initialization and log to console for debugging.
-    /// </summary>
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            recipes = await RecipeScanner.GetRecipesAsync();
-            Console.WriteLine($"Found {recipes.Count} recipes:");
-            foreach (var recipe in recipes)
-            {
-                Console.WriteLine($"- {recipe.Route} ({recipe.Location}) - {recipe.Summary}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading recipes: {ex.Message}");
-            recipes = new List<RecipeInfo>();
-        }
-    }
-
-    /// <summary>
-    /// Navigate to recipe page with debug logging.
-    /// </summary>
-    private void NavigateToRecipe(string route)
-    {
-        Console.WriteLine($"Attempting to navigate to: {route}");
-        try
-        {
-            Navigation.NavigateTo(route);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Navigation error: {ex.Message}");
-        }
-    }
-}
+</div>

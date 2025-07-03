@@ -106,18 +106,21 @@ dotnet test  # Full test suite
 
 ### 🔄 PENDING UPDATES
 
-#### **Phase 2: Home Page Restructuring (IN PROGRESS)**
+#### **Phase 2: Home Page Restructuring (COMPLETED)**
 - [x] Create new Browse Recipes page at `/recipes` route ✅ COMPLETED
-- [ ] Move recipe overview table from Home.razor to Recipes.razor  
-- [ ] Restructure Home page for project introduction content
+- [x] Move recipe overview table from Home.razor to Recipes.razor ✅ COMPLETED
+- [x] Restructure Home page for project introduction content ✅ COMPLETED
 - [x] Update navigation menu to include "Browse Recipes" link ✅ COMPLETED
 - [ ] Test complete navigation flow and responsive layout
 
-#### **Current Status: Phase 2.1 Complete**
-- ✅ **Browse Recipes page created** at `/recipes` with placeholder content
+#### **Current Status: Phase 2 Complete**
+- ✅ **Browse Recipes page created** at `/recipes` with full recipe overview table
+- ✅ **Home page restructured** with project introduction and getting started content
 - ✅ **Navigation menu updated** with "Browse Recipes" link
 - ✅ **All tests passing** (96/96) - no regressions introduced
-- 🔄 **Next step**: Move recipe overview table functionality from Home.razor
+- ✅ **RecipeScanner integration verified** - functionality moved successfully
+- ✅ **UI improvements completed** - removed Coming Soon alert and direct links
+- 🔄 **Next step**: Manual testing and responsive layout verification
 
 #### **Phase 3: Recipe Overview Enhancements (POST-RESTRUCTURING)**  
 - [ ] Update Recipe Overview to show clear distinction between render mode pages and demo
@@ -138,16 +141,18 @@ dotnet test  # Full test suite
 - Scans both Client and Server project directories
 
 **3. Home.razor**
-- Current home page displaying recipe overview table
-- Uses InteractiveServer render mode for button functionality
-- Includes debug logging to terminal
-- **Future**: Will be restructured for project introduction content
+- **Current**: Project introduction page with getting started content
+- **Previous**: Displayed recipe overview table (moved to Recipes.razor)
+- Uses InteractiveServer render mode for future functionality
+- **Content**: About project, getting started guide, recipe categories, link to Browse Recipes
 
-**4. Recipes.razor** ⭐ **NEW**
-- New Browse Recipes page at `/recipes` route
-- **Current**: Placeholder content with recipe categories and getting started guide
-- **Future**: Will receive recipe overview table functionality from Home.razor
-- Uses InteractiveServer render mode for future button functionality
+**4. Recipes.razor** ⭐ **COMPLETED**
+- Browse Recipes page at `/recipes` route
+- **Current**: Complete recipe overview table with auto-discovery functionality
+- **Previous**: Placeholder content (replaced with full functionality from Home.razor)
+- Uses InteractiveServer render mode for button functionality
+- **Content**: Clean recipe table with Open buttons only (no direct links)
+- **UI**: Streamlined design without Coming Soon alerts or placeholder content
 
 **5. Program.cs**
 - Registers RecipeScanner as scoped service
@@ -207,26 +212,25 @@ Found recipes in these locations:
 
 ### For Users
 
-#### **Current Navigation (Phase 2.1)**
-1. Navigate to home page (`/`) - shows recipe overview table
-2. Navigate to Browse Recipes page (`/recipes`) - shows placeholder content
-3. Use navigation menu to switch between pages
-4. Click "Open" button or "Direct link" to navigate to any recipe
-5. Recipes are sorted by Chapter → Recipe → Variant
-
-#### **Future Navigation (Post-Restructuring)**
+#### **Current Navigation (Phase 2 Complete)**
 1. Navigate to home page (`/`) - shows project introduction and getting started
 2. Navigate to Browse Recipes page (`/recipes`) - shows complete recipe overview table
 3. Use navigation menu to switch between pages
 4. Click "Open" button or "Direct link" to navigate to any recipe
 5. Recipes are sorted by Chapter → Recipe → Variant
 
+#### **Previous Navigation (Before Restructuring)**
+1. Navigate to home page (`/`) - showed recipe overview table
+2. No dedicated Browse Recipes page
+3. All functionality was on the home page
+
 ### For Developers
 
 1. Add new recipe with `@page "/ch##r##"` pattern
 2. Include H1 or H2 tag for summary
-3. Recipe automatically appears in overview on next page load
-4. **Future**: Recipe will appear on Browse Recipes page instead of Home page
+3. Recipe automatically appears in overview on Browse Recipes page
+4. **Current**: Recipe appears on `/recipes` page (Browse Recipes)
+5. **Previous**: Recipe appeared on `/` page (Home)
 
 ## Expected Result
 
