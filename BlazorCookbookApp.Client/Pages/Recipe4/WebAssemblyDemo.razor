@@ -152,8 +152,8 @@ else
 
 @code {
     // Page configuration for WebAssembly demo
-    private string PageTitle => "WebAssembly Demo: Features Showcase";
-    private string PageSummary => "Hands-on demonstration of WebAssembly capabilities with instant local processing";
+    public string PageTitle { get; set; } = "WebAssembly Demo: Features Showcase";
+    public string PageSummary { get; set; } = "Hands-on demonstration of WebAssembly capabilities with instant local processing";
     
     // Demo interaction state
     private bool _isInteractive = false;

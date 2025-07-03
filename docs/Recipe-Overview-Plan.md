@@ -169,6 +169,17 @@ this is done!
 
 **Current Status**: ✅ **Phase 3 COMPLETED** - Recipe4 titles improved and tested
 
+**T12.2.5.1 & T12.2.5.2 Status**: ✅ **COMPLETED** - All recipe pages now have PageTitle and PageSummary properties
+
+**Pages Updated with Properties**:
+- Recipe2: "Simple Offer Page" / "Demonstrates basic component usage with simple Ticket component"
+- Recipe3: "Components in Server Project" / "Shows component usage with WebAssembly render mode in server project"  
+- Recipe3cl: "Components in Client Project" / "Demonstrates component parameters and event handling in client project"
+- Recipe5: "Required Component Parameters" / "Ensures component parameters are required at compile time using warnings as errors"
+- Recipe6: "Cascading Parameters" / "Demonstrates cascading values to pass data to child components automatically"
+- Recipe7: "Customizable Component Content" / "Shows how to create components with customizable content using RenderFragment"
+- WebAssemblyDemo: "WebAssembly Demo: Features Showcase" / "Hands-on demonstration of WebAssembly capabilities with instant local processing"
+
 **New Column Structure (Planned)**:
 | Chapter | Recipe | Title             | Action | Summary                      | Location | Filename    |
 | ------- | ------ | ----------------- | ------ | ---------------------------- | -------- | ----------- |
@@ -181,6 +192,18 @@ this is done!
 - Show "unknown" if properties are missing (indicates need to add them)
 - No fallback to H1/H2 extraction
 - Filename shows name without extension or path (e.g., "Offer", "OfferServer")
+
+**Property Format**:
+```csharp
+public string PageTitle { get; set; } = "My Recipe Title";
+public string PageSummary { get; set; } = "Brief description of what this recipe demonstrates";
+```
+
+**Implementation Strategy**:
+1. First scan all recipe pages to identify which need properties
+2. Add PageTitle and PageSummary properties to all recipe pages
+3. Update RecipeScanner to extract from properties only
+4. Verify existing Recipe4 properties are properly formatted
 
 ## **Phase 4: Overview Page Enhancements (NEXT)**
 

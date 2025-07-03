@@ -46,6 +46,9 @@
 </div>
 
 @code {
+    public string PageTitle { get; set; } = "Cascading Parameters";
+    public string PageSummary { get; set; } = "Demonstrates cascading values to pass data to child components automatically";
+    
     public required Cart Cart;
 
     // runs when the component is initialized

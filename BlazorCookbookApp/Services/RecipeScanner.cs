@@ -4,7 +4,7 @@ namespace BlazorCookbookApp.Services;
 
 /// <summary>
 /// Scans Blazor components for recipe pages following the /chXXrXX route pattern.
-/// Automatically extracts chapter, recipe number, location, and summary information.
+/// Automatically extracts chapter, recipe number, location, title, and summary information.
 /// </summary>
 public class RecipeScanner
 {
@@ -13,9 +13,11 @@ public class RecipeScanner
     // Matches @page "/ch01r02" or @page "/ch01r03cl" - captures route, chapter, recipe, variant
     private readonly Regex _routePattern = new(@"@page\s+""(/ch(\d+)r(\d+)(\w*))""", RegexOptions.IgnoreCase);
     
-    // Extract summary from H1 and H2 tags
-    private readonly Regex _h1Pattern = new(@"<h1[^>]*>(.*?)</h1>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-    private readonly Regex _h2Pattern = new(@"<h2[^>]*>(.*?)</h2>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+    // Extract PageTitle property (both public and protected override patterns)
+    private readonly Regex _pageTitlePattern = new(@"(?:public\s+string\s+PageTitle\s*\{\s*get;\s*set;\s*\}\s*=\s*""([^""]*)""|protected\s+override\s+string\s+PageTitle\s*=>\s*""([^""]*)""\s*;)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+    
+    // Extract PageSummary property (both public and protected override patterns)
+    private readonly Regex _pageSummaryPattern = new(@"(?:public\s+string\s+PageSummary\s*\{\s*get;\s*set;\s*\}\s*=\s*""([^""]*)""|protected\s+override\s+string\s+PageSummary\s*=>\s*""([^""]*)""\s*;)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
     public RecipeScanner(IWebHostEnvironment environment)
     {
@@ -111,7 +113,9 @@ public class RecipeScanner
         if (!int.TryParse(chapterStr, out var chapter) || !int.TryParse(recipeStr, out var recipe))
             return null;
 
-        var summary = ExtractSummary(content);
+        var title = ExtractPageTitle(content);
+        var summary = ExtractPageSummary(content);
+        var filename = Path.GetFileNameWithoutExtension(filePath);
 
         return new RecipeInfo
         {
@@ -120,34 +124,51 @@ public class RecipeScanner
             Recipe = recipe,
             Variant = string.IsNullOrEmpty(variant) ? null : variant,
             Location = location,
+            Title = title,
             Summary = summary,
-            FilePath = filePath
+            FilePath = filename
         };
     }
 
     /// <summary>
-    /// Extracts recipe summary from first H1 or H2 tag found in the content.
-    /// Strips HTML tags and returns clean text.
+    /// Extracts recipe title from PageTitle property.
+    /// Returns "unknown" if property not found.
     /// </summary>
-    private string ExtractSummary(string content)
+    private string ExtractPageTitle(string content)
     {
-        // Try H1 first, then H2 as fallback
-        var h1Match = _h1Pattern.Match(content);
-        if (h1Match.Success)
+        var match = _pageTitlePattern.Match(content);
+        if (match.Success)
         {
-            var h1Content = h1Match.Groups[1].Value;
-            var cleanContent = Regex.Replace(h1Content, "<.*?>", "").Trim();
-            return cleanContent;
+            // Check both capture groups (public property and protected override)
+            var title = match.Groups[1].Value.Trim();
+            if (string.IsNullOrEmpty(title))
+            {
+                title = match.Groups[2].Value.Trim();
+            }
+            return title;
         }
 
-        var h2Match = _h2Pattern.Match(content);
-        if (h2Match.Success)
+        return "unknown";
+    }
+
+    /// <summary>
+    /// Extracts recipe summary from PageSummary property.
+    /// Returns "unknown" if property not found.
+    /// </summary>
+    private string ExtractPageSummary(string content)
+    {
+        var match = _pageSummaryPattern.Match(content);
+        if (match.Success)
         {
-            var h2Content = h2Match.Groups[1].Value;
-            var cleanContent = Regex.Replace(h2Content, "<.*?>", "").Trim();
-            return cleanContent;
+            // Check both capture groups (public property and protected override)
+            var summary = match.Groups[1].Value.Trim();
+            if (string.IsNullOrEmpty(summary))
+            {
+                summary = match.Groups[2].Value.Trim();
+            }
+            return summary;
         }
 
-        return "No summary available";
+        return "unknown";
     }
 } 

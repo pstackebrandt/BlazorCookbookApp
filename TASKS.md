@@ -12,10 +12,10 @@
 - [ ] T12.2.3 Add basic sorting functionality (Chapter/Recipe/Location)
 - [ ] T12.2.4 Add search/filter functionality
 - [ ] T12.2.5 Column structure enhancements
-- [ ] T12.2.5.1 Add PageTitle property to all recipe pages (no fallback to H1/H2)
-- [ ] T12.2.5.2 Add PageSummary property to all recipe pages (dedicated summaries)
-- [ ] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing)
-- [ ] T12.2.5.4 Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename
+- [x] T12.2.5.1 Add PageTitle property to all recipe pages (no fallback to H1/H2) ✅ COMPLETED
+- [x] T12.2.5.2 Add PageSummary property to all recipe pages (dedicated summaries) ✅ COMPLETED
+- [x] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing) ✅ COMPLETED
+- [x] T12.2.5.4 Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename ✅ COMPLETED
 - [ ] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop)
 - [ ] T12.3 Apply optical improvements for better user experience
 - [ ] T12.3.3 Optimize table spacing and visual hierarchy
