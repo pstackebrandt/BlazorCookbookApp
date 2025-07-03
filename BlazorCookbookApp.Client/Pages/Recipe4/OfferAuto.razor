@@ -157,8 +157,8 @@ else
     private DateTime? _clientTransitionTime = null;
 
     // Page configuration - inherits from RenderModeComponentBase for lifecycle tracking
-    protected override string PageTitle => "Render mode InteractiveAuto";
-    protected override string PageSummary => "Adaptive rendering - server-first, then client-side after WASM loads";
+    protected override string PageTitle => "Auto Render Mode: Adaptive Server-to-Client";
+    protected override string PageSummary => "Starts with fast server rendering, then seamlessly transitions to client-side processing";
 
     protected override void OnInitializedOverride()
     {

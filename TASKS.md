@@ -2,31 +2,29 @@
 
 ## Todo
 
-- [ ] T11 Phase 2: Home Page Restructuring (POST-TESTING)
-- [x] T11.1 Create new Browse Recipes page at `/recipes` route ✅ COMPLETED
-- [x] T11.1.1 Create BlazorCookbookApp/Components/Pages/Recipes.razor ✅ COMPLETED
-- [x] T11.1.2 Move recipe overview table from Home.razor to Recipes.razor ✅ COMPLETED
-- [x] T11.1.3 Update page title to "Browse Recipes" ✅ COMPLETED
-- [x] T11.1.4 Ensure RecipeScanner integration works correctly ✅ COMPLETED
-- [x] T11.2 Restructure Home page for project introduction ✅ COMPLETED
-- [x] T11.2.1 Replace recipe table with project overview content ✅ COMPLETED
-- [x] T11.2.2 Add getting started section ✅ COMPLETED
-- [x] T11.2.3 Add featured recipes or highlights ✅ COMPLETED
-- [x] T11.2.4 Include link to Browse Recipes page ✅ COMPLETED
-- [x] T11.3 Update navigation and routing ✅ COMPLETED
-- [x] T11.3.1 Add "Browse Recipes" link to NavMenu.razor ✅ COMPLETED
-- [ ] T11.3.2 Update any direct navigation links
-- [ ] T11.3.3 Test routing between Home and Browse Recipes
-- [x] T11.4 Post-restructuring testing ✅ COMPLETED
-- [x] T11.4.1 Run full test suite to verify no regressions ✅ COMPLETED
+- [ ] T11.4 Phase 2: Home Page Restructuring (POST-TESTING)
 - [ ] T11.4.2 Manual testing of navigation flow
 - [ ] T11.4.3 Verify recipe discovery still works correctly
 - [ ] T11.4.4 Test responsive layout of both pages
-- [x] T11.5 UI Improvements ✅ COMPLETED
-- [x] T11.5.1 Remove "Coming Soon" alert from Recipes page ✅ COMPLETED
-- [x] T11.5.2 Remove direct links from recipe table (keep only Open buttons) ✅ COMPLETED
-- [x] T11.5.3 Clean up placeholder content from Recipes page ✅ COMPLETED
-- [ ] T10.2 Update Recipe Overview to show clear distinction between render mode pages and demo
+- [ ] T11.3.2 Update any direct navigation links
+- [ ] T11.3.3 Test routing between Home and Browse Recipes
+- [ ] T10.2 Phase 3: Recipe Overview Enhancements
+- [ ] T10.2.1 Step 1: Improve Recipe4 Titles and Summaries
+- [ ] T10.2.1.1 Update WebAssembly page title to "WebAssembly Render Mode: Client-side Processing"
+- [ ] T10.2.1.2 Update Server page title to "Server Render Mode: Server-side Processing"
+- [ ] T10.2.1.3 Update Auto page title to "Auto Render Mode: Adaptive Server-to-Client"
+- [ ] T10.2.1.4 Update WebAssembly Demo page title to "WebAssembly Demo: Interactive Features Showcase"
+- [ ] T10.2.2 Step 2: Test Recipe Overview Integration
+- [ ] T10.2.2.1 Run tests to ensure RecipeScanner works with updated titles
+- [ ] T10.2.2.2 Verify overview table displays improved information
+- [ ] T10.2.2.3 Check all Recipe4 variants appear correctly
+- [ ] T10.2.3 Step 3: Manual Testing and Responsive Layout
+- [ ] T10.2.3.1 Test navigation flow: Home → Browse Recipes → Individual recipes
+- [ ] T10.2.3.2 Verify responsive layout on different screen sizes
+- [ ] T10.2.3.3 Test all Recipe4 variants work correctly
+- [ ] T10.2.4 Step 4: Update Documentation
+- [ ] T10.2.4.1 Update planning docs to reflect Phase 3 completion
+- [ ] T10.2.4.2 Document improved recipe overview experience
 - [ ] T10.3 Verify Recipe Overview integration with all Recipe4 variants
 - [ ] T10.4 Test Recipe Overview responsive layout and navigation
 - [ ] T8 Optimize render mode pages by reducing code duplication
@@ -52,6 +50,22 @@
 
 ## Done
 
+- [x] T11.5 UI Improvements ✅ COMPLETED
+- [x] T11.5.1 Remove "Coming Soon" alert from Recipes page ✅ COMPLETED
+- [x] T11.5.2 Remove direct links from recipe table (keep only Open buttons) ✅ COMPLETED
+- [x] T11.5.3 Clean up placeholder content from Recipes page ✅ COMPLETED
+- [x] T11.4.1 Run full test suite to verify no regressions ✅ COMPLETED
+- [x] T11.3.1 Add "Browse Recipes" link to NavMenu.razor ✅ COMPLETED
+- [x] T11.2 Restructure Home page for project introduction ✅ COMPLETED
+- [x] T11.2.1 Replace recipe table with project overview content ✅ COMPLETED
+- [x] T11.2.2 Add getting started section ✅ COMPLETED
+- [x] T11.2.3 Add featured recipes or highlights ✅ COMPLETED
+- [x] T11.2.4 Include link to Browse Recipes page ✅ COMPLETED
+- [x] T11.1 Create new Browse Recipes page at `/recipes` route ✅ COMPLETED
+- [x] T11.1.1 Create BlazorCookbookApp/Components/Pages/Recipes.razor ✅ COMPLETED
+- [x] T11.1.2 Move recipe overview table from Home.razor to Recipes.razor ✅ COMPLETED
+- [x] T11.1.3 Update page title to "Browse Recipes" ✅ COMPLETED
+- [x] T11.1.4 Ensure RecipeScanner integration works correctly ✅ COMPLETED
 - [x] T8.0.7 Create comprehensive unit tests for core business logic (96 tests) ✅ COMPLETED
 - [x] T8.0.7.1 RecipeScannerTests.cs - 15 tests covering route patterns, summary extraction, variants ✅ COMPLETED
 - [x] T8.0.7.2 RecipeInfoTests.cs - 11 tests covering data model properties and validation ✅ COMPLETED  
