@@ -138,13 +138,14 @@ dotnet test  # Full test suite
 
 **Step-by-Step Enhancement Plan**:
 
-**Step 1: Improve Recipe4 Titles and Summaries** 
+**Step 1: Improve Recipe4 Titles and Summaries**
+this is done!
 - Update PageTitle and PageSummary properties in all Recipe4 variants
 - Make titles more descriptive and user-friendly (shorter versions recommended)
 - Add clear distinctions between render modes vs demo
 - **Recommended Titles**:
   - WebAssembly: "WebAssembly: Client-side Processing"
-  - Server: "Server: Server-side Processing" 
+  - Server: "Server: Server-side Processing"
   - Auto: "Auto: Adaptive Server-to-Client"
   - Demo: "WebAssembly Demo: Features Showcase"
 - **Expected Result**: Clear, descriptive titles that explain each page's purpose
@@ -167,6 +168,40 @@ dotnet test  # Full test suite
 - **Expected Result**: Complete documentation of enhancements
 
 **Current Status**: ✅ **Phase 3 COMPLETED** - Recipe4 titles improved and tested
+
+**New Column Structure (Planned)**:
+| Chapter | Recipe | Title             | Action | Summary                      | Location | Filename    |
+| ------- | ------ | ----------------- | ------ | ---------------------------- | -------- | ----------- |
+| 1       | 2      | Simple Offer Page | [Open] | Uses simple Ticket component | Server   | Offer       |
+| 1       | 4      | WebAssembly Mode  | [Open] | Client-side processing demo  | Client   | Offer       |
+| 1       | 4      | unknown           | [Open] | unknown                      | Server   | OfferServer |
+
+**Scanner Behavior**:
+- Extract **only** `PageTitle` and `PageSummary` properties from recipe pages
+- Show "unknown" if properties are missing (indicates need to add them)
+- No fallback to H1/H2 extraction
+- Filename shows name without extension or path (e.g., "Offer", "OfferServer")
+
+## **Phase 4: Overview Page Enhancements (NEXT)**
+
+### **Priority 1: Structural Improvements**
+- **T12.2.1** Summary truncation for long text
+- **T12.2.2** Responsive table design for mobile
+- **T12.2.3** Basic sorting functionality (Chapter/Recipe/Location)
+- **T12.2.4** Search/filter functionality
+- **T12.2.5** Column structure enhancements
+  - Add PageTitle property to all recipe pages (no fallback to H1/H2)
+  - Add PageSummary property to all recipe pages (dedicated summaries)
+  - Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing)
+  - Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename
+  - Implement responsive column priority (mobile/tablet/desktop)
+
+### **Priority 2: Optical Improvements**
+- **T12.3.3** Optimized table spacing and visual hierarchy
+
+### **Priority 3: Code Quality (Later)**
+- **T12.1.1** Console logging cleanup (remove debug statements that are not needed)
+- **T12.1.2** Error handling enhancement (show user-visible error messages, if this is useful)
 
 ## Implementation Architecture
 

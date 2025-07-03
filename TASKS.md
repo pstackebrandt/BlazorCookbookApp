@@ -4,12 +4,25 @@
 
 - [ ] T10.2 Phase 3: Recipe Overview Enhancements
 - [ ] T10.2.4 Step 4: Update Documentation (concise)
+
 - [ ] T12 Overview Page Structural and Optical Improvements
-- [ ] T12.1 Fix existing bugs in overview functionality
 - [ ] T12.2 Implement structural improvements for better data display
+- [ ] T12.2.1 Add summary truncation for long text
+- [ ] T12.2.2 Implement responsive table design for mobile
+- [ ] T12.2.3 Add basic sorting functionality (Chapter/Recipe/Location)
+- [ ] T12.2.4 Add search/filter functionality
+- [ ] T12.2.5 Column structure enhancements
+- [ ] T12.2.5.1 Add PageTitle property to all recipe pages (no fallback to H1/H2)
+- [ ] T12.2.5.2 Add PageSummary property to all recipe pages (dedicated summaries)
+- [ ] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing)
+- [ ] T12.2.5.4 Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename
+- [ ] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop)
 - [ ] T12.3 Apply optical improvements for better user experience
-- [ ] T12.4 Add responsive design enhancements
-- [ ] T12.5 Improve table layout and information architecture
+- [ ] T12.3.3 Optimize table spacing and visual hierarchy
+- [ ] T12.1 Fix existing bugs in overview functionality [LOW PRIORITY - AFTER MAIN IMPROVEMENTS]
+- [ ] T12.1.1 Console logging cleanup (remove debug statements)
+- [ ] T12.1.2 Error handling enhancement (show user-visible error messages)
+
 - [ ] T8 Optimize render mode pages by reducing code duplication [AFTER OVERVIEW UPDATES]
 - [ ] T8.2 Phase 2: Extract status card into shared component (base class already exists)
 - [ ] T8.2.1 Create RenderModeStatusCard component with parameters
@@ -19,6 +32,7 @@
 - [ ] T8.3 Phase 3: Additional optimizations (optional)
 - [ ] T8.3.1 Extract Component Lifecycle Insight component (if beneficial)
 - [ ] T8.3.2 Extract Educational Delay Indicator component (if beneficial)
+
 - [ ] T7.5 Document educational comparison between all three modes [AFTER OVERVIEW UPDATES]
 - [ ] T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED: requires persistence]
 
