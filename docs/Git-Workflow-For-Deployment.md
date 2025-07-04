@@ -1,10 +1,10 @@
 # Git Workflow for Deployment Preparation
 
 ## 🎯 **OBJECTIVE**
-Merge current work from `feature/render-mode-optimizations` to dev and main, then create a new feature branch for deployment preparation work.
+Merge current work from `feature/overview-optimization` to dev and main, then create a new feature branch for deployment preparation work.
 
 ## 📋 **CURRENT SITUATION**
-- **Current Branch**: `feature/render-mode-optimizations`
+- **Current Branch**: `feature/overview-optimization`
 - **Status**: Star rating system completed, all tests passing (104/104)
 - **Changes**: Ready to be merged to dev and main
 - **Next**: Create `feature/deployment-preparation` for deployment tasks
@@ -30,7 +30,7 @@ git checkout dev
 git pull origin dev
 
 # Merge feature branch
-git merge feature/render-mode-optimizations
+git merge feature/overview-optimization
 
 # Push updated dev branch
 git push origin dev
@@ -84,7 +84,7 @@ If you prefer to run all commands in sequence:
 git status && \
 git checkout dev && \
 git pull origin dev && \
-git merge feature/render-mode-optimizations && \
+git merge feature/overview-optimization && \
 git push origin dev && \
 git checkout main && \
 git pull origin main && \
@@ -111,7 +111,7 @@ After completion:
 ```
 main                    ← Latest stable code with star rating system
 ├── dev                 ← Same as main
-├── feature/render-mode-optimizations  ← Can be deleted after merge
+├── feature/overview-optimization  ← Can be deleted after merge
 └── feature/deployment-preparation     ← New branch for deployment work (CURRENT)
 ```
 
@@ -137,10 +137,10 @@ git reflog
 ### **Branch Cleanup (After Successful Merge)**
 ```bash
 # Optional: Delete the merged feature branch
-git branch -d feature/render-mode-optimizations
+git branch -d feature/overview-optimization
 
 # Optional: Delete remote branch (if no longer needed)
-git push origin --delete feature/render-mode-optimizations
+git push origin --delete feature/overview-optimization
 ```
 
 ## 🚀 **NEXT STEPS AFTER GIT WORKFLOW**
