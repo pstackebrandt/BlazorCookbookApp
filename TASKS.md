@@ -2,6 +2,15 @@
 
 ## Todo
 
+- [ ] T14 Azure Deployment Preparation
+- [ ] T14.0 Git Branch Management (merge current work, create deployment branch)
+- [ ] T14.1 Update Home Page Content (book references, GitHub link, project purpose)
+- [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
+- [ ] T14.3 Production Configuration Review (appsettings, security, performance)
+- [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
+- [ ] T14.5 Add Impress (Legal Notice) [PRE-DEPLOYMENT - navigation only]
+- [ ] T14.6 Post-Deployment Verification (comprehensive testing) [POST-DEPLOYMENT]
+
 - [ ] T12 Overview Page Structural and Optical Improvements
 - [ ] T12.2 Implement structural improvements for better data display
 - [ ] T12.2.1 Add summary truncation for long text
