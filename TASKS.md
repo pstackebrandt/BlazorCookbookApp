@@ -8,7 +8,11 @@
 - [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
 - [ ] T14.3 Production Configuration Review (appsettings, security, performance)
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
-- [ ] T14.5 Add Impress (Legal Notice) [PRE-DEPLOYMENT - navigation only]
+- [x] T14.5 Add Impress (Legal Notice) [PRE-DEPLOYMENT - navigation only] ✅ COMPLETED
+- [x] T14.5.1 Create bilingual Impress pages (English /impress, German /impressum with English filename) ✅ COMPLETED
+- [x] T14.5.2 Add Legal Notice link to NavMenu.razor with separator and fixed icons ✅ COMPLETED
+- [x] T14.5.3 Test navigation and responsive design ✅ COMPLETED
+- [x] T14.5.4 Fix missing icons for Browse Recipes and Legal Notice ✅ COMPLETED
 - [ ] T14.6 Post-Deployment Verification (comprehensive testing) [POST-DEPLOYMENT]
 
 - [ ] T12 Overview Page Structural and Optical Improvements
