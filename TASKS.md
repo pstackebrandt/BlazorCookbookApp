@@ -4,6 +4,10 @@
 
 - [ ] T14 Azure Deployment Preparation
 - [x] T14.0 Git Branch Management (merge current work, create deployment branch) ✅ COMPLETED
+- [x] T14.1.6 Learning Journey consistency fixes (perspective, book titles, remove bUnit) ✅ COMPLETED
+- [x] T14.1.7 Update Resources page with bUnit under development tools ✅ COMPLETED
+- [x] T14.1.8 Prepare Home page content with project purpose text ✅ COMPLETED
+- [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
 - [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
 - [ ] T14.3 Production Configuration Review (appsettings, security, performance)
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
@@ -49,12 +53,13 @@
 
 ## Done
 
-- [x] T14.1 Create Resources Page (replace About with valuable learning resources) ✅ COMPLETED
-- [x] T14.1.1 Replace About link with Resources link in navigation ✅ COMPLETED
-- [x] T14.1.2 Create Resources.razor page with comprehensive learning materials ✅ COMPLETED
-- [x] T14.1.3 Add book recommendations section (updated order: .NET 9 book 2nd position) ✅ COMPLETED
-- [x] T14.1.4 Add tools & technologies section (updated order: .NET 9, Bootstrap, Cursor AI, VS Code+Copilot, Claude Sonnet, Azure) ✅ COMPLETED
-- [x] T14.1.5 Add personal learning journey and project information sections ✅ COMPLETED
+- [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
+- [x] T14.1 Update Resources Page and Create Learning Journey Page ✅ COMPLETED
+- [x] T14.1.1 Update book descriptions to reflect actual usage (primary source, starting point, etc.) ✅ COMPLETED
+- [x] T14.1.2 Create separate LearningJourney.razor page with enhanced content ✅ COMPLETED
+- [x] T14.1.3 Add Learning Journey link to navigation with journal icon ✅ COMPLETED
+- [x] T14.1.4 Update Resources page to link to Learning Journey instead of containing it ✅ COMPLETED
+- [x] T14.1.5 Translate "überschaubares" to "manageable" in all content ✅ COMPLETED
 - [x] T10.2.4 Step 4: Update Documentation (concise) ✅ COMPLETED
 - [x] T10.2 Phase 3: Recipe Overview Enhancements ✅ COMPLETED
 - [x] T13.8 Update RecipeScannerTests for property-based extraction ✅ COMPLETED

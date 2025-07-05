@@ -1,7 +1,7 @@
 # Resources Page Implementation Plan
 
 ## 🎯 **OBJECTIVE**
-Create a comprehensive Resources page to replace the generic About page, featuring personal book recommendations, learning resources, and project information.
+Create a comprehensive Resources page and separate Learning Journey page, featuring personal book recommendations, learning resources, and project information.
 
 ## 📋 **IMPLEMENTATION TASKS**
 
@@ -60,73 +60,148 @@ Create a comprehensive Resources page to replace the generic About page, featuri
         </div>
     </div>
 
-    <!-- Learning Journey -->
+    <!-- Learning Journey Link -->
     <div class="row mt-4">
         <div class="col-12">
             <h2>🚀 My Learning Journey</h2>
-            <!-- Personal learning story -->
+            <p class="text-muted">Discover how this project evolved and my personal Blazor learning path.</p>
+            <a href="/learning-journey" class="btn btn-primary">Read My Learning Journey</a>
         </div>
     </div>
 </div>
 ```
 
-### **T14.1.3 Book Recommendations Section**
-**Order** (Updated):
+### **T14.1.3 Create Learning Journey Page**
+**File**: `BlazorCookbookApp/Components/Pages/LearningJourney.razor`
+**Route**: `/learning-journey`
+
+**Content Structure**:
+```razor
+@page "/learning-journey"
+
+<PageTitle>My Learning Journey - Blazor Cookbook</PageTitle>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>🚀 My Learning Journey</h1>
+            <p class="lead">How this project evolved and my personal path to mastering Blazor.</p>
+        </div>
+    </div>
+
+    <!-- Project Evolution -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">From Cookbook to Code</h5>
+                    <p class="card-text">
+                        This application started as a practical exercise while working through tutorials of Blazor Cookbook by P. Bazyluk. 
+                        I decided to publish it as a training for publishing a Blazor app with Azure. Additionally, I believe that the 
+                        preparations for hosting help to understand a technology much better than local work. I will extend the content 
+                        step by step while working through the book and add my own ideas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Path -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Blazor Learning Path</h5>
+                    <p class="card-text">
+                        My Blazor learning journey began with live workshops and the book "C# 13 and .NET 9" by M.J. Price, 
+                        which provided the essential foundation. The "Blazor Web Development Cookbook" by P. Bazyluk is now my 
+                        primary systematic source for recipes, while other books serve as supplementary resources for deeper understanding.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Blazor -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Why I Chose Blazor</h5>
+                    <p class="card-text">
+                        I like Blazor because it's a Single Page Application (SPA) that allows me to use and extend my C# and ASP.NET knowledge. 
+                        It often reminds me of React but seems to use a more secure and manageable set of libraries.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Learning Areas -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Key Learning Areas</h5>
+                    <ul>
+                        <li>Blazor render modes and their practical applications</li>
+                        <li>Component lifecycle and state management</li>
+                        <li>Modern .NET development with dependency injection</li>
+                        <li>Responsive web design with Bootstrap 5</li>
+                        <li>Test-driven development with bUnit</li>
+                        <li>Azure deployment and DevOps practices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### **T14.1.4 Book Recommendations Section**
+**Updated Descriptions**:
 1. **"Blazor Web Development Cookbook"** by Pawel Bazyluk (Packt)
+   - **Primary systematic source** for this project
+   - Practical recipes for building modern web applications with Blazor
+
 2. **"C# 13 and .NET 9 – Modern Cross-Platform Development Fundamentals"** by Mark J. Price (Packt)
+   - **Good introduction to .NET 9** with limited Blazor coverage
+   - **Starting point** with live workshops
+
 3. **"Full Stack Development with Microsoft Blazor"** by Peter Himschoot (Apress)
+   - **Comprehensive introduction** focused on Blazor
+   - **Recommended for beginners** who know C# and .NET well
+
 4. **"Apps and Services with .NET 8"** by Mark J. Price (Packt)
-
-**Implementation**:
-- Bootstrap card layout for each book
-- Amazon.de links + Publisher links for each
-- Star ratings or brief descriptions
-- Book cover images (if available)
-
-### **T14.1.4 Tools & Technologies Section**
-**Order** (Updated):
-- **.NET 9** - https://dotnet.microsoft.com/en-us/download/dotnet/9.0
-- **Bootstrap 5.3.3** ✅ (confirmed) - https://getbootstrap.com/docs/5.3/
-- **Cursor AI** - https://cursor.sh/
-- **Visual Studio Code** - https://code.visualstudio.com/
-- **GitHub Copilot** - https://github.com/features/copilot
-- **Claude Sonnet (Anthropic)** - https://www.anthropic.com/claude
-- **Azure** (deployment platform) - https://azure.microsoft.com/
-
-**Implementation Notes**:
-- Separate badges for VS Code and GitHub Copilot
-- Include company names where relevant (Anthropic)
-- All links open in new tabs
+   - Advanced guide to building applications and services with .NET 8
 
 ### **T14.1.5 Navigation Integration**
-**Position**: Between main navigation and Legal Notice
-**Icon**: `bi-book-nav-menu` or `bi-collection-nav-menu`
+**New Navigation Structure**:
+- Resources (existing)
+- Learning Journey (new separate page)
+- Legal Notice (existing)
+
+**Icon**: `bi-journal-text-nav-menu` for Learning Journey
 **CSS**: Add icon definition to NavMenu.razor.css
 
 ## 🔧 **TECHNICAL DETAILS**
 
 ### **Navigation Updates**
 ```razor
-<!-- Add before Legal Notice separator -->
+<!-- Add Learning Journey before Legal Notice separator -->
 <div class="nav-item px-3">
-    <NavLink class="nav-link" href="resources">
-        <span class="bi bi-book-nav-menu" aria-hidden="true"></span> Resources
+    <NavLink class="nav-link" href="learning-journey">
+        <span class="bi bi-journal-text-nav-menu" aria-hidden="true"></span> Learning Journey
     </NavLink>
 </div>
 ```
 
-### **Responsive Design**
-- Bootstrap grid system for responsive layout
-- Card components for book recommendations
-- List groups for technology stack
-- Consistent styling with existing pages
+### **Translation Updates**
+- "überschaubares" → "manageable" in all content
 
 ### **Content Categories**
-1. **Books**: Card layout with links and descriptions
-2. **Microsoft Resources**: List with external links
-3. **Tools**: Badge-style list with links
-4. **Project Info**: GitHub links and purpose
-5. **Learning Journey**: Personal narrative section
+1. **Resources Page**: Books, Microsoft Resources, Tools, Project Info, Learning Journey Link
+2. **Learning Journey Page**: Project evolution, learning path, why Blazor, key learning areas
 
 ## 📱 **RESPONSIVE DESIGN**
 
@@ -144,89 +219,78 @@ Create a comprehensive Resources page to replace the generic About page, featuri
 ## 🧪 **TESTING CHECKLIST**
 
 ### **Functional Testing**
-- [ ] Page loads at `/resources` URL
-- [ ] Navigation link works from main menu
+- [ ] Resources page loads at `/resources` URL
+- [ ] Learning Journey page loads at `/learning-journey` URL
+- [ ] Both navigation links work from main menu
 - [ ] All external links open in new tabs
-- [ ] Page title displays correctly
+- [ ] Page titles display correctly
 - [ ] Responsive design works on mobile and desktop
 
 ### **Content Verification**
-- [ ] All book information accurate
-- [ ] Technology links work correctly
-- [ ] GitHub links point to correct repositories
-- [ ] Learning journey content is engaging
+- [ ] Updated book descriptions reflect correct usage
+- [ ] Learning Journey content matches requirements
+- [ ] "überschaubares" translated to "manageable"
+- [ ] All links work correctly
 
 ### **Integration Testing**
 - [ ] Navigation menu updated correctly
 - [ ] No broken links introduced
-- [ ] Page accessible from all other pages
-- [ ] Icon displays correctly in navigation
+- [ ] Pages accessible from all other pages
+- [ ] Icons display correctly in navigation
 
 ## ⚡ **IMPLEMENTATION PRIORITY**
 
 **Priority**: **HIGH** - Part of deployment preparation
-**Complexity**: **MEDIUM** - Content-heavy page with multiple sections
-**Estimated Time**: **45-60 minutes**
-**Dependencies**: Book links research, GitHub username confirmation
+**Complexity**: **MEDIUM** - Two pages with updated content
+**Estimated Time**: **30-45 minutes**
+**Dependencies**: Content review and approval
 
 ## 🔄 **IMPLEMENTATION SEQUENCE**
 
-1. **Update Navigation** (10 minutes)
-   - Change About to Resources in NavMenu
+1. **Update Resources Page** (15 minutes)
+   - Remove Learning Journey section
+   - Add link to Learning Journey page
+   - Update book descriptions
+
+2. **Create Learning Journey Page** (20 minutes)
+   - Create new .razor file
+   - Add enhanced content
+   - Implement responsive design
+
+3. **Update Navigation** (5 minutes)
+   - Add Learning Journey link
    - Add appropriate icon
    - Test navigation works
 
-2. **Create Resources Page Structure** (20 minutes)
-   - Create basic page layout
-   - Add section headers
-   - Implement responsive grid
-
-3. **Add Content Sections** (25 minutes)
-   - Books section with cards
-   - Technology list
-   - Microsoft resources
-   - Project information
-
-4. **Add Learning Journey** (10 minutes)
-   - Personal narrative
-   - Why I chose Blazor (SPA, C#/ASP.NET knowledge, React-like but more secure/manageable)
-   - Key learning points
-   - Project purpose
-
-5. **Testing & Polish** (10 minutes)
+4. **Testing & Polish** (5 minutes)
    - Test all links
    - Verify responsive design
    - Content review
 
 ## 📝 **CONTENT TEMPLATES**
 
-### **Book Card Template**
+### **Updated Book Description Template**
 ```html
 <div class="card mb-3">
     <div class="card-body">
         <h5 class="card-title">[Book Title]</h5>
         <h6 class="card-subtitle mb-2 text-muted">by [Author] ([Publisher])</h6>
-        <p class="card-text">[Brief description or why you recommend it]</p>
-        <a href="[Amazon.de link]" class="btn btn-primary btn-sm" target="_blank">Amazon.de</a>
-        <a href="[Publisher link]" class="btn btn-outline-secondary btn-sm" target="_blank">[Publisher]</a>
+        <p class="card-text">[Updated description reflecting actual usage]</p>
+        <div class="d-flex gap-2">
+            <a href="[Amazon.de link]" class="btn btn-primary btn-sm" target="_blank">Amazon.de</a>
+            <a href="[Publisher link]" class="btn btn-outline-secondary btn-sm" target="_blank">[Publisher]</a>
+        </div>
     </div>
 </div>
-```
-
-### **Technology Badge Template**
-```html
-<span class="badge bg-primary me-2 mb-2">
-    <a href="[link]" class="text-white text-decoration-none" target="_blank">[Technology]</a>
-</span>
 ```
 
 ---
 
 ## ✅ **READY FOR IMPLEMENTATION**
 
-This plan provides a comprehensive, personal resource page that:
-- Showcases your learning journey
-- Provides value to other developers
-- Maintains professional appearance
-- Integrates seamlessly with existing design
-- Replaces generic About content with meaningful resources 
+This plan provides:
+- Separate Resources and Learning Journey pages
+- Updated book descriptions reflecting actual usage
+- Enhanced personal learning narrative
+- Proper navigation structure
+- Translation corrections 
