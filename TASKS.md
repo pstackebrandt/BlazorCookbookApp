@@ -4,7 +4,6 @@
 
 - [ ] T14 Azure Deployment Preparation
 - [x] T14.0 Git Branch Management (merge current work, create deployment branch) ✅ COMPLETED
-- [ ] T14.1 Update Home Page Content (book references, GitHub link, project purpose)
 - [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
 - [ ] T14.3 Production Configuration Review (appsettings, security, performance)
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
@@ -50,6 +49,12 @@
 
 ## Done
 
+- [x] T14.1 Create Resources Page (replace About with valuable learning resources) ✅ COMPLETED
+- [x] T14.1.1 Replace About link with Resources link in navigation ✅ COMPLETED
+- [x] T14.1.2 Create Resources.razor page with comprehensive learning materials ✅ COMPLETED
+- [x] T14.1.3 Add book recommendations section (updated order: .NET 9 book 2nd position) ✅ COMPLETED
+- [x] T14.1.4 Add tools & technologies section (updated order: .NET 9, Bootstrap, Cursor AI, VS Code+Copilot, Claude Sonnet, Azure) ✅ COMPLETED
+- [x] T14.1.5 Add personal learning journey and project information sections ✅ COMPLETED
 - [x] T10.2.4 Step 4: Update Documentation (concise) ✅ COMPLETED
 - [x] T10.2 Phase 3: Recipe Overview Enhancements ✅ COMPLETED
 - [x] T13.8 Update RecipeScannerTests for property-based extraction ✅ COMPLETED
