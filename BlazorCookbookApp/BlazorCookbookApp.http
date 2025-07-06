@@ -4,8 +4,7 @@
 GET {{baseUrl}}/health
 Accept: application/json
 
-### Weather Data
-GET {{baseUrl}}/weather
+
 Accept: application/json
 
 ### Error Page
