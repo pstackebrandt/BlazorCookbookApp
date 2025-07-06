@@ -29,9 +29,9 @@
 
 - [ ] T15 Mobile Responsiveness and Testing
 - [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
-- [ ] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename)
+- [x] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
 - [ ] T15.6 Manual mobile testing on actual phone devices (post-deployment verification)
-- [ ] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode)
+- [x] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode) ✅ COMPLETED
 - [ ] T15.4 FUTURE: Review and optimize small font sizes for mobile readability (0.75rem badges → 0.85rem, 0.9rem table text → 1rem)
 - [ ] T15.5 FUTURE: Add touch-friendly mobile enhancements (44px tap targets, improved spacing, swipe gestures)
 
@@ -71,6 +71,9 @@
 
 ## Done
 
+- [x] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode) ✅ COMPLETED
+- [x] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
+- [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
 - [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
 - [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
 - [x] T14.7.2 Replace generic "About This Project" with personal project purpose ✅ COMPLETED

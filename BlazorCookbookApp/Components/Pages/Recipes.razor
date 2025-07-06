@@ -75,36 +75,36 @@
                         <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Chapter</th>
-                                <th>Recipe</th>
+                                <th class="d-none d-lg-table-cell">Chapter</th>
+                                <th class="d-none d-lg-table-cell">Recipe</th>
                                 <th>Title</th>
                                 <th>Action</th>
-                                <th>Summary</th>
-                                <th>Location</th>
+                                <th class="d-none d-md-table-cell">Summary</th>
+                                <th class="d-none d-md-table-cell">Location</th>
                                 <th>Stars</th>
-                                <th>Filename</th>
+                                <th class="d-none d-lg-table-cell">Filename</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var recipe in recipes)
                             {
                                 <tr>
-                                    <td>@recipe.Chapter</td>
-                                    <td>@recipe.Recipe</td>
+                                    <td class="d-none d-lg-table-cell">@recipe.Chapter</td>
+                                    <td class="d-none d-lg-table-cell">@recipe.Recipe</td>
                                     <td>@recipe.Title</td>
                                     <td>
                                         <button class="btn btn-sm btn-outline-primary" @onclick="() => NavigateToRecipe(recipe.Route)">
                                             Open
                                         </button>
                                     </td>
-                                    <td>@recipe.Summary</td>
-                                    <td>
+                                    <td class="d-none d-md-table-cell">@recipe.Summary</td>
+                                    <td class="d-none d-md-table-cell">
                                         <span class="badge @(recipe.Location == "Client" ? "bg-primary" : "bg-secondary")">
                                             @recipe.Location
                                         </span>
                                     </td>
                                     <td>@GetStarDisplay(recipe.Stars)</td>
-                                    <td>@recipe.FilePath</td>
+                                    <td class="d-none d-lg-table-cell">@recipe.FilePath</td>
                                 </tr>
                             }
                         </tbody>
