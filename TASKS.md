@@ -27,10 +27,18 @@
 - [x] T14.5.4 Fix missing icons for Browse Recipes and Legal Notice ✅ COMPLETED
 - [ ] T14.6 Post-Deployment Verification (comprehensive testing) [POST-DEPLOYMENT]
 
+- [ ] T15 Mobile Responsiveness and Testing
+- [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
+- [ ] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename)
+- [ ] T15.6 Manual mobile testing on actual phone devices (post-deployment verification)
+- [ ] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode)
+- [ ] T15.4 FUTURE: Review and optimize small font sizes for mobile readability (0.75rem badges → 0.85rem, 0.9rem table text → 1rem)
+- [ ] T15.5 FUTURE: Add touch-friendly mobile enhancements (44px tap targets, improved spacing, swipe gestures)
+
 - [ ] T12 Overview Page Structural and Optical Improvements
 - [ ] T12.2 Implement structural improvements for better data display
 - [ ] T12.2.1 Add summary truncation for long text
-- [ ] T12.2.2 Implement responsive table design for mobile
+- [x] T12.2.2 Implement responsive table design for mobile ✅ COMPLETED
 - [ ] T12.2.3 Add basic sorting functionality (Chapter/Recipe/Location)
 - [ ] T12.2.4 Add search/filter functionality
 - [ ] T12.2.5 Column structure enhancements
@@ -38,7 +46,7 @@
 - [x] T12.2.5.2 Add PageSummary property to all recipe pages (dedicated summaries) ✅ COMPLETED
 - [x] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing) ✅ COMPLETED
 - [x] T12.2.5.4 Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename ✅ COMPLETED
-- [ ] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop)
+- [ ] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop) [SUPERSEDED BY T15.3]
 - [ ] T12.2.6 Add repository links to each recipe in overview page (post-deployment improvement)
 - [ ] T12.3 Apply optical improvements for better user experience
 - [ ] T12.3.3 Optimize table spacing and visual hierarchy
@@ -209,6 +217,7 @@
 
 ## Deferred
 
+- [ ] T15.2 Set up automated mobile testing with Playwright (device emulation, real browser testing, responsive design validation) [DEFERRED: Too complex for pre-deployment, focus on manual testing]
 - [ ] T6 Create Recipe4 Server vs Client comparison implementation [DEFERRED: Not current priority]
 - [ ] T6.2 Update client version with authentic state tracking and distinct page title [DEFERRED]
 - [ ] T6.3 Create comparison page with responsive layout (/ch01r04c) [DEFERRED]
@@ -224,6 +233,7 @@
 - Use B + number for bug tasks
 - **Task Order**: In Done section, place newer tasks at the top, older tasks at the bottom
 - **Authentic Behavior**: Focus on real render mode behavior, not artificial delays
+- **Mobile Testing Strategy**: Desktop browser emulation for pre-deployment, actual device testing post-deployment
 
 ## Examples
 
