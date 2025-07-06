@@ -328,7 +328,14 @@ dotnet publish --configuration Release --output ./publish
 
 # 5. Create ZIP package
 # Navigate to ./publish folder and create ZIP of all contents
+# Name: BlazorCookbookApp.zip (simple naming for manual upload)
 ```
+
+**Manual Upload Process**:
+1. Build and publish locally using commands above
+2. Create ZIP from publish folder contents
+3. Upload ZIP to Azure App Service via portal
+4. Verify version displays correctly in UI (manual check)
 
 ### **File Structure Verification**
 **Required Files in ZIP**:
@@ -435,16 +442,17 @@ dotnet publish --configuration Release --output ./publish
 **Example Display**: "Version 1.0.0 (Production, Built: 2024-01-15 14:30)"
 
 #### **Version-Based Deployment Naming**
-**Implementation**: Use version numbers in deployment artifacts
+**Implementation**: Use version numbers in deployment artifacts (optional)
+**Current Approach**: Simple naming like `BlazorCookbookApp.zip` works perfectly for manual upload
 **Benefits**:
 - Easy identification of deployment packages
 - Better organization in Azure storage
 - Clear rollback target identification
 
 **Examples**:
-- ZIP file: `BlazorCookbookApp-v1.0.0.zip`
-- Deployment slots: `staging-v1.0.0`
-- Release naming: `Production-v1.0.0-20240115`
+- ZIP file: `BlazorCookbookApp.zip` (current approach) or `BlazorCookbookApp-v1.0.0.zip` (optional)
+- Manual upload to Azure App Service (current workflow)
+- Version tracking via UI verification (manual check)
 
 #### **Version Tracking for Rollback**
 **Implementation**: Maintain deployment history with version mapping

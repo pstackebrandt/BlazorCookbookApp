@@ -5,16 +5,20 @@
 ![Blazor](https://img.shields.io/badge/Blazor-WebAssembly-orange)
 ![Azure](https://img.shields.io/badge/Azure-Ready-lightblue)
 
-A comprehensive Blazor application showcasing various recipes and techniques for
-building modern web applications with Blazor WebAssembly and Server.
+Educational Blazor application demonstrating real-world patterns and techniques.
+Based on "Blazor Web Development Cookbook" with enhanced examples and production-ready features.
 
-## Features
+## 🌐 Live Demo
 
-- **Overview**: Dynamic content overview.
-- **Recipe4**: Render mode demonstrations (WebAssembly, Server, Auto)
-  with authentic timing data and component lifecycle insights
-- **WebAssembly Demo**: Interactive demonstration page showcasing WebAssembly
-  capabilities with real-time performance metrics and hands-on examples
+**Production URL**: *Coming soon after Azure deployment*
+
+## What You'll Find
+
+- **Recipe Browser**: Browse 15+ interactive Blazor examples
+- **Render Mode Comparison**: See Server vs WebAssembly vs Auto modes in action
+- **Performance Insights**: Real-time metrics and component lifecycle visualization
+- **Mobile Responsive**: Optimized for all device sizes
+- **Production Ready**: Version management, deployment configuration, comprehensive testing
 
 ## Quick Start
 
@@ -35,20 +39,26 @@ Current version: **1.0.0** (displayed in navigation footer)
 
 Version is managed centrally in `Directory.Build.props`. See [VERSIONING.md](VERSIONING.md) for update workflow.
 
+## Technology Stack
+
+- **.NET 9.0** - Latest framework features
+- **Blazor WebAssembly & Server** - Hybrid rendering approach
+- **Bootstrap 5** - Responsive UI components
+- **xUnit & bUnit** - Comprehensive testing (96 tests)
+- **Azure App Service** - Production deployment target
+
 ## Project Structure
 
 - **`BlazorCookbookApp/`** - Server project with shared components
-- **`BlazorCookbookApp.Client/`** - Client project with WebAssembly components
-- **`docs/`** - Feature documentation and development guides
-  - `Recipe4-Optimization-Plan.md` - Code duplication reduction and truthful
-    state implementation
-  - `Truthful-State-Design-Principle.md` - Revolutionary approach to authentic
-    component education
-  - `Educational-Delay-Design-Principle.md` - Real delay implementation
-    standards (superseded)
-  - `BlazorCookbook-Style-Guide.md` - UI consistency, color semantics, and
-    coding standards
+- **`BlazorCookbookApp.Client/`** - WebAssembly client project
+- **`BlazorCookbookApp.Tests/`** - Comprehensive test suite
+- **`docs/`** - Development guides and deployment documentation
 
-## Sources
+## Sources & Attribution
 
-Based on: [Blazor Web Development Cookbook](https://github.com/PacktPublishing/Blazor-Web-Development-Cookbook)
+- **Primary Source**: [Blazor Web Development Cookbook](https://www.packtpub.com/product/blazor-web-development-cookbook/9781803241524)
+ by Pawel Bazyluk
+****- **Publisher**: Packt Publishing
+- **Enhanced with**: Production features, comprehensive testing, mobile optimization
+- **Educational Purpose**: Training reference for Blazor development patterns
+- **Repository**: [GitHub](https://github.com/pstackebrandt/BlazorCookbookApp)

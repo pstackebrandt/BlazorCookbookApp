@@ -8,7 +8,7 @@
 - [x] T14.1.7 Update Resources page with bUnit under development tools ✅ COMPLETED
 - [x] T14.1.8 Prepare Home page content with project purpose text ✅ COMPLETED
 - [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
-- [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
+- [x] T14.2 Update README.md (deployment info, attribution, educational purpose) ✅ COMPLETED
 - [x] T14.3 Production Configuration Review (appsettings, security, performance) ✅ COMPLETED
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
 - [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
@@ -71,6 +71,9 @@
 
 ## Done
 
+- [x] T17 Update README.md to be more concise and helpful ✅ COMPLETED
+- [x] T16 Implement version management system for BlazorCookbookApp ✅ COMPLETED
+- [x] T14.2 Update README.md (deployment info, attribution, educational purpose) ✅ COMPLETED
 - [x] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode) ✅ COMPLETED
 - [x] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
 - [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
