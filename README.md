@@ -1,5 +1,10 @@
 # Blazor Cookbook App
 
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![.NET](https://img.shields.io/badge/.NET-9.0-purple)
+![Blazor](https://img.shields.io/badge/Blazor-WebAssembly-orange)
+![Azure](https://img.shields.io/badge/Azure-Ready-lightblue)
+
 A comprehensive Blazor application showcasing various recipes and techniques for
 building modern web applications with Blazor WebAssembly and Server.
 
@@ -23,6 +28,17 @@ building modern web applications with Blazor WebAssembly and Server.
 2. **Browse recipes:** Navigate to home page for complete recipe overview
 
 3. **Add new recipes:** Follow `/ch##r##` naming pattern for auto-discovery
+
+## Version Management
+
+Version information is managed centrally and displayed in the application:
+
+- **Current Version**: 1.0.0 (visible in navigation footer)
+- **Central Management**: Version defined in `Directory.Build.props`
+- **Runtime Access**: Version service provides version information to UI
+- **Deployment Tracking**: Version verification included in deployment checklist
+
+For version updates, see [VERSIONING.md](VERSIONING.md) for detailed workflow.
 
 ## Project Structure
 

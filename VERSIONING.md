@@ -114,8 +114,9 @@ Manages central package versioning for NuGet dependencies:
 
 ## How to Update Versions
 
-### Update Directory.Build.props
+### Version Update Workflow
 
+**Step 1: Update Directory.Build.props**
 Edit the version numbers in `Directory.Build.props`:
 
 ```xml
@@ -126,18 +127,70 @@ Edit the version numbers in `Directory.Build.props`:
 <PackageVersion>1.2.0</PackageVersion>
 ```
 
-### Beware of redundancy
+**Step 2: Update README.md Badge**
+Update the version badge in README.md:
 
-Don't use current version number in README.md or VERSIONING.md. Don't use a version history. file.
+```markdown
+![Version](https://img.shields.io/badge/Version-1.2.0-blue)
+```
 
-### Tag the release in Git (optional)
+**Step 3: Test Version Display**
+Build and run the application to verify version appears correctly:
+
+```powershell
+dotnet build
+dotnet run
+```
+
+Check navigation footer displays: "Version 1.2.0"
+
+**Step 4: Commit Changes**
+Use conventional commit format:
+
+```powershell
+git add .
+git commit -m "feat: bump version to 1.2.0"
+```
+
+**Step 5: Create Git Tag**
+Tag the release for deployment tracking:
 
 ```powershell
 git tag -a v1.2.0 -m "List main changes here"
 git push origin v1.2.0
 ```
 
-### Update Package Versions (if needed)
+### Version Tagging Workflow
+
+**Purpose**: Track releases and enable rollback capabilities
+
+**Tag Format**: `v{MAJOR}.{MINOR}.{PATCH}` (e.g., v1.2.0)
+
+**Tag Message**: Include main changes or release notes
+
+**Examples**:
+```powershell
+# Feature release
+git tag -a v1.1.0 -m "Added recipe overview and mobile responsiveness"
+
+# Bug fix release  
+git tag -a v1.0.1 -m "Fixed navigation menu version display"
+
+# Major release
+git tag -a v2.0.0 -m "Breaking: Updated to .NET 10, redesigned UI"
+```
+
+### Deployment Version Updates
+
+**Before Deployment**:
+1. Update version in `Directory.Build.props`
+2. Update README.md badge
+3. Test version display locally
+4. Commit and tag release
+
+**Deployment Guides**: Remember to update version number before each deployment
+
+### Package Version Updates (if needed)
 
 Edit `Directory.Packages.props` to update NuGet package versions:
 
@@ -145,10 +198,9 @@ Edit `Directory.Packages.props` to update NuGet package versions:
 <PackageVersion Include="PackageName" Version="NewVersion" />
 ```
 
-### Commit Changes
+### Beware of redundancy
 
-- Use conventional commit format: `feat: bump version to 1.2.0`
-- Include version update in commit message
+Don't use current version number in README.md or VERSIONING.md. Don't use a version history file.
 
 ## Best Practices
 

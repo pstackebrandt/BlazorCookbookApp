@@ -16,6 +16,9 @@ builder.Services.AddScoped<RecipeScanner>();
 // Add recipe URL service (needed for InteractiveWebAssembly pages that pre-render on server)
 builder.Services.AddScoped<IRecipeUrlService, RecipeUrlService>();
 
+// Add version service
+builder.Services.AddScoped<IVersionService, VersionService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

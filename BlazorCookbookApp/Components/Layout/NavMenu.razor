@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using BlazorCookbookApp.Services
+@inject IVersionService VersionService
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Blazor Cookbook</a>
     </div>
@@ -41,5 +44,10 @@
             </NavLink>
         </div>
     </nav>
+    
+    <!-- Version Footer -->
+    <div class="version-footer px-3 py-2 mt-auto">
+        <small>@VersionService.GetVersion()</small>
+    </div>
 </div>
 

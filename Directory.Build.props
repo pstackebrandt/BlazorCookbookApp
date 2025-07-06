@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <!-- Central Version Management -->
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageVersion>1.0.0</PackageVersion>
+    
+    <!-- Project Metadata -->
+    <Company>Peter Stackebrandt</Company>
+    <Product>Blazor Cookbook App</Product>
+    <Description>Educational Blazor application based on "Blazor Web Development Cookbook"</Description>
+    <Copyright>Copyright © $([System.DateTime]::Now.Year) Peter Stackebrandt</Copyright>
+  </PropertyGroup>
+</Project> 

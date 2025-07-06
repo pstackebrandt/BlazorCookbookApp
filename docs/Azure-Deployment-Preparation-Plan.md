@@ -7,6 +7,23 @@ Deploy the Blazor Cookbook application to Azure App Service using ZIP deployment
 
 ### ✅ **IMMEDIATE TASKS (Before Deployment)**
 
+#### **T16 Implement Version Management System**
+**Priority**: MEDIUM - Recommended before deployment
+**Description**: Add version management system to display current version in UI
+
+**Implementation**:
+- Create `Directory.Build.props` with central version management (v1.0.0)
+- Create `VersionService` for runtime version access
+- Register service in `Program.cs`
+- Display version in `NavMenu.razor`
+- Test across all render modes
+
+**Benefits**:
+- Users can see current version
+- Support team can identify deployed version
+- Consistent version management across solution
+- Ready for future version updates
+
 #### **T14.1 Update Home Page Content**
 **Priority**: HIGH - Required before deployment
 **Description**: Update Home.razor with book references and project purpose
@@ -171,6 +188,8 @@ Weißensee 27<br>
 **Description**: Comprehensive testing of deployed application
 
 **Testing Checklist**:
+- [ ] **Version Verification**: Confirm correct version displays in navigation footer
+- [ ] **Version Tracking**: Document deployed version in deployment log
 - [ ] All pages load correctly
 - [ ] Recipe overview functionality works
 - [ ] Star rating system displays properly
@@ -181,6 +200,12 @@ Weißensee 27<br>
 - [ ] Performance metrics acceptable
 - [ ] Error handling works in production
 - [ ] HTTPS certificate valid and working
+
+**Version Verification Steps**:
+1. Navigate to deployed application URL
+2. Check navigation footer displays "Version 1.0.0"
+3. Compare with expected version from deployment
+4. Document version in deployment log for rollback reference
 
 ## 🔧 **TECHNICAL DEPLOYMENT REQUIREMENTS**
 
@@ -395,6 +420,50 @@ dotnet publish --configuration Release --output ./publish
 1. **Deployment Guide** - Detailed deployment instructions
 2. **Production Troubleshooting** - Common issues and solutions
 3. **Performance Optimization Guide** - Production performance tips
+
+## 🔮 **FUTURE VERSION ENHANCEMENTS**
+
+### **Post-Deployment Options**
+
+#### **Build Information Enhancement**
+**Implementation**: Extend VersionService to include build metadata
+**Benefits**: 
+- Show build date/time in UI
+- Display environment (Development/Production)
+- Include Git commit hash for precise tracking
+
+**Example Display**: "Version 1.0.0 (Production, Built: 2024-01-15 14:30)"
+
+#### **Version-Based Deployment Naming**
+**Implementation**: Use version numbers in deployment artifacts
+**Benefits**:
+- Easy identification of deployment packages
+- Better organization in Azure storage
+- Clear rollback target identification
+
+**Examples**:
+- ZIP file: `BlazorCookbookApp-v1.0.0.zip`
+- Deployment slots: `staging-v1.0.0`
+- Release naming: `Production-v1.0.0-20240115`
+
+#### **Version Tracking for Rollback**
+**Implementation**: Maintain deployment history with version mapping
+**Benefits**:
+- Quick rollback to previous working version
+- Deployment audit trail
+- Issue correlation with specific versions
+
+**Implementation**:
+- Simple deployment log in Azure deployment checklist
+- Previous deployment packages retained for rollback
+- Version-to-environment mapping documentation
+
+**Example Deployment Log**:
+```
+v1.0.0 - 2024-01-15 - Initial production release
+v1.0.1 - 2024-01-16 - Hotfix for navigation issue
+v1.1.0 - 2024-01-20 - Feature: Mobile responsiveness
+```
 
 ## ❓ **QUESTIONS FOR CLARIFICATION**
 
