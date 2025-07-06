@@ -103,6 +103,14 @@
     margin: 0.5rem 1rem;
 }
 
+.nav-section-header {
+    padding: 0.5rem 0 0.25rem 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
 .nav-scrollable {
     display: none;
 }

@@ -11,6 +11,15 @@
 - [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
 - [ ] T14.3 Production Configuration Review (appsettings, security, performance)
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
+- [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
+- [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
+- [x] T14.7.2 Replace generic "About This Project" with personal project purpose ✅ COMPLETED
+- [x] T14.7.3 Add prominent navigation links to Learning Journey and Resources ✅ COMPLETED
+- [x] T14.7.4 Remove "Coming Soon" and replace with continuous expansion messaging ✅ COMPLETED
+- [x] T14.7.5 Add Featured Highlights section with 2 top recipes as teaser ✅ COMPLETED
+- [x] T14.7.6 Home page content refinements (remove comprehensive, fix links, add book link, remove low-value sections) ✅ COMPLETED
+- [x] T14.7.7 Fix book links (updated Packt URLs) and Auto page route (/ch01r04a) ✅ COMPLETED
+- [x] T14.8 Add repository link to Home page Quick Start section ✅ COMPLETED
 - [x] T14.5 Add Impress (Legal Notice) [PRE-DEPLOYMENT - navigation only] ✅ COMPLETED
 - [x] T14.5.1 Create bilingual Impress pages (English /impress, German /impressum with English filename) ✅ COMPLETED
 - [x] T14.5.2 Add Legal Notice link to NavMenu.razor with separator and fixed icons ✅ COMPLETED
@@ -30,6 +39,7 @@
 - [x] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing) ✅ COMPLETED
 - [x] T12.2.5.4 Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename ✅ COMPLETED
 - [ ] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop)
+- [ ] T12.2.6 Add repository links to each recipe in overview page (post-deployment improvement)
 - [ ] T12.3 Apply optical improvements for better user experience
 - [ ] T12.3.3 Optimize table spacing and visual hierarchy
 - [ ] T12.1 Fix existing bugs in overview functionality [LOW PRIORITY - AFTER MAIN IMPROVEMENTS]
@@ -53,6 +63,14 @@
 
 ## Done
 
+- [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
+- [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
+- [x] T14.7.2 Replace generic "About This Project" with personal project purpose ✅ COMPLETED
+- [x] T14.7.3 Add prominent navigation links to Learning Journey and Resources ✅ COMPLETED
+- [x] T14.7.4 Remove "Coming Soon" and replace with continuous expansion messaging ✅ COMPLETED
+- [x] T14.7.5 Add Featured Highlights section with 2 top recipes as teaser ✅ COMPLETED
+- [x] T14.7.6 Home page content refinements (remove comprehensive, fix links, add book link, remove low-value sections) ✅ COMPLETED
+- [x] T14.7.7 Fix book links (updated Packt URLs) and Auto page route (/ch01r04a) ✅ COMPLETED
 - [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
 - [x] T14.1 Update Resources Page and Create Learning Journey Page ✅ COMPLETED
 - [x] T14.1.1 Update book descriptions to reflect actual usage (primary source, starting point, etc.) ✅ COMPLETED
