@@ -31,14 +31,9 @@ building modern web applications with Blazor WebAssembly and Server.
 
 ## Version Management
 
-Version information is managed centrally and displayed in the application:
+Current version: **1.0.0** (displayed in navigation footer)
 
-- **Current Version**: 1.0.0 (visible in navigation footer)
-- **Central Management**: Version defined in `Directory.Build.props`
-- **Runtime Access**: Version service provides version information to UI
-- **Deployment Tracking**: Version verification included in deployment checklist
-
-For version updates, see [VERSIONING.md](VERSIONING.md) for detailed workflow.
+Version is managed centrally in `Directory.Build.props`. See [VERSIONING.md](VERSIONING.md) for update workflow.
 
 ## Project Structure
 
