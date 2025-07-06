@@ -11,8 +11,9 @@
 *.sln.docstates
 
 # Configuration files with sensitive data
-appsettings.json
-appsettings.*.json
+# Currently we versionize appsettings becaus they contain no secrets
+#appsettings.json
+#appsettings.*.json
 !appsettings.*.Example.json
 !appsettings.Example.json
 

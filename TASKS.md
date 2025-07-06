@@ -9,7 +9,7 @@
 - [x] T14.1.8 Prepare Home page content with project purpose text ✅ COMPLETED
 - [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
 - [ ] T14.2 Update README.md (deployment info, attribution, educational purpose)
-- [ ] T14.3 Production Configuration Review (appsettings, security, performance)
+- [x] T14.3 Production Configuration Review (appsettings, security, performance) ✅ COMPLETED
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
 - [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
 - [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
@@ -217,6 +217,12 @@
 - [x] T1 Optimize page Rendermodes ch1r4
 - [x] T1.1 Make better visible what the page is about
 - [x] T1.2 Separate render mode detection from the page title
+- [x] T14.3.7 Create comprehensive Azure deployment checklist ✅ COMPLETED
+- [x] T14.3.6 Document recommended Azure App Service settings for Linux deployment ✅ COMPLETED
+- [x] T14.3.4 Test publish output to ensure WebAssembly files are included ✅ COMPLETED
+- [x] T14.3.3 Verify Program.cs WebAssembly and static file configuration ✅ COMPLETED
+- [x] T14.3.2 Create appsettings.Production.json with optimized logging levels (Linux deployment) ✅ COMPLETED
+- [x] T14.3.5 Verify appsettings files are included in version control ✅ COMPLETED
 
 ## Deferred
 

@@ -69,20 +69,57 @@ Based on "Blazor Web Development Cookbook" by Pawel Bazyluk (Packt Publishing)
 **Priority**: HIGH - Critical for production deployment
 **Description**: Review and optimize all configuration files for production
 
+**CRITICAL AZURE DEPLOYMENT REQUIREMENTS**:
+
+**1. web.config (CRITICAL - Fixes Interactivity Issues)**
+- **Problem**: Missing WebAssembly MIME types cause interactivity failures
+- **Solution**: Create/verify web.config with proper IIS configuration
+- **Required MIME types**: .wasm, .blat, .dat files
+- **Static file serving**: Ensure proper routing for SPA
+- **Compression**: Enable gzip/brotli for WebAssembly files
+
+**2. appsettings.Production.json (HIGH PRIORITY)**
+- **✅ CREATED** - Production-specific configuration with optimized logging
+- **Logging optimization**: Warning level instead of Information for production
+- **Version control**: ✅ Included in git (removed from .gitignore)
+- **Environment hierarchy**: Base → Development → Production → Azure settings
+- **Future expansion**: Ready for connection strings, monitoring, security settings
+
+**3. Program.cs Verification (HIGH PRIORITY)**
+- **WebAssembly hosting configuration** must be correct
+- **Static file serving** properly configured
+- **HTTPS redirection** enabled for production
+- **Error handling** appropriate for production
+- **Compression middleware** enabled
+
+**4. Azure App Service Settings (DEPLOYMENT)**
+- **ASPNETCORE_ENVIRONMENT**: Production
+- **WEBSITE_RUN_FROM_PACKAGE**: 1
+- **SCM_DO_BUILD_DURING_DEPLOYMENT**: false
+
 **Files to Review**:
-1. **appsettings.json** - Production logging and configuration
-2. **appsettings.Production.json** - Create if needed for production-specific settings
-3. **Program.cs** - Ensure proper error handling and HTTPS configuration
-4. **launchSettings.json** - Review for any development-specific settings
-5. **web.config** - Ensure proper IIS configuration for Azure App Service
+1. **web.config** - CREATE/VERIFY (most critical for interactivity)
+2. **appsettings.json** - Review current settings
+3. **appsettings.Production.json** - CREATE for production
+4. **Program.cs** - Verify WebAssembly and static file configuration
+5. **launchSettings.json** - Review for development-specific settings
+6. **Publish output** - Verify WebAssembly files are included
 
 **Production Settings to Verify**:
-- Logging levels appropriate for production
-- Error handling configured for production
+- Logging levels appropriate for production (Warning/Error only)
+- Error handling configured for production (no stack traces to users)
 - HTTPS redirection enabled
-- Static file serving optimized
-- Compression enabled
+- Static file serving optimized for WebAssembly
+- Compression enabled for .wasm, .blat, .dat files
 - Security headers configured
+- WebAssembly MIME types properly registered
+
+**Azure-Specific Checks**:
+- WebAssembly files in wwwroot/_framework/ after publish
+- Proper routing configuration for SPA
+- MIME type registration for .wasm files
+- Static file caching headers
+- Compression settings for large WebAssembly files
 
 #### **T14.4 Application Performance Optimization**
 **Priority**: MEDIUM - Recommended for production
@@ -149,20 +186,24 @@ Weißensee 27<br>
 
 ### **Azure App Service Configuration**
 **Runtime Stack**: .NET 9.0
-**Operating System**: Windows (recommended for simplicity)
-**Pricing Tier**: **Free F1** or **Shared D1** (cost-optimized, longer startup times acceptable)
+**Operating System**: Linux (cost-optimized, no IIS complications)
+**Pricing Tier**: **F1 Free** (no cost, longer startup times acceptable)
 **Region**: West Europe (recommended for German audience)
 **Resource Group**: Create new resource group for this project
 
-**Free Tier Limitations**:
+**F1 Free Tier Specifications**:
+- **Cost**: Completely free
 - Cold start delays (app sleeps after 20 minutes of inactivity)
 - 60 CPU minutes/day limit
 - 1GB storage
 - Custom domains not included (use *.azurewebsites.net)
 - No auto-scaling
-- **Acceptable for**: Educational projects, demos, low-traffic sites
+- **Perfect for**: Educational projects, demos, portfolio sites
+- **Linux advantage**: Better performance and reliability than Windows F1
 
-### **Required Azure App Service Settings**
+### **Required Azure App Service Settings (Linux)**
+
+**Essential Settings (Critical for Deployment):**
 ```json
 {
   "ASPNETCORE_ENVIRONMENT": "Production",
@@ -170,6 +211,80 @@ Weißensee 27<br>
   "SCM_DO_BUILD_DURING_DEPLOYMENT": "false"
 }
 ```
+
+**Setting Explanations:**
+
+#### **ASPNETCORE_ENVIRONMENT = "Production"**
+- **Purpose**: Tells .NET which environment configuration to use
+- **Effect**: Loads `appsettings.Production.json` automatically
+- **Benefits**: Optimized logging, production error handling, HSTS enabled
+- **Critical**: Without this, app runs in default mode with development settings
+
+#### **WEBSITE_RUN_FROM_PACKAGE = "1"**
+- **Purpose**: Runs app directly from deployment ZIP package
+- **Benefits**: Faster startup, better performance, read-only file system
+- **Security**: Prevents file system modifications at runtime
+- **Recommended**: Always use for production deployments
+
+#### **SCM_DO_BUILD_DURING_DEPLOYMENT = "false"**
+- **Purpose**: Disables Azure's automatic build process
+- **Why needed**: We're uploading pre-built publish output
+- **Benefits**: Faster deployment, consistent builds, no build dependencies on Azure
+- **Critical**: Prevents Azure from trying to rebuild already-compiled code
+
+**Optional Performance Settings:**
+```json
+{
+  "WEBSITE_ENABLE_SYNC_UPDATE_SITE": "true",
+  "WEBSITE_RUN_FROM_PACKAGE_BLOB": "false",
+  "WEBSITE_ENABLE_SYNC_UPDATE_SITE": "true"
+}
+```
+
+#### **WEBSITE_ENABLE_SYNC_UPDATE_SITE = "true"**
+- **Purpose**: Synchronizes file updates across all instances
+- **Benefits**: Consistent deployment across scale-out instances
+- **F1 Free**: Not critical (single instance), but good practice
+
+#### **WEBSITE_RUN_FROM_PACKAGE_BLOB = "false"**
+- **Purpose**: Runs package from local storage instead of blob storage
+- **Benefits**: Better performance for small packages on F1 Free
+- **Trade-off**: Uses local storage quota instead of blob storage
+
+**Monitoring Settings (Optional - Free Tier Available):**
+```json
+{
+  "APPINSIGHTS_INSTRUMENTATIONKEY": "[your-key-here]",
+  "ApplicationInsightsAgent_EXTENSION_VERSION": "~3",
+  "APPINSIGHTS_PROFILERFEATURE_VERSION": "1.0.0"
+}
+```
+
+#### **Application Insights Settings**
+- **APPINSIGHTS_INSTRUMENTATIONKEY**: Your Application Insights key
+- **ApplicationInsightsAgent_EXTENSION_VERSION**: Enables automatic telemetry
+- **Benefits**: Performance monitoring, error tracking, usage analytics
+- **Free tier**: 5GB/month data ingestion included
+- **Recommendation**: Enable for production monitoring
+
+**Security Settings (Optional but Recommended):**
+```json
+{
+  "WEBSITE_HTTPLOGGING_RETENTION_DAYS": "3",
+  "WEBSITE_LOAD_CERTIFICATES": "*",
+  "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false"
+}
+```
+
+#### **WEBSITE_HTTPLOGGING_RETENTION_DAYS = "3"**
+- **Purpose**: Limits HTTP log retention
+- **Benefits**: Saves storage space, reduces costs
+- **F1 Free**: Helps stay within storage limits
+
+#### **WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"**
+- **Purpose**: Disables persistent storage for better security
+- **Benefits**: Stateless deployment, better security posture
+- **Matches**: WEBSITE_RUN_FROM_PACKAGE approach
 
 ### **Deployment Package Creation**
 **Command Sequence**:
@@ -335,4 +450,4 @@ dotnet publish --configuration Release --output ./publish
 
 **Estimated Timeline**: 2-3 days for complete deployment and verification
 
-**Risk Assessment**: Low - Application is well-tested and production-ready 
+**Risk Assessment**: Low - Application is well-tested and production-ready
