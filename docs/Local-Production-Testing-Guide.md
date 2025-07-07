@@ -4,26 +4,52 @@ This guide shows how to test your Blazor application in production mode locally 
 
 ## 🎯 Overview
 
-Testing production builds locally helps identify configuration issues, performance problems, and deployment-specific behavior before going live. This is a critical step in the deployment process.
+Testing production builds locally helps identify configuration issues, performance problems, and deployment-specific behavior before going live. 
+
+This is a critical step in the deployment process.
 
 ## 🔧 Testing Methods
 
-### Method 1: Environment Variable Approach
+**💡 All methods should be run from the solution root directory: `/BlazorCookbookApp/`**
+
+### Method 1: Test Published Output (Recommended)
 
 ```powershell
-# 1. Set environment to Production
-$env:ASPNETCORE_ENVIRONMENT="Production"
+# 1. Clean previous builds
+dotnet clean
 
-# 2. Build in Release configuration
-dotnet build --configuration Release
+# 2. Publish like you would for Azure
+dotnet publish BlazorCookbookApp --configuration Release --output ./publish
 
-# 3. Run with production settings
-dotnet run --configuration Release
+# 3. Run the published version
+cd publish
+dotnet BlazorCookbookApp.dll --environment Production
+
+# 4. Navigate back when done
+cd ..
 ```
 
-**Best for**: Quick production configuration testing
+**Best for**: Testing the exact output that will be deployed to Azure
 
-### Method 2: Explicit Environment Parameter
+### Method 2: Environment Variable Approach
+
+```powershell
+# 1. Clean previous builds
+dotnet clean
+
+# 2. Set environment to Production
+$env:ASPNETCORE_ENVIRONMENT="Production"
+
+# 3. Build in Release configuration
+dotnet build --configuration Release
+
+# 4. Run with production settings
+dotnet run --project BlazorCookbookApp --configuration Release
+```
+
+**Best for**: Quick production configuration testing with clean build
+
+### Method 3: Explicit Environment Parameter
 
 ```powershell
 # 1. Clean previous builds
@@ -32,27 +58,11 @@ dotnet clean
 # 2. Build for production
 dotnet build --configuration Release
 
-# 3. Run with explicit environment
-dotnet run --configuration Release --environment Production
+# 3. Run with explicit environment (without setting env variable)
+dotnet run --project BlazorCookbookApp --configuration Release --environment Production
 ```
 
-**Best for**: Ensuring clean production build
-
-### Method 3: Test Published Output (Recommended)
-
-```powershell
-# 1. Publish like you would for Azure
-dotnet publish --configuration Release --output ./publish
-
-# 2. Run the published version
-cd publish
-dotnet BlazorCookbookApp.dll --environment Production
-
-# 3. Navigate back when done
-cd ..
-```
-
-**Best for**: Testing the exact output that will be deployed to Azure
+**Best for**: Testing without modifying environment variables
 
 ## 📋 Testing Checklist
 
@@ -184,9 +194,10 @@ dotnet BlazorCookbookApp.dll --environment Production --verbose
 ## 📝 Notes
 
 - **Environment Reset**: Remember to reset environment variable after testing
-- **Clean Builds**: Use `dotnet clean` between different test methods
+- **Clean Builds**: `dotnet clean` ensures no stale artifacts from previous builds with different configurations
 - **Browser Cache**: Clear browser cache between tests for accurate results
 - **Port Conflicts**: Ensure no other applications using same ports
+- **Build Reliability**: Always clean before production testing to ensure known build state
 
 ## 🔄 Reset Environment
 
@@ -199,4 +210,4 @@ $env:ASPNETCORE_ENVIRONMENT=""
 # Or restart PowerShell/terminal
 ```
 
-This ensures development mode returns to normal behavior. 
+This ensures development mode returns to normal behavior.

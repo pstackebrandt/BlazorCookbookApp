@@ -2,6 +2,8 @@
 @using BlazorCookbookApp.Services
 @inject RecipeScanner RecipeScanner
 @inject NavigationManager Navigation
+@inject ILogger<Recipes> Logger
+@inject IWebHostEnvironment Environment
 @rendermode InteractiveServer
 
 <PageTitle>Browse Recipes - Blazor Cookbook</PageTitle>
@@ -120,39 +122,40 @@
     private List<RecipeInfo>? recipes;
 
     /// <summary>
-    /// Load all recipes on page initialization and log to console for debugging.
+    /// Load all recipes on page initialization with minimal logging.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
         try
         {
             recipes = await RecipeScanner.GetRecipesAsync();
-            Console.WriteLine($"Found {recipes.Count} recipes:");
-            foreach (var recipe in recipes)
+            
+            // Minimal logging - only recipe count and only in development
+            if (Environment.IsDevelopment())
             {
-                Console.WriteLine($"- {recipe.Route} ({recipe.Location}) - {recipe.Summary}");
+                Console.WriteLine($"Found {recipes.Count} recipes");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading recipes: {ex.Message}");
+            // Use proper ILogger for errors
+            Logger.LogError(ex, "Error loading recipes");
             recipes = new List<RecipeInfo>();
         }
     }
 
     /// <summary>
-    /// Navigate to recipe page with debug logging.
+    /// Navigate to recipe page with proper error logging.
     /// </summary>
     private void NavigateToRecipe(string route)
     {
-        Console.WriteLine($"Attempting to navigate to: {route}");
         try
         {
             Navigation.NavigateTo(route);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Navigation error: {ex.Message}");
+            Logger.LogError(ex, "Navigation error for route: {Route}", route);
         }
     }
 

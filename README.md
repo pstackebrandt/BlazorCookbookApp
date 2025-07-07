@@ -8,6 +8,18 @@
 Educational Blazor application demonstrating real-world patterns and techniques.
 Based on "Blazor Web Development Cookbook" with enhanced examples and production-ready features.
 
+## 📋 Table of Contents
+
+- [Blazor Cookbook App](#blazor-cookbook-app)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [🌐 Live Demo](#-live-demo)
+  - [What You'll Find](#what-youll-find)
+  - [Quick Start](#quick-start)
+  - [Version Management](#version-management)
+  - [Technology Stack](#technology-stack)
+  - [Project Structure](#project-structure)
+  - [Sources \& Attribution](#sources--attribution)
+
 ## 🌐 Live Demo
 
 **Production URL**: *Coming soon after Azure deployment*

@@ -1,5 +1,6 @@
 using BlazorCookbookApp.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 using System.Reflection;
@@ -18,7 +19,8 @@ public class RecipeScannerTests
     public RecipeScannerTests()
     {
         var mockEnvironment = new MockWebHostEnvironment();
-        _scanner = new RecipeScanner(mockEnvironment);
+        var mockLogger = new Mock<ILogger<RecipeScanner>>();
+        _scanner = new RecipeScanner(mockEnvironment, mockLogger.Object);
     }
 
     [Theory]

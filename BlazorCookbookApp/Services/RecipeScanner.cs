@@ -9,6 +9,7 @@ namespace BlazorCookbookApp.Services;
 public class RecipeScanner
 {
     private readonly IWebHostEnvironment _environment;
+    private readonly ILogger<RecipeScanner> _logger;
     
     // Matches @page "/ch01r02" or @page "/ch01r03cl" - captures route, chapter, recipe, variant
     private readonly Regex _routePattern = new(@"@page\s+""(/ch(\d+)r(\d+)(\w*))""", RegexOptions.IgnoreCase);
@@ -22,9 +23,10 @@ public class RecipeScanner
     // Extract PageStars property (both public and protected override patterns)
     private readonly Regex _pageStarsPattern = new(@"(?:public\s+int\s+PageStars\s*\{\s*get;\s*set;\s*\}\s*=\s*(\d+)|protected\s+override\s+int\s+PageStars\s*=>\s*(\d+)\s*;)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-    public RecipeScanner(IWebHostEnvironment environment)
+    public RecipeScanner(IWebHostEnvironment environment, ILogger<RecipeScanner> logger)
     {
         _environment = environment;
+        _logger = logger;
     }
 
     /// <summary>
@@ -87,13 +89,13 @@ public class RecipeScanner
                 catch (Exception ex)
                 {
                     // Log error but continue processing other files
-                    Console.WriteLine($"Error parsing {filePath}: {ex.Message}");
+                    _logger.LogError(ex, "Error parsing recipe file: {FilePath}", filePath);
                 }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error scanning directory {directoryPath}: {ex.Message}");
+            _logger.LogError(ex, "Error scanning directory: {DirectoryPath}", directoryPath);
         }
     }
 
