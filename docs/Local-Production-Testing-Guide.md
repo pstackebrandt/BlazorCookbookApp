@@ -4,7 +4,8 @@ This guide shows how to test your Blazor application in production mode locally 
 
 ## 🎯 Overview
 
-Testing production builds locally helps identify configuration issues, performance problems, and deployment-specific behavior before going live. 
+Testing production builds locally helps identify configuration issues, performance problems,
+and deployment-specific behavior before going live.
 
 This is a critical step in the deployment process.
 
