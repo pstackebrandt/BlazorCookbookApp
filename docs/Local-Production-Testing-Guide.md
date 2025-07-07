@@ -71,6 +71,7 @@ dotnet run --project BlazorCookbookApp --configuration Release --environment Pro
 
 - [ ] **Application Starts**: No startup errors or exceptions
 - [ ] **Version Display**: "Version 1.0.0" appears in navigation footer
+- [ ] **Health Check Endpoint**: `/health` returns 200 OK with "Healthy"
 - [ ] **All Pages Load**: Home, Recipes, Resources, Learning Journey, Legal Notice
 - [ ] **Navigation**: All menu items and links work correctly
 - [ ] **Recipe Overview**: Browse recipes functionality works
@@ -141,6 +142,16 @@ publish/
 ```powershell
 # Monitor application logs during testing
 dotnet BlazorCookbookApp.dll --environment Production --verbose
+```
+
+### Health Check Testing
+```powershell
+# Test health check endpoint (adjust port as needed)
+Invoke-WebRequest -Uri "http://localhost:5000/health" -Method GET
+
+# Expected response:
+# StatusCode: 200
+# Content: "Healthy"
 ```
 
 ### Browser Developer Tools

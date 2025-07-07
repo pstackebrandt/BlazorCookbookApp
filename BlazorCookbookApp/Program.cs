@@ -19,6 +19,9 @@ builder.Services.AddScoped<IRecipeUrlService, RecipeUrlService>();
 // Add version service
 builder.Services.AddScoped<IVersionService, VersionService>();
 
+// Add health checks
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,5 +53,8 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorCookbookApp.Client._Imports).Assembly);
+
+// Map health check endpoint
+app.MapHealthChecks("/health");
 
 app.Run();

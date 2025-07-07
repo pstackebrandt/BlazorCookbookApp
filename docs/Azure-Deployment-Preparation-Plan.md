@@ -167,6 +167,25 @@ if (app.Environment.IsDevelopment())
 3. Re-test to measure improvements
 4. Document performance baseline
 
+#### **T20 Implement Health Check Endpoint** ✅ **COMPLETED**
+**Priority**: MEDIUM - Recommended for Azure monitoring
+**Description**: Add health check endpoint for Azure App Service monitoring and deployment validation
+
+**✅ Implementation Completed**:
+- ✅ Added `builder.Services.AddHealthChecks()` to Program.cs
+- ✅ Added `app.MapHealthChecks("/health")` to Program.cs
+- ✅ Tested locally: `http://localhost:5000/health` returns 200 OK with "Healthy"
+- ✅ Ready for production testing: `https://yourapp.azurewebsites.net/health`
+
+**Benefits**:
+- **Azure Integration**: Automatic health monitoring and failure detection
+- **Load Balancer**: Ensures traffic routes only to healthy instances
+- **Deployment Validation**: Simple endpoint to verify successful deployments
+- **Application Insights**: Automatic tracking and metrics collection
+- **Production Standard**: Industry best practice for web applications
+
+**References**: See [Health Check Implementation Guide](HEALTH-CHECK-IMPLEMENTATION.md)
+
 ### ✅ **POST-DEPLOYMENT TASKS**
 
 #### **T14.5 Add Impress (Legal Notice)**
@@ -208,6 +227,7 @@ Weißensee 27<br>
 **Testing Checklist**:
 - [ ] **Version Verification**: Confirm correct version displays in navigation footer
 - [ ] **Version Tracking**: Document deployed version in deployment log
+- [ ] **Health Check Endpoint**: Verify `/health` endpoint returns 200 OK (if implemented)
 - [ ] All pages load correctly
 - [ ] Recipe overview functionality works
 - [ ] Star rating system displays properly
@@ -516,6 +536,7 @@ v1.1.0 - 2024-01-20 - Feature: Mobile responsiveness
 
 ### **Deployment Success Indicators**
 - [ ] Application loads successfully at Azure URL
+- [ ] Health check endpoint returns 200 OK (`/health`)
 - [ ] All features work as expected in production
 - [ ] Performance is acceptable (< 3 second load times)
 - [ ] No console errors or warnings
@@ -541,7 +562,12 @@ v1.1.0 - 2024-01-20 - Feature: Mobile responsiveness
 3. Review and optimize production configuration
 4. Create deployment package and deploy to Azure
 5. Add Impress page after deployment
-6. Complete post-deployment verification
+6. Complete post-deployment verification (including health check)
+
+**✅ Recently Completed**:
+- Health check endpoint implementation (`/health`)
+- Local health check testing (200 OK response verified)
+- Production testing guide updated with health check verification
 
 **Estimated Timeline**: 2-3 days for complete deployment and verification
 
