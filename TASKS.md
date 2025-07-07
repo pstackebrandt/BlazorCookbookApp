@@ -10,6 +10,7 @@
 - [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
 - [x] T14.2 Update README.md (deployment info, attribution, educational purpose) ✅ COMPLETED
 - [x] T14.3 Production Configuration Review (appsettings, security, performance) ✅ COMPLETED
+- [x] T14.3.10 Review Program.cs for Azure App Service compatibility (HTTPS redirection, static files) ✅ COMPLETED
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
 - [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
 - [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
@@ -71,6 +72,7 @@
 
 ## Done
 
+- [x] T14.3.8 Implement conditional HTTPS redirection for Azure App Service compatibility ✅ COMPLETED
 - [x] T17 Update README.md to be more concise and helpful ✅ COMPLETED
 - [x] T16 Implement version management system for BlazorCookbookApp ✅ COMPLETED
 - [x] T14.2 Update README.md (deployment info, attribution, educational purpose) ✅ COMPLETED

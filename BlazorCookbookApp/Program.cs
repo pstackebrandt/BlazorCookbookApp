@@ -33,12 +33,19 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
+// Azure handles HTTPS termination at load balancer level, avoiding redirect loops
+// Behind the load balancer, the app is served over HTTP
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection(); // Local development needs explicit HTTPS redirection
+}
+// Production: Azure infrastructure handles HTTPS termination automatically
+// Redirects in production could lead to redirect loops and connection issues.
 
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()

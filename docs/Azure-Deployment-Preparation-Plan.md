@@ -105,9 +105,19 @@ Based on "Blazor Web Development Cookbook" by Pawel Bazyluk (Packt Publishing)
 **3. Program.cs Verification (HIGH PRIORITY)**
 - **WebAssembly hosting configuration** must be correct
 - **Static file serving** properly configured
-- **HTTPS redirection** enabled for production
+- **HTTPS redirection** configured for Azure (conditional - development only)
 - **Error handling** appropriate for production
 - **Compression middleware** enabled
+
+**HTTPS Redirection for Azure** (CRITICAL):
+```csharp
+// Azure handles HTTPS termination, so only redirect in development
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+```
+**Why**: Azure terminates HTTPS at load balancer level. Unconditional redirection can cause loops.
 
 **4. Azure App Service Settings (DEPLOYMENT)**
 - **ASPNETCORE_ENVIRONMENT**: Production
