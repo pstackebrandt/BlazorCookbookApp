@@ -152,12 +152,20 @@ if (app.Environment.IsDevelopment())
 **Priority**: MEDIUM - Recommended for production
 **Description**: Optimize application for production performance
 
+**Pre-Testing**: See [Local Production Testing Guide](Local-Production-Testing-Guide.md) for testing methods
+
 **Areas to Optimize**:
 - **Bundle Size**: Review and minimize WebAssembly bundle size
 - **Static Assets**: Optimize images and CSS files
 - **Caching**: Configure appropriate caching headers
 - **Compression**: Ensure gzip/brotli compression enabled
 - **CDN Ready**: Prepare for potential CDN integration
+
+**Testing Steps**:
+1. Test production build locally before optimization
+2. Apply performance improvements
+3. Re-test to measure improvements
+4. Document performance baseline
 
 ### ✅ **POST-DEPLOYMENT TASKS**
 
