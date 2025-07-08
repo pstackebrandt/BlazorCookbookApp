@@ -1,6 +1,6 @@
 # Blazor Cookbook App
 
-![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![Version](https://img.shields.io/badge/Version-1.0.1-blue)
 ![.NET](https://img.shields.io/badge/.NET-9.0-purple)
 ![Blazor](https://img.shields.io/badge/Blazor-WebAssembly-orange)
 ![Azure](https://img.shields.io/badge/Azure-Ready-lightblue)
@@ -47,7 +47,7 @@ Based on "Blazor Web Development Cookbook" with enhanced examples and production
 
 ## Version Management
 
-Current version: **1.0.0** (displayed in navigation footer)
+Current version: **1.0.1** (displayed in navigation footer)
 
 Version is managed centrally in `Directory.Build.props`. See [VERSIONING.md](VERSIONING.md) for update workflow.
 
