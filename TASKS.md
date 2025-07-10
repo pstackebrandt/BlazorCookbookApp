@@ -2,6 +2,16 @@
 
 ## Todo
 
+- [x] T15 Documentation Reorganization Series ✅ COMPLETED
+- [x] T15.1 Create new documentation structure with topic-based folders (deployment, development, features, project-management) ✅ COMPLETED
+- [x] T15.2 Create archive structure with 2025-q1 time-based subdivision (completed-features, deferred-projects, documentation-history) ✅ COMPLETED
+- [x] T15.3 Move completed feature documentation to archive/2025-q1/completed-features/ (Recipe4-Optimization-Plan.md, Recipe-Overview-Plan.md) ✅ COMPLETED
+- [x] T15.4 Move Documentation-Reorganization-Summary.md to archive/2025-q1/documentation-history/ ✅ COMPLETED
+- [x] T15.5 Organize remaining documentation files into topic-based folders (deployment, development, features, project-management) ✅ COMPLETED
+- [x] T15.6 Create Documentation-Reorganization-2025.md with new structure explanation and migration record ✅ COMPLETED
+- [x] T15.7 Create comprehensive README.md in docs/ explaining structure, conventions, and usage guidelines ✅ COMPLETED
+- [x] T15.8 Remove empty deployment-debugging/ folder ✅ COMPLETED
+
 - [ ] T14 Azure Deployment Preparation
 - [x] T14.0 Git Branch Management (merge current work, create deployment branch) ✅ COMPLETED
 - [x] T14.1.6 Learning Journey consistency fixes (perspective, book titles, remove bUnit) ✅ COMPLETED
