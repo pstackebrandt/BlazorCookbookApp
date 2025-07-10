@@ -1,5 +1,9 @@
 # Git Workflow for Deployment Preparation
 
+> Build & deployment commands are maintained in
+> `docs/deployment/Production-Build-Guide.md` – this file focuses on Git flow
+> only.
+
 ## 🎯 **OBJECTIVE** ✅ **COMPLETED**
 Merge current work from `feature/overview-optimization` to dev and main, then create a new feature branch for deployment preparation work.
 

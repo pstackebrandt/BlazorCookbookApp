@@ -1,5 +1,10 @@
 # Local Production Testing Guide
 
+> **Note**  
+> Build & deployment commands are now maintained in
+> `docs/deployment/Production-Build-Guide.md`.  
+> This guide focuses solely on **testing** the published output locally.
+
 This guide shows how to test your Blazor application in production mode locally before Azure deployment.
 
 ## 🎯 Overview

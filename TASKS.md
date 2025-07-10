@@ -45,6 +45,12 @@
 - [ ] T18.3 Research build-time manifest generation (JSON)
 - [ ] T18.4 Implement build-time manifest and remove source copy (future)
 
+- [x] T19 Consolidate production build docs ✅ COMPLETED
+- [x] T19.1 Add Production-Build-Guide.md (single source) ✅ COMPLETED
+- [x] T19.2 Refactor Azure-Deployment-Checklist to reference guide ✅ COMPLETED
+- [x] T19.3 Refactor Azure-Deployment-Preparation-Plan to reference guide ✅ COMPLETED
+- [x] T19.4 Add guide references to remaining deployment docs ✅ COMPLETED
+
 - [ ] T15 Mobile Responsiveness and Testing
 - [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
 - [x] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED

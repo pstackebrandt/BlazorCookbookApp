@@ -1,4 +1,7 @@
-# Why Use appsettings.Production.json - Benefits Summary
+# Production appsettings Benefits
+
+> Related build & deployment steps are documented in
+> `docs/deployment/Production-Build-Guide.md`.
 
 ## 🎯 **Overview**
 This document explains why using `appsettings.Production.json` is beneficial for .NET applications, especially when deploying to Azure or other cloud platforms.

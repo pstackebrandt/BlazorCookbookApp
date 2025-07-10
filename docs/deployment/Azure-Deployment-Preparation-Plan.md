@@ -350,24 +350,9 @@ Weißensee 27<br>
 - **Matches**: WEBSITE_RUN_FROM_PACKAGE approach
 
 ### **Deployment Package Creation**
-**Command Sequence**:
-```bash
-# 1. Clean previous builds
-dotnet clean
-
-# 2. Restore dependencies
-dotnet restore
-
-# 3. Build in Release mode
-dotnet build --configuration Release
-
-# 4. Publish for production
-dotnet publish --configuration Release --output ./publish
-
-# 5. Create ZIP package
-# Navigate to ./publish folder and create ZIP of all contents
-# Name: BlazorCookbookApp.zip (simple naming for manual upload)
-```
+Detailed build & package commands have been consolidated into
+`docs/deployment/Production-Build-Guide.md`. Use that guide for the current
+publish + zip steps.
 
 **Manual Upload Process**:
 1. Build and publish locally using commands above

@@ -10,22 +10,8 @@
 - [ ] **WebAssembly files** are included in publish output
 
 ### **✅ Step 2: Create Production Build**
-```bash
-# Navigate to main project directory
-cd BlazorCookbookApp
-
-# Clean previous builds
-dotnet clean
-
-# Restore dependencies
-dotnet restore
-
-# Build in Release mode
-dotnet build --configuration Release
-
-# Publish for production
-dotnet publish --configuration Release --output ../publish
-```
+Please follow the single-source instructions in
+`docs/deployment/Production-Build-Guide.md`.
 
 ### **✅ Step 3: Verify Publish Output**
 - [ ] **publish/** folder created successfully
@@ -35,15 +21,8 @@ dotnet publish --configuration Release --output ../publish
 - [ ] **All static assets** (CSS, images) included
 
 ### **✅ Step 4: Create Deployment Package**
-```bash
-# Navigate to publish folder
-cd publish
-
-# Create ZIP package (Windows PowerShell)
-Compress-Archive -Path * -DestinationPath ../BlazorCookbookApp-Deploy.zip
-
-# Alternative: Use file explorer to create ZIP of all contents in publish folder
-```
+Detailed packaging commands have moved to
+`docs/deployment/Production-Build-Guide.md` (section 2 Build & Package).
 
 ## 🚀 **Azure App Service Setup**
 
@@ -89,19 +68,8 @@ Compress-Archive -Path * -DestinationPath ../BlazorCookbookApp-Deploy.zip
 3. **Click Save** and wait for restart
 
 ### **✅ Step 7: Deploy Application**
-1. **Go to Deployment Center** → **Manual Deployment (Local Git/ZIP)**
-2. **Upload ZIP Package**:
-   - Click **Browse** and select `BlazorCookbookApp-Deploy.zip`
-   - Click **Upload**
-   - Wait for deployment to complete
-
-3. **Alternative: Using Azure CLI**:
-   ```bash
-   az webapp deployment source config-zip \
-     --resource-group BlazorCookbookApp-RG \
-     --name blazor-cookbook-[yourname] \
-     --src BlazorCookbookApp-Deploy.zip
-   ```
+Deployment is described in section 3 of
+`docs/deployment/Production-Build-Guide.md`.
 
 ## 🔍 **Post-Deployment Verification**
 
