@@ -131,4 +131,5 @@ docs/
 
 ---
 
-**This reorganization creates a cleaner, more focused documentation structure while preserving historical context and completed work in the archive.** 
+**This reorganization creates a cleaner, more focused documentation structure
+while preserving historical context and completed work in the archive.**
