@@ -226,4 +226,4 @@ If deployment fails:
 
 ---
 
-**Estimated Total Time**: 1-2 hours for first deployment, 15-30 minutes for subsequent deployments 
+**Estimated Total Time**: 1-2 hours for first deployment, 15-30 minutes for subsequent deployments
