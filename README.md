@@ -1,6 +1,6 @@
 # Blazor Cookbook App
 
-![Version](https://img.shields.io/badge/Version-1.0.1-blue)
+![Version](https://img.shields.io/badge/Version-1.0.2-blue)
 ![.NET](https://img.shields.io/badge/.NET-9.0-purple)
 ![Blazor](https://img.shields.io/badge/Blazor-WebAssembly-orange)
 ![Azure](https://img.shields.io/badge/Azure-Ready-lightblue)
