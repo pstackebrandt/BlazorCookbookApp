@@ -439,3 +439,6 @@ FodyWeavers.xsd
 
 # Content created by AI but for confidential use
 docs/chats/
+
+# Logs for local development and temporary use
+docs/logs/
