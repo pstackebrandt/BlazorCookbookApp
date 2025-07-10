@@ -11,6 +11,8 @@
 - [x] T15.6 Create Documentation-Reorganization-2025.md with new structure explanation and migration record ✅ COMPLETED
 - [x] T15.7 Create comprehensive README.md in docs/ explaining structure, conventions, and usage guidelines ✅ COMPLETED
 - [x] T15.8 Remove empty deployment-debugging/ folder ✅ COMPLETED
+- [x] T15.9 Move and rename remaining documentation files: VERSION-IMPLEMENTATION-GUIDE.md → development/Version-Implementation-Guide.md, DEVELOPMENT_TIPS.md → development/Development-Tips.md, VERSIONING.md → project-management/Versioning-Strategy.md ✅ COMPLETED
+- [x] T15.10 Fix archive structure consistency: move old completed-projects and exported-chats to 2025-q1 time-based structure, rename HEALTH-CHECK-IMPLEMENTATION.md → Health-Check-Implementation.md ✅ COMPLETED
 
 - [ ] T14 Azure Deployment Preparation
 - [x] T14.0 Git Branch Management (merge current work, create deployment branch) ✅ COMPLETED
