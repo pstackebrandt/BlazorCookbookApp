@@ -3,15 +3,29 @@
 This document is the **single source of truth** for creating a production
 package and deploying *BlazorCookbookApp* to Azure App Service.
 
+## Table of Contents
+
+- [Production Build \& Deploy Guide](#production-build--deploy-guide)
+  - [Table of Contents](#table-of-contents)
+  - [1  Prerequisites](#1--prerequisites)
+    - [One-off App Service settings](#one-off-app-service-settings)
+  - [2  Build \& Package](#2--build--package)
+  - [3  Test locally (optional)](#3--test-locally-optional)
+  - [4  Deploy](#4--deploy)
+    - [4.1 Preferred – VS Code Azure extension](#41-preferred--vs-code-azure-extension)
+    - [4.2 Alternative – Azure CLI](#42-alternative--azure-cli)
+  - [5  Verify deployment](#5--verify-deployment)
+  - [6  Next steps](#6--next-steps)
+
 ---
 
 ## 1  Prerequisites
 
-* Windows 11 / WSL2 with PowerShell 7 or Bash
-* .NET SDK ≥ 9.0.4 ( `dotnet --version` )
-* Visual Studio Code with **Azure App Service** extension
-* Azure CLI (optional) – sign in via `az login --use-device-code`
-* An existing Azure App Service (Linux, .NET 9 stack)
+- Windows 11 / WSL2 with PowerShell 7 or Bash
+- .NET SDK ≥ 9.0.4 ( `dotnet --version` )
+- Visual Studio Code with **Azure App Service** extension
+- Azure CLI (optional) – sign in via `az login --use-device-code`
+- An existing Azure App Service (Linux, .NET 9 stack)
 
 ### One-off App Service settings
 
@@ -31,34 +45,53 @@ package and deploying *BlazorCookbookApp* to Azure App Service.
 Remove-Item -Recurse -Force .\bin\Publish -ErrorAction SilentlyContinue
 
 # 1) Publish the server project in Release mode
- dotnet publish BlazorCookbookApp/BlazorCookbookApp.csproj `
-              -c Release `
-              -o .\bin\Publish
+dotnet publish BlazorCookbookApp/BlazorCookbookApp.csproj -c Release -o .\bin\Publish
 
-# 2) The .razor files are copied automatically (quick-fix for RecipeScanner)
-#    thanks to <Content CopyToPublishDirectory="Always"/> in the csproj.
-
-# 3) (Optional) create a zip for CLI deployments
-Compress-Archive -Path '.\bin\Publish\*' `
-                 -DestinationPath '.\blazor-recipes.zip' -Force
+# 2) (Optional) create a zip for CLI deployments
+Compress-Archive -Path '.\bin\Publish\*' -DestinationPath '.\blazor-recipes.zip' -Force
 ```
 
 > **Gotchas**
-> * Ensure no `global.json` is present in *bin\Publish* – it will break the
+> - Ensure no `global.json` is present in *bin\Publish* – it will break the
 >   runtime image.
-> * Exclude test artefacts: `<IsPublishable>false>` in the test project.
+> - Exclude test artefacts: `<IsPublishable>false>` in the test project.
 
 ---
 
-## 3  Deploy
+## 3  Test locally (optional)
 
-### 3.1 Preferred – VS Code Azure extension
+To verify the published output works correctly before deploying to Azure:
+
+```powershell
+# Navigate to the publish folder
+cd .\bin\Publish
+
+# Run the published application
+dotnet BlazorCookbookApp.dll
+
+# The app will start on http://localhost:5000 and https://localhost:5001
+```
+
+**Manual test checklist:**
+- Browse to `http://localhost:5000` → Home page loads correctly
+- Browse to `http://localhost:5000/recipes` → Browse Recipes page (will be empty until Recipe Overview strategy is implemented)
+- Test direct recipe routes: `/ch01r04`, `/ch01r04s`, `/ch01r04a`, `/ch01r04w`
+- Health check: `http://localhost:5000/health` → returns `Healthy`
+- Check console output for any errors or warnings
+
+Press `Ctrl+C` to stop the application when finished testing.
+
+---
+
+## 4  Deploy
+
+### 4.1 Preferred – VS Code Azure extension
 
 1. Right-click the target App Service → **Deploy to Web App…**
 2. Select the folder **bin\Publish**.
 3. Wait for *Deployment completed*; the extension mounts the zip automatically.
 
-### 3.2 Alternative – Azure CLI
+### 4.2 Alternative – Azure CLI
 
 ```powershell
 az webapp deploy `
@@ -70,7 +103,7 @@ az webapp deploy `
 
 ---
 
-## 4  Verify deployment
+## 5  Verify deployment
 
 1. Portal → **Log stream** → look for
    `Executing startup command: dotnet BlazorCookbookApp.dll` and
@@ -81,12 +114,12 @@ az webapp deploy `
 
 ---
 
-## 5  Next steps
+## 6  Next steps
 
-* Script the build + deploy commands in **publish.ps1** for convenience.
-* Investigate a build-time manifest (# T18.3) to remove the need to copy
+- Script the build + deploy commands in **publish.ps1** for convenience.
+- Investigate a build-time manifest (# T18.3) to remove the need to copy
   `.razor` sources.
-* Enable container log streaming (optional):
+- Enable container log streaming (optional):
 
   ```powershell
   az webapp log config --name <App> --resource-group <RG> \
@@ -95,4 +128,4 @@ az webapp deploy `
 
 ---
 
-_Last updated 2025-07-10_ 
+*Last updated 2025-01-15*
