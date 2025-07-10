@@ -26,7 +26,12 @@
 - [x] T14.5.2 Add Legal Notice link to NavMenu.razor with separator and fixed icons ✅ COMPLETED
 - [x] T14.5.3 Test navigation and responsive design ✅ COMPLETED
 - [x] T14.5.4 Fix missing icons for Browse Recipes and Legal Notice ✅ COMPLETED
-- [ ] T14.6 Post-Deployment Verification (comprehensive testing) [POST-DEPLOYMENT]
+
+- [ ] T18 Recipe Overview Page – Publish Strategies
+- [x] T18.1 Copy .razor sources via Content include (quick fix) ✅ COMPLETED
+- [ ] T18.2 Deploy and verify Browse Recipes page shows data in Azure
+- [ ] T18.3 Research build-time manifest generation (JSON)
+- [ ] T18.4 Implement build-time manifest and remove source copy (future)
 
 - [ ] T15 Mobile Responsiveness and Testing
 - [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
