@@ -11,27 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
   </ItemGroup>
 
-  <!--
-     Quick-fix for Issue: Browse Recipes page empty after publish
-     We copy all relevant .razor source files into the publish folder so that
-     RecipeScanner can still enumerate them at runtime in Azure.
-     Trade-offs and alternative strategies are documented in
-     docs/Recipe-Overview-Fix-Strategies.md (see task block T18).
-  -->
-  <ItemGroup>
-    <!-- Server components -->
-    <Content Include="Components\**\*.razor"
-             CopyToPublishDirectory="Always" />
-
-    <!-- Client pages -->
-    <Content Include="..\BlazorCookbookApp.Client\Pages\**\*.razor"
-             Link="Client\Pages\%(RecursiveDir)%(Filename)%(Extension)"
-             CopyToPublishDirectory="Always" />
-
-    <!-- Client chapters -->
-    <Content Include="..\BlazorCookbookApp.Client\Chapters\**\*.razor"
-             Link="Client\Chapters\%(RecursiveDir)%(Filename)%(Extension)"
-             CopyToPublishDirectory="Always" />
-  </ItemGroup>
-
 </Project>

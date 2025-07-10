@@ -2,6 +2,14 @@
 
 ## Todo
 
+- [x] T20 Fix Recipe Overview Build Error (NETSDK1022) ✅ COMPLETED
+- [x] T20.1 Resolve duplicate Content items error caused by manual .razor file includes conflicting with SDK defaults ✅ COMPLETED
+- [x] T20.2 Revert T18.1 changes: Remove manual Content includes from BlazorCookbookApp.csproj ✅ COMPLETED
+- [x] T20.3 Test build after removing manual includes (should resolve NETSDK1022 error) ✅ COMPLETED
+- [x] T20.4 Update Recipe-Overview-Fix-Strategies.md: mark strategy 1 as non-viable due to SDK conflicts ✅ COMPLETED
+- [x] T20.5 Test production build locally: Confirm Browse Recipes page is empty (expected behavior) ✅ COMPLETED
+- [ ] T20.6 Choose next strategy approach for Recipe Overview page functionality
+
 - [x] T15 Documentation Reorganization Series ✅ COMPLETED
 - [x] T15.1 Create new documentation structure with topic-based folders (deployment, development, features, project-management) ✅ COMPLETED
 - [x] T15.2 Create archive structure with 2025-q1 time-based subdivision (completed-features, deferred-projects, documentation-history) ✅ COMPLETED
@@ -40,7 +48,7 @@
 - [x] T14.5.4 Fix missing icons for Browse Recipes and Legal Notice ✅ COMPLETED
 
 - [ ] T18 Recipe Overview Page – Publish Strategies
-- [x] T18.1 Copy .razor sources via Content include (quick fix) ✅ COMPLETED
+- [ ] T18.1 Revert quick-fix strategy: Remove .razor source copy due to SDK conflicts
 - [ ] T18.2 Deploy and verify Browse Recipes page shows data in Azure
 - [ ] T18.3 Research build-time manifest generation (JSON)
 - [ ] T18.4 Implement build-time manifest and remove source copy (future)
@@ -95,7 +103,7 @@
 
 ## Done
 
-- [x] T14.4.1 Document local production build testing methods in separate markdown file ✅ COMPLETED
+- [x] T14.4.1 Document local production build testing methods in separate Markdown file ✅ COMPLETED
 - [x] T14.3.8 Implement conditional HTTPS redirection for Azure App Service compatibility ✅ COMPLETED
 - [x] T17 Update README.md to be more concise and helpful ✅ COMPLETED
 - [x] T16 Implement version management system for BlazorCookbookApp ✅ COMPLETED
