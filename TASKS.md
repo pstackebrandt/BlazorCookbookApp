@@ -8,19 +8,51 @@
 - [x] T20.3 Test build after removing manual includes (should resolve NETSDK1022 error) ✅ COMPLETED
 - [x] T20.4 Update Recipe-Overview-Fix-Strategies.md: mark strategy 1 as non-viable due to SDK conflicts ✅ COMPLETED
 - [x] T20.5 Test production build locally: Confirm Browse Recipes page is empty (expected behavior) ✅ COMPLETED
-- [ ] T20.6 Choose next strategy approach for Recipe Overview page functionality
+- [x] T20.6 Choose next strategy approach for Recipe Overview page functionality ✅ COMPLETED
+- [x] T20.7 Create Recipe Manifest Implementation Plan document ✅ COMPLETED
+
+- [ ] T21 Implement Build-time Recipe Manifest (Phase 1)
+- [ ] T21.1 Create Recipe Manifest Generator console application
+- [ ] T21.1.1 Create Tools/RecipeManifestGenerator project structure
+- [ ] T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic
+- [ ] T21.1.3 Create RecipeManifest model classes
+- [ ] T21.1.4 Add JSON serialization and file output
+- [ ] T21.2 Update RecipeScanner service for JSON loading
+- [ ] T21.2.1 Create IManifestLoader interface and implementation
+- [ ] T21.2.2 Add configuration options in appsettings.json
+- [ ] T21.2.3 Implement JSON loading with file scanning fallback
+- [ ] T21.2.4 Add logging for manifest loading operations
+- [ ] T21.3 Integration and testing
+- [ ] T21.3.1 Add manifest generation to Production Build Guide
+- [ ] T21.3.2 Test manifest generation and JSON loading
+- [ ] T21.3.3 Create unit tests for manifest functionality
+- [ ] T21.3.4 Test production build with JSON manifest
+- [ ] T21.4 Deployment verification
+- [ ] T21.4.1 Deploy with manifest and verify Browse Recipes page works
+- [ ] T21.4.2 Test error scenarios and fallback behavior
 
 - [x] T15 Documentation Reorganization Series ✅ COMPLETED
-- [x] T15.1 Create new documentation structure with topic-based folders (deployment, development, features, project-management) ✅ COMPLETED
-- [x] T15.2 Create archive structure with 2025-q1 time-based subdivision (completed-features, deferred-projects, documentation-history) ✅ COMPLETED
-- [x] T15.3 Move completed feature documentation to archive/2025-q1/completed-features/ (Recipe4-Optimization-Plan.md, Recipe-Overview-Plan.md) ✅ COMPLETED
+- [x] T15.1 Create new documentation structure with topic-based folders 
+  (deployment, development, features, project-management) ✅ COMPLETED
+- [x] T15.2 Create archive structure with 2025-q1 time-based subdivision 
+  (completed-features, deferred-projects, documentation-history) ✅ COMPLETED
+- [x] T15.3 Move completed feature documentation to archive/2025-q1/completed-features/ 
+  (Recipe4-Optimization-Plan.md, Recipe-Overview-Plan.md) ✅ COMPLETED
 - [x] T15.4 Move Documentation-Reorganization-Summary.md to archive/2025-q1/documentation-history/ ✅ COMPLETED
-- [x] T15.5 Organize remaining documentation files into topic-based folders (deployment, development, features, project-management) ✅ COMPLETED
-- [x] T15.6 Create Documentation-Reorganization-2025.md with new structure explanation and migration record ✅ COMPLETED
-- [x] T15.7 Create comprehensive README.md in docs/ explaining structure, conventions, and usage guidelines ✅ COMPLETED
+- [x] T15.5 Organize remaining documentation files into topic-based folders 
+  (deployment, development, features, project-management) ✅ COMPLETED
+- [x] T15.6 Create Documentation-Reorganization-2025.md with new structure 
+  explanation and migration record ✅ COMPLETED
+- [x] T15.7 Create comprehensive README.md in docs/ explaining structure, 
+  conventions, and usage guidelines ✅ COMPLETED
 - [x] T15.8 Remove empty deployment-debugging/ folder ✅ COMPLETED
-- [x] T15.9 Move and rename remaining documentation files: VERSION-IMPLEMENTATION-GUIDE.md → development/Version-Implementation-Guide.md, DEVELOPMENT_TIPS.md → development/Development-Tips.md, VERSIONING.md → project-management/Versioning-Strategy.md ✅ COMPLETED
-- [x] T15.10 Fix archive structure consistency: move old completed-projects and exported-chats to 2025-q1 time-based structure, rename HEALTH-CHECK-IMPLEMENTATION.md → Health-Check-Implementation.md ✅ COMPLETED
+- [x] T15.9 Move and rename remaining documentation files: 
+  VERSION-IMPLEMENTATION-GUIDE.md → development/Version-Implementation-Guide.md, 
+  DEVELOPMENT_TIPS.md → development/Development-Tips.md, 
+  VERSIONING.md → project-management/Versioning-Strategy.md ✅ COMPLETED
+- [x] T15.10 Fix archive structure consistency: move old completed-projects 
+  and exported-chats to 2025-q1 time-based structure, 
+  rename HEALTH-CHECK-IMPLEMENTATION.md → Health-Check-Implementation.md ✅ COMPLETED
 
 - [ ] T14 Azure Deployment Preparation
 - [x] T14.0 Git Branch Management (merge current work, create deployment branch) ✅ COMPLETED
@@ -30,7 +62,8 @@
 - [x] T14.1.9 Remove About link from MainLayout.razor ✅ COMPLETED
 - [x] T14.2 Update README.md (deployment info, attribution, educational purpose) ✅ COMPLETED
 - [x] T14.3 Production Configuration Review (appsettings, security, performance) ✅ COMPLETED
-- [x] T14.3.10 Review Program.cs for Azure App Service compatibility (HTTPS redirection, static files) ✅ COMPLETED
+- [x] T14.3.10 Review Program.cs for Azure App Service compatibility 
+  (HTTPS redirection, static files) ✅ COMPLETED
 - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
 - [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
 - [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
@@ -48,10 +81,10 @@
 - [x] T14.5.4 Fix missing icons for Browse Recipes and Legal Notice ✅ COMPLETED
 
 - [ ] T18 Recipe Overview Page – Publish Strategies
-- [ ] T18.1 Revert quick-fix strategy: Remove .razor source copy due to SDK conflicts
-- [ ] T18.2 Deploy and verify Browse Recipes page shows data in Azure
-- [ ] T18.3 Research build-time manifest generation (JSON)
-- [ ] T18.4 Implement build-time manifest and remove source copy (future)
+- [x] T18.1 Revert quick-fix strategy: Remove .razor source copy due to SDK conflicts ✅ COMPLETED
+- [x] T18.2 Choose build-time manifest strategy for implementation ✅ COMPLETED
+- [x] T18.3 Create detailed implementation plan with clean architecture ✅ COMPLETED
+- [ ] T18.4 Implement build-time manifest (see T21 tasks for details)
 
 - [x] T19 Consolidate production build docs ✅ COMPLETED
 - [x] T19.1 Add Production-Build-Guide.md (single source) ✅ COMPLETED
@@ -61,11 +94,14 @@
 
 - [ ] T15 Mobile Responsiveness and Testing
 - [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
-- [x] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
+- [x] T15.3 Implement mobile-first column priority system for recipe tables 
+  (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
 - [ ] T15.6 Manual mobile testing on actual phone devices (post-deployment verification)
 - [x] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode) ✅ COMPLETED
-- [ ] T15.4 FUTURE: Review and optimize small font sizes for mobile readability (0.75rem badges → 0.85rem, 0.9rem table text → 1rem)
-- [ ] T15.5 FUTURE: Add touch-friendly mobile enhancements (44px tap targets, improved spacing, swipe gestures)
+- [x] T15.4 FUTURE: Review and optimize small font sizes for mobile readability 
+  (0.75rem badges → 0.85rem, 0.9rem table text → 1rem)
+- [x] T15.5 FUTURE: Add touch-friendly mobile enhancements 
+  (44px tap targets, improved spacing, swipe gestures)
 
 - [ ] T12 Overview Page Structural and Optical Improvements
 - [ ] T12.2 Implement structural improvements for better data display
@@ -76,10 +112,11 @@
 - [ ] T12.2.5 Column structure enhancements
 - [x] T12.2.5.1 Add PageTitle property to all recipe pages (no fallback to H1/H2) ✅ COMPLETED
 - [x] T12.2.5.2 Add PageSummary property to all recipe pages (dedicated summaries) ✅ COMPLETED
-- [x] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties (show "unknown" if missing) ✅ COMPLETED
+- [x] T12.2.5.3 Update RecipeScanner to extract only PageTitle and PageSummary properties 
+  (show "unknown" if missing) ✅ COMPLETED
 - [x] T12.2.5.4 Reorder columns: Chapter | Recipe | Title | Action | Summary | Location | Filename ✅ COMPLETED
-- [ ] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop) [SUPERSEDED BY T15.3]
-- [ ] T12.2.6 Add repository links to each recipe in overview page (post-deployment improvement)
+- [x] T12.2.5.5 Implement responsive column priority (mobile/tablet/desktop) [SUPERSEDED BY T15.3]
+- [x] T12.2.6 Add repository links to each recipe in overview page (post-deployment improvement)
 - [ ] T12.3 Apply optical improvements for better user experience
 - [ ] T12.3.3 Optimize table spacing and visual hierarchy
 - [ ] T12.1 Fix existing bugs in overview functionality [LOW PRIORITY - AFTER MAIN IMPROVEMENTS]
@@ -109,7 +146,8 @@
 - [x] T16 Implement version management system for BlazorCookbookApp ✅ COMPLETED
 - [x] T14.2 Update README.md (deployment info, attribution, educational purpose) ✅ COMPLETED
 - [x] T15.7 Desktop browser mobile emulation testing (Chrome DevTools, Firefox Responsive Design Mode) ✅ COMPLETED
-- [x] T15.3 Implement mobile-first column priority system for recipe tables (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
+- [x] T15.3 Implement mobile-first column priority system for recipe tables 
+  (Essential: Title/Action/Stars, Secondary: Summary/Location, Tertiary: Chapter/Recipe/Filename) ✅ COMPLETED
 - [x] T15.1 Fix main recipe table mobile responsiveness by adding table-responsive wrapper ✅ COMPLETED
 - [x] T14.7 Home Page Consistency and Content Optimization ✅ COMPLETED
 - [x] T14.7.1 Remove "From Cookbook to Code" duplication from Resources page ✅ COMPLETED
