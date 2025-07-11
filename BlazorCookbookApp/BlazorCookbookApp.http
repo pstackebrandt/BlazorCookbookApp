@@ -4,9 +4,6 @@
 GET {{baseUrl}}/health
 Accept: application/json
 
-
-Accept: application/json
-
 ### Error Page
 GET {{baseUrl}}/Error
 Accept: text/html
@@ -15,10 +12,50 @@ Accept: text/html
 GET {{baseUrl}}/
 Accept: text/html
 
+### Browse Recipes (Overview)
+GET {{baseUrl}}/recipes
+Accept: text/html
+
+### Browse Recipes - Admin View (Hidden Recipes)
+GET {{baseUrl}}/recipes/admin
+Accept: text/html
+
+### Learning Journey
+GET {{baseUrl}}/learning-journey
+Accept: text/html
+
+### Resources
+GET {{baseUrl}}/resources
+Accept: text/html
+
+### Legal Notice (English)
+GET {{baseUrl}}/impress
+Accept: text/html
+
+### Legal Notice (German)
+GET {{baseUrl}}/impressum
+Accept: text/html
+
 ### Recipe2 Pages
 GET {{baseUrl}}/ch01r02
 Accept: text/html
 
 ### Recipe3 Pages
 GET {{baseUrl}}/ch01r03
+Accept: text/html
+
+### Recipe4 - WebAssembly
+GET {{baseUrl}}/ch01r04
+Accept: text/html
+
+### Recipe4 - Server
+GET {{baseUrl}}/ch01r04s
+Accept: text/html
+
+### Recipe4 - Auto
+GET {{baseUrl}}/ch01r04a
+Accept: text/html
+
+### Recipe4 - WebAssembly Demo
+GET {{baseUrl}}/ch01r04w
 Accept: text/html 

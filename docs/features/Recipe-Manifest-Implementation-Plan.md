@@ -1,16 +1,37 @@
 # Recipe Manifest Implementation Plan
 
+## Progress Overview
+
+### Phase 1: Basic JSON Manifest (Current Focus)
+📊 **Progress: 1/22 tasks completed (5%)**
+
+**Planning & Design** ✅ 3/3 completed
+- ✅ Strategy selection and documentation  
+- ✅ Implementation plan creation
+- ✅ Architecture design with clean separation
+
+**Implementation** ⏳ 1/19 completed
+- ✅ **T21.1.1**: Tools/RecipeManifestGenerator project structure created
+- 🔄 **Current Task**: T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic
+- ⏳ Console application development (3 remaining tasks)
+- ⏳ RecipeScanner service updates (6 tasks) 
+- ⏳ Integration and testing (5 tasks)
+- ⏳ Deployment verification (4 tasks)
+
+---
+
 ## Table of Contents
 
-1. [Intended Functionality](#intended-functionality)
-2. [Implementation Strategy](#implementation-strategy)
-3. [Implementation Steps](#implementation-steps)
-4. [Architecture & Separation of Concerns](#architecture--separation-of-concerns)
-5. [Pros and Cons](#pros-and-cons)
-6. [Configuration Options](#configuration-options)
-7. [Error Handling](#error-handling)
-8. [Testing Strategy](#testing-strategy)
-9. [Future Improvements](#future-improvements)
+1. [Progress Overview](#progress-overview)
+2. [Intended Functionality](#intended-functionality)
+3. [Implementation Strategy](#implementation-strategy)
+4. [Implementation Steps](#implementation-steps)
+5. [Architecture & Separation of Concerns](#architecture--separation-of-concerns)
+6. [Pros and Cons](#pros-and-cons)
+7. [Configuration Options](#configuration-options)
+8. [Error Handling](#error-handling)
+9. [Testing Strategy](#testing-strategy)
+10. [Future Improvements](#future-improvements)
 
 ---
 
@@ -150,10 +171,10 @@ private IEnumerable<RecipeInfo> FilteredRecipes =>
 ```
 
 **Admin view characteristics:**
-- **Low effort**: Simple URL pattern or query parameter
-- **Not discoverable**: No UI links or navigation to admin view
+- **Discoverable**: Accessible via direct URL `/recipes/admin`
+- **No UI navigation**: No links in NavMenu or page buttons
 - **Development friendly**: Easy access for recipe management
-- **Visitor protection**: Hidden functionality not exposed to users
+- **Visitor awareness**: Visitors can access if they know the URL (for now)
 
 ---
 
