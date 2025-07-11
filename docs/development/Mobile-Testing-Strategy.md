@@ -135,30 +135,57 @@ Your Blazor Cookbook app is now **100% mobile-ready** for deployment:
 - **Performance**: Page load under 3 seconds on mobile
 - **Usability**: Smooth navigation and interaction
 - **Accessibility**: Screen reader compatibility
-- **User Satisfaction**: Positive mobile user feedback
 
-## Simplified Testing Workflow
+## ⚠️ Identified Responsiveness Issue (T22)
 
-### **Phase 1: Pre-Deployment (Current)**
-1. **Desktop browser emulation testing** (T15.7)
-2. **Basic functionality verification**
-3. **Layout responsiveness check**
-4. **Deploy when mobile-ready criteria met**
+**Issue**: User reported that app has lost responsiveness compared to deployed version
+**Status**: Under investigation - specific issue not yet identified
+**Impact**: Local development environment shows different responsive behavior than production
 
-### **Phase 2: Post-Deployment**
-1. **Manual device testing** (T15.6)
-2. **User feedback collection**
-3. **Performance monitoring**
-4. **Iterative improvements based on real usage**
+### **Root Cause Identified** ✅
+**Issue**: CSS file breakpoint mismatch between MainLayout.razor.css and NavMenu.razor.css
+**Impact**:
+- MainLayout.razor.css: Changed to 768px (too early for mobile switch)
+- NavMenu.razor.css: Still using 641px (hamburger menu logic)
+- Result: Between 641px-768px, hamburger menu hidden but layout in single-column mode
 
-### **Phase 3: Future Enhancements**
-1. **Column priority system** (T15.3) - if needed
-2. **Font size optimization** (T15.4) - based on feedback
-3. **Touch enhancements** (T15.5) - user experience improvements
-4. **Automated testing** (T15.2) - when complexity is justified
+### **Fix Attempted and Reverted** ❌
+- [x] **T22.1**: Attempted fix (641px → 768px) but broke hamburger menu, **REVERTED** ❌ FAILED
+- [ ] **T22.2**: Test hamburger menu functionality and layout switching ⏸️ DEFERRED
+- [ ] **T22.3**: Verify responsive behavior matches production deployment ⏸️ DEFERRED
+- [ ] **T22.4**: Document responsive breakpoint standards in style guide ⏸️ DEFERRED
+
+**What Happened:**
+1. **Initial attempt**: Changed MainLayout.razor.css from 641px to 768px
+2. **Result**: Layout switched to mobile mode too early, hamburger menu disappeared
+3. **Root cause**: Mismatch between MainLayout (768px) and NavMenu (641px) CSS files
+4. **Resolution**: **Reverted change** - back to original 641px in MainLayout.razor.css
+5. **Status**: Issue remains unresolved, original responsive problem persists
+
+### **User's Observation**
+- Production (deployed) version shows correct responsiveness
+- Local development version has lost some responsiveness
+- Issue visible in narrowest possible viewport comparison
+- Screenshots provided showing the difference
+
+### **Next Steps**
+1. Get clarification on specific responsiveness aspect that's broken
+2. Test current implementation against previous working version
+3. Identify what changes might have caused the regression
+4. Fix the issue and ensure consistency between environments
+
+**Priority**: Medium - affects development experience but production is working correctly
+
+**Status**: ⏸️ **DEFERRED** - Focus on functional changes first, responsive issue can be addressed later
+
+### **Decision**
+- Responsive issue identified and partially analyzed
+- User decided to defer this work to prioritize functional changes
+- Issue can be revisited after manifest generation and other functional work is complete
+- Production is working correctly, so this is not blocking deployment
 
 ---
 
-**Key Decision**: Focus on **deployment readiness** over **perfect mobile optimization**. The app is **95% mobile-ready** and can be deployed with confidence. Further optimizations can be made based on real user feedback post-deployment.
+*Updated 15 Jan 2025 to document responsiveness issue (T22)*
 
-*This simplified strategy prioritizes getting the app deployed quickly while ensuring essential mobile functionality works correctly.* 
+*This simplified strategy prioritizes getting the app deployed quickly while ensuring essential mobile functionality works correctly.*

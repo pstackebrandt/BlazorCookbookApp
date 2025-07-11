@@ -36,15 +36,21 @@
 - [ ] T21.4.3 Verify hidden recipes are excluded from Browse Recipes in production
 - [ ] T21.4.4 Verify admin view works for hidden recipe management in production
 
-- [ ] T22 Debug View Enhancements (Future Improvements - Low Priority)
-- [ ] T22.1 Fix base64 obfuscation implementation (currently using plain text key)
-- [ ] T22.2 Add debug statistics panel with structural separation
-- [ ] T22.2.1 Create separate DebugInfoPanel component
-- [ ] T22.2.2 Add visible/hidden recipe counts (featured/common)
-- [ ] T22.2.3 Add manifest vs fallback usage indicator
-- [ ] T22.2.4 Add fallback activation status display
-- [ ] T22.2.5 Style debug panel with clear visual separation (not part of common view)
-- [ ] T22.3 Remove temporary debug console logging
+- [x] T22 Fix responsive design issue identified in production vs local comparison ⏸️ DEFERRED
+- [x] T22.1 Fix responsive breakpoint mismatch (641px → 768px) ❌ FAILED - Fix broke hamburger menu, reverted
+- [x] T22.2 Test hamburger menu functionality and layout switching ⏸️ DEFERRED
+- [x] T22.3 Verify responsive behavior matches production deployment ⏸️ DEFERRED
+- [x] T22.4 Document responsive breakpoint standards in style guide ⏸️ DEFERRED
+
+- [ ] T23 Debug View Enhancements (Future Improvements - Low Priority)
+- [ ] T23.1 Fix base64 obfuscation implementation (currently using plain text key)
+- [ ] T23.2 Add debug statistics panel with structural separation
+- [ ] T23.2.1 Create separate DebugInfoPanel component
+- [ ] T23.2.2 Add visible/hidden recipe counts (featured/common)
+- [ ] T23.2.3 Add manifest vs fallback usage indicator
+- [ ] T23.2.4 Add fallback activation status display
+- [ ] T23.2.5 Style debug panel with clear visual separation (not part of common view)
+- [ ] T23.3 Remove temporary debug console logging
 
 - [x] T15 Documentation Reorganization Series ✅ COMPLETED
 - [x] T15.1 Create new documentation structure with topic-based folders
@@ -154,6 +160,13 @@
 ## In Progress
 
 - 🔄 T21.3.1 Add manifest generation to Production Build Guide
+
+## Deferred
+
+- ⏸️ T22 Responsive design issue (original problem: layout doesn't switch to mobile at narrow widths)
+  - Issue identified, attempted fix failed (broke hamburger menu), reverted to original state
+  - Original responsive problem remains unresolved
+  - Deferred to focus on functional changes first - can be revisited after manifest generation work is complete
 
 ## Done
 
