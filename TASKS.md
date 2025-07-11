@@ -17,19 +17,28 @@
 - [ ] T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic
 - [ ] T21.1.3 Create RecipeManifest model classes
 - [ ] T21.1.4 Add JSON serialization and file output
+- [ ] T21.1.5 Add PageVisibleInOverview property support and recipe exclusion logic
 - [ ] T21.2 Update RecipeScanner service for JSON loading
 - [ ] T21.2.1 Create IManifestLoader interface and implementation
 - [ ] T21.2.2 Add configuration options in appsettings.json
 - [ ] T21.2.3 Implement JSON loading with file scanning fallback
 - [ ] T21.2.4 Add logging for manifest loading operations
+- [ ] T21.2.5 Implement recipe visibility filtering in JSON loading (PageVisibleInOverview)
+- [ ] T21.2.6 Add admin view functionality for hidden recipe management (/recipes/admin)
 - [ ] T21.3 Integration and testing
 - [ ] T21.3.1 Add manifest generation to Production Build Guide
 - [ ] T21.3.2 Test manifest generation and JSON loading
 - [ ] T21.3.3 Create unit tests for manifest functionality
 - [ ] T21.3.4 Test production build with JSON manifest
+- [ ] T21.3.5 Add PageVisibleInOverview property to recipe pages (test with hidden recipes)
+- [ ] T21.3.6 Implement automatic multi-mode testing (manifest + fallback combinations)
+- [ ] T21.3.7 Test recipe visibility filtering and exclusion logic
+- [ ] T21.3.8 Test admin view functionality and hidden recipe access
 - [ ] T21.4 Deployment verification
 - [ ] T21.4.1 Deploy with manifest and verify Browse Recipes page works
 - [ ] T21.4.2 Test error scenarios and fallback behavior
+- [ ] T21.4.3 Verify hidden recipes are excluded from Browse Recipes in production
+- [ ] T21.4.4 Verify admin view works for hidden recipe management in production
 
 - [x] T15 Documentation Reorganization Series ✅ COMPLETED
 - [x] T15.1 Create new documentation structure with topic-based folders 
