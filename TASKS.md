@@ -153,10 +153,69 @@
 
 ## In Progress
 
-- 🔄 T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic
+- 🔄 T21.3.1 Add manifest generation to Production Build Guide
 
 ## Done
 
+- [x] T21.3.2 Test manifest generation and JSON loading ✅ COMPLETED
+  - ManifestGenerator successfully creates JSON manifest with 13 recipes (10 visible + 3 hidden)
+  - Web application build successful with JSON manifest loading capability
+  - RecipeScanner correctly loads from JSON manifest with fallback to file scanning
+  - All test files working correctly with consistent light yellow/beige backgrounds
+  - Background color updates: ch01r01test and ch99r03test now use alert-warning (no red error-like colors)
+- [x] T21.3 Integration and testing ✅ COMPLETED
+  - Complete JSON manifest system integration successful
+  - ManifestGenerator console application working perfectly
+  - Web application correctly loading recipes from JSON manifest
+  - Fallback system operational for development scenarios
+- [x] T21.2.5 Implement recipe visibility filtering in JSON loading (PageVisibleInOverview) ✅ COMPLETED
+  - Recipe visibility filtering handled by RecipeInfo.VisibleInOverview property
+  - JSON deserialization properly includes visibility information
+  - Recipes.razor page correctly filters based on visibility setting
+- [x] T21.2.4 Add logging for manifest loading operations ✅ COMPLETED
+  - Comprehensive logging in ManifestLoader service
+  - RecipeScanner logs source of recipe data (manifest vs file scanning)
+  - Proper error logging with fallback information
+- [x] T21.2.3 Implement JSON loading with file scanning fallback ✅ COMPLETED
+  - JSON loading attempted first when enabled
+  - Graceful fallback to file scanning if JSON loading fails
+  - Maintains existing functionality while adding JSON capability
+- [x] T21.2.2 Add configuration options in appsettings.json ✅ COMPLETED
+  - Added RecipeManifest configuration section
+  - EnableJsonLoading, FallbackToFileScanning, and Path settings
+  - Configurable manifest file location support
+- [x] T21.2.1 Create IManifestLoader interface and implementation ✅ COMPLETED
+  - Created IManifestLoader interface for dependency injection
+  - Implemented ManifestLoader service with caching and error handling
+  - Multiple manifest file location support with default paths
+- [x] T21.2 Update RecipeScanner service for JSON loading ✅ COMPLETED
+  - Updated RecipeScanner to use IManifestLoader with fallback to file scanning
+  - Added JSON serialization attributes to RecipeInfo class
+  - Registered services in Program.cs for dependency injection
+  - Build successful with JSON manifest loading capability
+- [x] T21.1.5 Add PageVisibleInOverview property support and recipe exclusion logic ✅ COMPLETED
+  - PageVisibleInOverview property extraction already implemented in RecipeScanner
+  - Recipe exclusion logic working correctly (hidden recipes properly marked)
+  - JSON serialization includes visibility property (visibleInOverview: false for hidden recipes)
+  - Manifest generation properly handles visible/hidden recipe separation
+- [x] T21.1.4 Add JSON serialization and file output ✅ COMPLETED
+  - Complete JSON serialization with System.Text.Json and proper formatting
+  - File output functionality saves manifest to recipe-manifest.json (5,638 bytes)
+  - JSON structure includes metadata, recipes, and statistics sections
+  - Proper camelCase naming and indented formatting for readability
+  - Generation metadata with timestamp, versions, and scanned directories
+- [x] T21.1.3 Create RecipeManifest model classes ✅ COMPLETED
+  - Created RecipeManifest class with metadata, recipes, and statistics
+  - Added ManifestMetadata class with generation timestamp and versioning
+  - Added ManifestStatistics class with comprehensive recipe statistics
+  - Updated RecipeInfo class with JSON serialization attributes
+  - Model classes ready for JSON serialization with proper property names
+- [x] T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic ✅ COMPLETED
+  - Created ManifestGenerator class that mirrors RecipeScanner functionality
+  - Added RecipeInfo model class for console application use
+  - Implemented full recipe scanning with title, summary, stars, and visibility extraction
+  - Successfully tested: Found 13 recipes (10 visible + 3 hidden) with all metadata
+  - Console application works correctly without web hosting dependencies
 - [x] T21.3.5a Fix test file route patterns and enhanced functionality ✅ COMPLETED
   - Updated routes: `/ch01r01test` (featured hidden), `/ch99r02test`, `/ch99r03test`
   - Added PageVisibleInOverview property extraction to RecipeScanner

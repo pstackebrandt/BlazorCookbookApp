@@ -1,18 +1,17 @@
 using System.Text.RegularExpressions;
+using System.Text.Json;
 
-namespace BlazorCookbookApp.Services;
+namespace RecipeManifestGenerator;
 
 /// <summary>
-/// Scans Blazor components for recipe pages following the /chXXrXX route pattern.
+/// Generates recipe manifests by scanning Blazor components for recipe pages following the /chXXrXX route pattern.
 /// Automatically extracts chapter, recipe number, location, title, and summary information.
-/// Supports both JSON manifest loading and file scanning fallback.
+/// This is a console application version of the RecipeScanner service.
 /// </summary>
-public class RecipeScanner
+public class ManifestGenerator
 {
-    private readonly IWebHostEnvironment _environment;
-    private readonly ILogger<RecipeScanner> _logger;
-    private readonly IManifestLoader _manifestLoader;
-    private readonly IConfiguration _configuration;
+    private readonly string _rootPath;
+    private readonly List<string> _scannedDirectories = new();
     
     // Matches @page "/ch01r02" or @page "/ch01r03cl" - captures route, chapter, recipe, variant
     private readonly Regex _routePattern = new(@"@page\s+""(/ch(\d+)r(\d+)(\w*))""", RegexOptions.IgnoreCase);
@@ -29,69 +28,74 @@ public class RecipeScanner
     // Extract PageVisibleInOverview property (private static readonly pattern)
     private readonly Regex _pageVisibleInOverviewPattern = new(@"private\s+static\s+readonly\s+bool\s+PageVisibleInOverview\s*=\s*(true|false)\s*;", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-    public RecipeScanner(IWebHostEnvironment environment, ILogger<RecipeScanner> logger, IManifestLoader manifestLoader, IConfiguration configuration)
+    public ManifestGenerator(string rootPath)
     {
-        _environment = environment;
-        _logger = logger;
-        _manifestLoader = manifestLoader;
-        _configuration = configuration;
+        _rootPath = rootPath ?? throw new ArgumentNullException(nameof(rootPath));
     }
 
     /// <summary>
-    /// Gets recipes using JSON manifest loading with fallback to file scanning.
+    /// Generates a complete recipe manifest with metadata and statistics.
     /// </summary>
-    public async Task<List<RecipeInfo>> GetRecipesAsync()
+    public async Task<RecipeManifest> GenerateManifestAsync()
     {
-        // Try JSON manifest loading first if enabled
-        if (IsJsonLoadingEnabled())
+        var recipes = await GetRecipesAsync();
+        var statistics = GenerateStatistics(recipes);
+        var metadata = GenerateMetadata();
+        
+        return new RecipeManifest
         {
-            var manifest = await _manifestLoader.LoadManifestAsync();
-            if (manifest?.Recipes != null && manifest.Recipes.Count > 0)
-            {
-                _logger.LogInformation("Successfully loaded {RecipeCount} recipes from manifest (generated: {GeneratedAt})", 
-                    manifest.Recipes.Count, manifest.Metadata.GeneratedAt);
-                
-                return manifest.Recipes
-                    .OrderBy(r => r.Chapter)
-                    .ThenBy(r => r.Recipe)
-                    .ThenBy(r => r.Variant)
-                    .ToList();
-            }
-        }
+            Metadata = metadata,
+            Recipes = recipes,
+            Statistics = statistics
+        };
+    }
 
-        // Fallback to file scanning
-        _logger.LogInformation("Using file scanning fallback for recipe discovery");
-        return await ScanFilesAsync();
+    /// <summary>
+    /// Generates a complete recipe manifest and saves it to a JSON file.
+    /// </summary>
+    public async Task<string> GenerateManifestFileAsync(string outputPath)
+    {
+        var manifest = await GenerateManifestAsync();
+        var json = JsonSerializer.Serialize(manifest, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+        
+        await File.WriteAllTextAsync(outputPath, json);
+        return outputPath;
     }
 
     /// <summary>
     /// Scans all configured directories for recipe .razor files and returns organized recipe list.
-    /// This is the original file scanning implementation used as fallback.
     /// </summary>
-    private async Task<List<RecipeInfo>> ScanFilesAsync()
+    public async Task<List<RecipeInfo>> GetRecipesAsync()
     {
         var recipes = new List<RecipeInfo>();
-        var webRoot = _environment.ContentRootPath;
+        _scannedDirectories.Clear();
 
         // Scan server components (BlazorCookbookApp/Components)
-        var serverPath = Path.Combine(webRoot, "Components");
+        var serverPath = Path.Combine(_rootPath, "BlazorCookbookApp", "Components");
         if (Directory.Exists(serverPath))
         {
             await ScanDirectoryAsync(serverPath, "Server", recipes);
+            _scannedDirectories.Add(serverPath);
         }
 
         // Scan client pages (BlazorCookbookApp.Client/Pages)
-        var clientPagesPath = Path.Combine(webRoot, "..", "BlazorCookbookApp.Client", "Pages");
+        var clientPagesPath = Path.Combine(_rootPath, "BlazorCookbookApp.Client", "Pages");
         if (Directory.Exists(clientPagesPath))
         {
             await ScanDirectoryAsync(clientPagesPath, "Client", recipes);
+            _scannedDirectories.Add(clientPagesPath);
         }
 
         // Scan client chapters (BlazorCookbookApp.Client/Chapters)
-        var clientChaptersPath = Path.Combine(webRoot, "..", "BlazorCookbookApp.Client", "Chapters");
+        var clientChaptersPath = Path.Combine(_rootPath, "BlazorCookbookApp.Client", "Chapters");
         if (Directory.Exists(clientChaptersPath))
         {
             await ScanDirectoryAsync(clientChaptersPath, "Client", recipes);
+            _scannedDirectories.Add(clientChaptersPath);
         }
 
         // Return sorted by chapter, recipe number, then variant
@@ -103,11 +107,48 @@ public class RecipeScanner
     }
 
     /// <summary>
-    /// Checks if JSON loading is enabled in configuration.
+    /// Generates comprehensive statistics about the recipes.
     /// </summary>
-    private bool IsJsonLoadingEnabled()
+    private ManifestStatistics GenerateStatistics(List<RecipeInfo> recipes)
     {
-        return _configuration.GetValue<bool>("RecipeManifest:EnableJsonLoading", true);
+        var visibleRecipes = recipes.Where(r => r.VisibleInOverview).ToList();
+        var hiddenRecipes = recipes.Where(r => !r.VisibleInOverview).ToList();
+        var serverRecipes = recipes.Where(r => r.Location == "Server").ToList();
+        var clientRecipes = recipes.Where(r => r.Location == "Client").ToList();
+        var featuredRecipes = recipes.Where(r => r.Stars >= 4).ToList();
+        
+        var chapters = recipes.Select(r => r.Chapter).ToList();
+        var chapterRange = chapters.Any() ? $"{chapters.Min()}-{chapters.Max()}" : "0-0";
+        
+        var starRatings = recipes.GroupBy(r => r.Stars)
+            .ToDictionary(g => g.Key, g => g.Count());
+
+        return new ManifestStatistics
+        {
+            TotalRecipes = recipes.Count,
+            VisibleRecipes = visibleRecipes.Count,
+            HiddenRecipes = hiddenRecipes.Count,
+            ServerRecipes = serverRecipes.Count,
+            ClientRecipes = clientRecipes.Count,
+            FeaturedRecipes = featuredRecipes.Count,
+            ChapterRange = chapterRange,
+            StarRatings = starRatings
+        };
+    }
+
+    /// <summary>
+    /// Generates metadata about the manifest generation process.
+    /// </summary>
+    private ManifestMetadata GenerateMetadata()
+    {
+        return new ManifestMetadata
+        {
+            GeneratedAt = DateTime.UtcNow,
+            GeneratorVersion = "1.0.0",
+            FormatVersion = "1.0",
+            SourcePath = _rootPath,
+            ScannedDirectories = _scannedDirectories.ToList()
+        };
     }
 
     /// <summary>
@@ -133,13 +174,13 @@ public class RecipeScanner
                 catch (Exception ex)
                 {
                     // Log error but continue processing other files
-                    _logger.LogError(ex, "Error parsing recipe file: {FilePath}", filePath);
+                    Console.WriteLine($"Error parsing recipe file: {filePath} - {ex.Message}");
                 }
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error scanning directory: {DirectoryPath}", directoryPath);
+            Console.WriteLine($"Error scanning directory: {directoryPath} - {ex.Message}");
         }
     }
 

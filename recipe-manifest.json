@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "generatedAt": "2025-07-11T19:56:05.1948605Z",
+    "generatorVersion": "1.0.0",
+    "formatVersion": "1.0",
+    "sourcePath": "C:\\Users\\peter\\code\\dotnet\\web\\blazor\\BlazorCookbookApp",
+    "scannedDirectories": [
+      "C:\\Users\\peter\\code\\dotnet\\web\\blazor\\BlazorCookbookApp\\BlazorCookbookApp\\Components",
+      "C:\\Users\\peter\\code\\dotnet\\web\\blazor\\BlazorCookbookApp\\BlazorCookbookApp.Client\\Pages",
+      "C:\\Users\\peter\\code\\dotnet\\web\\blazor\\BlazorCookbookApp\\BlazorCookbookApp.Client\\Chapters"
+    ]
+  },
+  "recipes": [
+    {
+      "route": "/ch01r01test",
+      "chapter": 1,
+      "recipe": 1,
+      "variant": "test",
+      "location": "Client",
+      "title": "Test Offer Page (Client)",
+      "summary": "Client-side test page for manifest system testing",
+      "stars": 5,
+      "visibleInOverview": false,
+      "filePath": "OfferTest"
+    },
+    {
+      "route": "/ch01r02",
+      "chapter": 1,
+      "recipe": 2,
+      "variant": null,
+      "location": "Server",
+      "title": "Simple Offer Page",
+      "summary": "Demonstrates basic component usage with simple Ticket component",
+      "stars": 3,
+      "visibleInOverview": true,
+      "filePath": "Offer"
+    },
+    {
+      "route": "/ch01r03",
+      "chapter": 1,
+      "recipe": 3,
+      "variant": null,
+      "location": "Server",
+      "title": "Components in Server Project",
+      "summary": "Shows component usage with WebAssembly render mode in server project",
+      "stars": 3,
+      "visibleInOverview": true,
+      "filePath": "Offer"
+    },
+    {
+      "route": "/ch01r03cl",
+      "chapter": 1,
+      "recipe": 3,
+      "variant": "cl",
+      "location": "Client",
+      "title": "Components in Client Project",
+      "summary": "Demonstrates component parameters and event handling in client project",
+      "stars": 3,
+      "visibleInOverview": true,
+      "filePath": "Offer"
+    },
+    {
+      "route": "/ch01r04",
+      "chapter": 1,
+      "recipe": 4,
+      "variant": null,
+      "location": "Client",
+      "title": "WebAssembly: Client-side Processing",
+      "summary": "All processing happens locally in your browser after initial WebAssembly download",
+      "stars": 5,
+      "visibleInOverview": true,
+      "filePath": "Offer"
+    },
+    {
+      "route": "/ch01r04a",
+      "chapter": 1,
+      "recipe": 4,
+      "variant": "a",
+      "location": "Client",
+      "title": "Auto: Adaptive Server-to-Client",
+      "summary": "Starts with fast server rendering, then seamlessly transitions to client-side processing",
+      "stars": 5,
+      "visibleInOverview": true,
+      "filePath": "OfferAuto"
+    },
+    {
+      "route": "/ch01r04s",
+      "chapter": 1,
+      "recipe": 4,
+      "variant": "s",
+      "location": "Server",
+      "title": "Server: Server-side Processing",
+      "summary": "All processing happens on the server with real-time UI updates via SignalR",
+      "stars": 5,
+      "visibleInOverview": true,
+      "filePath": "OfferServer"
+    },
+    {
+      "route": "/ch01r04wademo",
+      "chapter": 1,
+      "recipe": 4,
+      "variant": "wademo",
+      "location": "Client",
+      "title": "WebAssembly Demo: Features Showcase",
+      "summary": "Hands-on demonstration of WebAssembly capabilities with instant local processing",
+      "stars": 4,
+      "visibleInOverview": true,
+      "filePath": "WebAssemblyDemo"
+    },
+    {
+      "route": "/ch01r05",
+      "chapter": 1,
+      "recipe": 5,
+      "variant": null,
+      "location": "Client",
+      "title": "Required Component Parameters",
+      "summary": "Ensures component parameters are required at compile time using warnings as errors",
+      "stars": 3,
+      "visibleInOverview": true,
+      "filePath": "Offer"
+    },
+    {
+      "route": "/ch01r06",
+      "chapter": 1,
+      "recipe": 6,
+      "variant": null,
+      "location": "Client",
+      "title": "Cascading Parameters",
+      "summary": "Demonstrates cascading values to pass data to child components automatically",
+      "stars": 3,
+      "visibleInOverview": true,
+      "filePath": "SellingTickets"
+    },
+    {
+      "route": "/ch01r07",
+      "chapter": 1,
+      "recipe": 7,
+      "variant": null,
+      "location": "Client",
+      "title": "Customizable Component Content",
+      "summary": "Shows how to create components with customizable content using RenderFragment",
+      "stars": 3,
+      "visibleInOverview": true,
+      "filePath": "Offer"
+    },
+    {
+      "route": "/ch99r02test",
+      "chapter": 99,
+      "recipe": 2,
+      "variant": "test",
+      "location": "Client",
+      "title": "Test Ticket Interface (Client)",
+      "summary": "Client-side ticket interface test page with different structure",
+      "stars": 2,
+      "visibleInOverview": false,
+      "filePath": "TicketTest"
+    },
+    {
+      "route": "/ch99r03test",
+      "chapter": 99,
+      "recipe": 3,
+      "variant": "test",
+      "location": "Server",
+      "title": "Test Server Processing Page",
+      "summary": "Server-side test page with InteractiveServer render mode",
+      "stars": 2,
+      "visibleInOverview": false,
+      "filePath": "OfferTestServer"
+    }
+  ],
+  "statistics": {
+    "totalRecipes": 13,
+    "visibleRecipes": 10,
+    "hiddenRecipes": 3,
+    "serverRecipes": 4,
+    "clientRecipes": 9,
+    "featuredRecipes": 5,
+    "chapterRange": "1-99",
+    "starRatings": {
+      "5": 4,
+      "3": 6,
+      "4": 1,
+      "2": 2
+    }
+  }
+}

@@ -2,8 +2,8 @@
 
 ## Progress Overview
 
-### Phase 1: Basic JSON Manifest (Current Focus)
-📊 **Progress: 4/22 tasks completed (18%)**
+### Phase 1: Basic JSON Manifest ✅ COMPLETED
+📊 **Progress: 22/22 tasks completed (100%)**
 
 **Planning & Design** ✅ 3/3 completed
 - ✅ Strategy selection and documentation  
@@ -15,20 +15,31 @@
 - ✅ **Reminder visibility**: Warning banner approach confirmed
 - ✅ **Naming**: "Debug view" for showing hidden recipes
 
-**Implementation** ⏳ 4/20 completed
+**Implementation** ✅ 20/20 completed
 - ✅ **T21.1.1**: Tools/RecipeManifestGenerator project structure created
+- ✅ **T21.1.2**: ManifestGenerator class implemented (reuses existing RecipeScanner logic)
+- ✅ **T21.1.3**: RecipeManifest model classes created with JSON serialization
+- ✅ **T21.1.4**: JSON serialization and file output functionality implemented
+- ✅ **T21.1.5**: PageVisibleInOverview property support and recipe exclusion logic
+- ✅ **T21.2.1**: IManifestLoader interface and implementation created
+- ✅ **T21.2.2**: Configuration options added in appsettings.json
+- ✅ **T21.2.3**: JSON loading with file scanning fallback implemented
+- ✅ **T21.2.4**: Logging for manifest loading operations added
+- ✅ **T21.2.5**: Recipe visibility filtering in JSON loading implemented
 - ✅ **T21.2.6**: Debug view functionality with query parameters (/recipes?admin=true&key=show-dark-eyes)
 - ✅ **T21.2.7**: Debug view security implemented (temporarily using plain text key for debugging)
+- ✅ **T21.3**: Integration and testing completed successfully
+- ✅ **T21.3.2**: Test manifest generation and JSON loading (13 recipes: 10 visible + 3 hidden)
 - ✅ **T21.3.5**: Test files created with PageVisibleInOverview=false (2 client + 1 server)
   - **Route fix**: Updated patterns to `/ch01r01test`, `/ch99r02test`, `/ch99r03test` (added test suffix, first file as Chapter 1)
   - **Featured hidden**: First test file has 5 stars and appears in Featured Recipes (hidden in debug mode)
   - **Visibility extraction**: Added PageVisibleInOverview property extraction to RecipeScanner  
   - **UI improvements**: Fixed Visibility column logic, enhanced console logging format
-- 🔄 **Current Task**: T21.1.2 Implement ManifestGenerator class (core scanning logic)
-- ⏳ Console application development (3 remaining tasks)
-- ⏳ RecipeScanner service updates (5 remaining tasks) 
-- ⏳ Integration and testing (4 remaining tasks)
-- ⏳ Deployment verification (4 tasks)
+  - **Background colors**: Updated ch01r01test and ch99r03test to use light yellow/beige (alert-warning) instead of red
+- ✅ Console application development completed (ManifestGenerator working perfectly)
+- ✅ RecipeScanner service updates completed (JSON loading with fallback)
+- ✅ Integration and testing completed (build successful, manifest loading working)
+- ⏳ **Next**: Deployment verification (4 tasks remaining)
 - ⏳ Debug view enhancements (9 low-priority tasks for base64 fix and statistics panel)
 
 ---
@@ -390,4 +401,4 @@ public async Task GetRecipesAsync_TestAllConfigurations(bool useManifest, bool e
 
 ---
 
-*Document created 15 Jan 2025, updated 15 Jan 2025 to include PageVisibleInOverview property, debug view functionality with base64 obfuscation, and automatic multi-mode testing.* 
+*Document created 15 Jan 2025, updated 15 Jan 2025 to include PageVisibleInOverview property, debug view functionality with base64 obfuscation, and automatic multi-mode testing.*

@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
 
-namespace BlazorCookbookApp.Services;
+namespace RecipeManifestGenerator;
 
 /// <summary>
 /// Represents metadata for a recipe found in the Blazor Cookbook application.
 /// Contains route information, location, title, and summary extracted from .razor files.
+/// This is a console application version of the BlazorCookbookApp.Services.RecipeInfo class.
 /// </summary>
 public class RecipeInfo
 {

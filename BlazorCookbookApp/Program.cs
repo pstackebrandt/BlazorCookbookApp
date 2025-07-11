@@ -10,7 +10,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-// Add recipe scanner service
+// Add recipe scanner service with JSON manifest loading capability
+builder.Services.AddScoped<IManifestLoader, ManifestLoader>();
 builder.Services.AddScoped<RecipeScanner>();
 
 // Add recipe URL service (needed for InteractiveWebAssembly pages that pre-render on server)
