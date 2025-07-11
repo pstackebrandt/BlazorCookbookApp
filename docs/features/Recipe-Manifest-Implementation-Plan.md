@@ -3,20 +3,33 @@
 ## Progress Overview
 
 ### Phase 1: Basic JSON Manifest (Current Focus)
-📊 **Progress: 1/22 tasks completed (5%)**
+📊 **Progress: 4/22 tasks completed (18%)**
 
 **Planning & Design** ✅ 3/3 completed
 - ✅ Strategy selection and documentation  
 - ✅ Implementation plan creation
 - ✅ Architecture design with clean separation
 
-**Implementation** ⏳ 1/19 completed
+**Pending Decisions** ✅ Resolved
+- ✅ **Debug view security method**: Base64 obfuscation with "show-dark-eyes" key
+- ✅ **Reminder visibility**: Warning banner approach confirmed
+- ✅ **Naming**: "Debug view" for showing hidden recipes
+
+**Implementation** ⏳ 4/20 completed
 - ✅ **T21.1.1**: Tools/RecipeManifestGenerator project structure created
-- 🔄 **Current Task**: T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic
+- ✅ **T21.2.6**: Debug view functionality with query parameters (/recipes?admin=true&key=show-dark-eyes)
+- ✅ **T21.2.7**: Debug view security implemented (temporarily using plain text key for debugging)
+- ✅ **T21.3.5**: Test files created with PageVisibleInOverview=false (2 client + 1 server)
+  - **Route fix**: Updated patterns to `/ch01r01test`, `/ch99r02test`, `/ch99r03test` (added test suffix, first file as Chapter 1)
+  - **Featured hidden**: First test file has 5 stars and appears in Featured Recipes (hidden in debug mode)
+  - **Visibility extraction**: Added PageVisibleInOverview property extraction to RecipeScanner  
+  - **UI improvements**: Fixed Visibility column logic, enhanced console logging format
+- 🔄 **Current Task**: T21.1.2 Implement ManifestGenerator class (core scanning logic)
 - ⏳ Console application development (3 remaining tasks)
-- ⏳ RecipeScanner service updates (6 tasks) 
-- ⏳ Integration and testing (5 tasks)
+- ⏳ RecipeScanner service updates (5 remaining tasks) 
+- ⏳ Integration and testing (4 remaining tasks)
 - ⏳ Deployment verification (4 tasks)
+- ⏳ Debug view enhancements (9 low-priority tasks for base64 fix and statistics panel)
 
 ---
 
@@ -156,25 +169,45 @@ public class RecipeInfo
 - **Fallback removal**: Simply remove `FileScanner` registration
 - **Recipe visibility**: Controlled per recipe with `PageVisibleInOverview` property
 
-### Admin View for Hidden Recipes
+### Debug View for Hidden Recipes
 ```csharp
 @page "/recipes"
-@page "/recipes/admin"
 
-private bool ShowHiddenRecipes => 
-    NavigationManager.Uri.Contains("/admin") || 
-    NavigationManager.Uri.Contains("showHidden=true");
+private bool ShowHiddenRecipes => CheckDebugAccess();
 
-// Filter recipes based on admin view mode
+private bool CheckDebugAccess()
+{
+    var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+    var query = QueryHelpers.ParseQuery(uri.Query);
+    
+    if (query.TryGetValue("admin", out var adminValue) && 
+        adminValue == "true" &&
+        query.TryGetValue("key", out var keyValue))
+    {
+        // Base64 obfuscation: "show-dark-eyes" → base64 → reverse
+        const string encodedKey = "=c2V5ZS1rcmFkLXdvaHM"; // obfuscated
+        var decodedKey = System.Text.Encoding.UTF8.GetString(
+            Convert.FromBase64String(new string(encodedKey.Reverse().ToArray())));
+        return keyValue == decodedKey;
+    }
+    
+    return false;
+}
+
+// Filter recipes based on debug view mode
 private IEnumerable<RecipeInfo> FilteredRecipes => 
     ShowHiddenRecipes ? allRecipes : allRecipes.Where(r => r.VisibleInOverview);
 ```
 
-**Admin view characteristics:**
-- **Discoverable**: Accessible via direct URL `/recipes/admin`
-- **No UI navigation**: No links in NavMenu or page buttons
-- **Development friendly**: Easy access for recipe management
-- **Visitor awareness**: Visitors can access if they know the URL (for now)
+**Debug view characteristics:**
+- **URL format**: `/recipes?admin=true&key=show-dark-eyes`
+- **Key obfuscation**: Base64 encoding + simple transformation
+- **Easy to remember**: "show-dark-eyes" (general, not app/year specific)
+- **Professional**: No plain text key in source code
+- **Breakable**: ~2-5 minutes for someone familiar with base64
+- **Visible reminder**: Warning banner about future access restrictions
+
+**Security level**: Light obfuscation for professional appearance, not intended as true security
 
 ---
 
@@ -316,15 +349,31 @@ public async Task GetRecipesAsync_TestAllConfigurations(bool useManifest, bool e
 - **Metadata expansion**: Additional recipe properties (tags, difficulty, etc.)
 - **Advanced filtering**: Recipe categories, skill levels, completion status
 - **Recipe management**: Bulk visibility controls, recipe status tracking
-- **Enhanced admin view**: Recipe visibility toggle UI, batch operations
+- **Enhanced debug view**: Recipe visibility toggle UI, batch operations
 
 ### Phase 4: Advanced Features
 - **Source generators**: Roslyn-based manifest generation
 - **Hot reload support**: Live manifest updates in development
 - **Caching strategies**: Memory caching for large manifests
-- **Admin interface**: Recipe visibility management UI with authentication
+- **Debug interface**: Recipe visibility management UI with authentication
 - **Search capabilities**: Full-text search within recipe content
 - **Recipe lifecycle**: Draft, published, archived states with PageVisibleInOverview integration
+
+### Debug View Enhancements (Low Priority)
+- **Fix base64 obfuscation**: Currently using plain text key for debugging
+- **Debug statistics panel**: Structurally separated component showing:
+  - Visible/hidden recipe counts (featured vs common)
+  - Manifest vs fallback usage status
+  - Fallback activation indicator
+- **Visual separation**: Clear distinction between debug and regular UI elements
+- **Component isolation**: Separate DebugInfoPanel component to prevent cross-contamination
+
+---
+
+## Development Guidelines
+
+### Overengineering Prevention
+⚠️ **Rule**: The assistant will warn if solutions become overly complex for the actual problem being solved. Simple solutions are preferred when they adequately address the requirements. Debug enhancements are practical development aids, not overengineering, as they provide valuable system insight.
 
 ---
 
@@ -341,4 +390,4 @@ public async Task GetRecipesAsync_TestAllConfigurations(bool useManifest, bool e
 
 ---
 
-*Document created 15 Jan 2025, updated 15 Jan 2025 to include PageVisibleInOverview property, admin view functionality, and automatic multi-mode testing.* 
+*Document created 15 Jan 2025, updated 15 Jan 2025 to include PageVisibleInOverview property, debug view functionality with base64 obfuscation, and automatic multi-mode testing.* 

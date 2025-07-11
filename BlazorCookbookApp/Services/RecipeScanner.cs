@@ -22,6 +22,9 @@ public class RecipeScanner
     
     // Extract PageStars property (both public and protected override patterns)
     private readonly Regex _pageStarsPattern = new(@"(?:public\s+int\s+PageStars\s*\{\s*get;\s*set;\s*\}\s*=\s*(\d+)|protected\s+override\s+int\s+PageStars\s*=>\s*(\d+)\s*;)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+    
+    // Extract PageVisibleInOverview property (private static readonly pattern)
+    private readonly Regex _pageVisibleInOverviewPattern = new(@"private\s+static\s+readonly\s+bool\s+PageVisibleInOverview\s*=\s*(true|false)\s*;", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
     public RecipeScanner(IWebHostEnvironment environment, ILogger<RecipeScanner> logger)
     {
@@ -121,6 +124,7 @@ public class RecipeScanner
         var title = ExtractPageTitle(content);
         var summary = ExtractPageSummary(content);
         var stars = ExtractPageStars(content);
+        var visibleInOverview = ExtractPageVisibleInOverview(content);
         var filename = Path.GetFileNameWithoutExtension(filePath);
 
         return new RecipeInfo
@@ -133,6 +137,7 @@ public class RecipeScanner
             Title = title,
             Summary = summary,
             Stars = stars,
+            VisibleInOverview = visibleInOverview,
             FilePath = filename
         };
     }
@@ -202,5 +207,21 @@ public class RecipeScanner
         }
 
         return 3; // Default 3 stars if not found or invalid
+    }
+
+    /// <summary>
+    /// Extracts recipe visibility setting from PageVisibleInOverview property.
+    /// Returns true (default) if property not found.
+    /// </summary>
+    private bool ExtractPageVisibleInOverview(string content)
+    {
+        var match = _pageVisibleInOverviewPattern.Match(content);
+        if (match.Success)
+        {
+            var visibleStr = match.Groups[1].Value.Trim().ToLower();
+            return visibleStr == "true";
+        }
+
+        return true; // Default to visible if not found
     }
 } 

@@ -1,0 +1,120 @@
+@page "/ch99r02test"
+@rendermode InteractiveWebAssembly
+@inject NavigationManager Navigation
+@inherits RenderModeComponentBase
+@using BlazorCookbookApp.Client.Shared
+
+<PageTitle>@(PageTitle) - Blazor Cookbook</PageTitle>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>@(PageTitle)</h1>
+            <p class="lead text-muted">
+                Second test page with ticket-style interface for client-side testing.
+                Also hidden from Browse Recipes overview.
+            </p>
+
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Test File Variation</h4>
+                <p>This page demonstrates a different test file naming pattern and content structure.</p>
+                <hr>
+                <p class="mb-0">
+                    <strong>Render Mode:</strong> InteractiveWebAssembly<br>
+                    <strong>Project:</strong> Client<br>
+                    <strong>Pattern:</strong> TicketTest.razor variant<br>
+                    <strong>Hidden:</strong> Yes (PageVisibleInOverview = false)
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Test Ticket Interface</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Ticket Type: <strong>@selectedTicketType</strong></p>
+                            <p>Price: <strong>$@ticketPrice.ToString("F2")</strong></p>
+                            <button class="btn btn-success" @onclick="SelectAdultTicket">
+                                Adult Ticket ($15.00)
+                            </button>
+                            <button class="btn btn-info ms-2" @onclick="SelectChildTicket">
+                                Child Ticket ($8.00)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Action History</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                @foreach (var action in ticketActions)
+                                {
+                                    <li class="mb-1">
+                                        <span class="badge bg-light text-dark">@action.Time</span>
+                                        @action.Description
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string selectedTicketType = "None";
+    private decimal ticketPrice = 0.00m;
+    private List<TicketAction> ticketActions = new();
+
+    // Page metadata properties following existing pattern
+    protected override string PageTitle => "Test Ticket Interface (Client)";
+    protected override string PageSummary => "Client-side ticket interface test page with different structure";
+    protected override int PageStars => 2;
+    
+    // Hidden from overview - this is what we're testing
+    private static readonly bool PageVisibleInOverview = false;
+
+    protected override void OnInitializedOverride()
+    {
+        AddTicketAction("Test page initialized");
+        AddAction("TicketTest component loaded", RenderActionCategory.Initialization);
+    }
+
+    private void SelectAdultTicket()
+    {
+        selectedTicketType = "Adult";
+        ticketPrice = 15.00m;
+        AddTicketAction($"Selected {selectedTicketType} ticket (${ticketPrice:F2})");
+        AddAction($"Adult ticket selected - ${ticketPrice:F2}", RenderActionCategory.UserInteraction);
+    }
+
+    private void SelectChildTicket()
+    {
+        selectedTicketType = "Child";
+        ticketPrice = 8.00m;
+        AddTicketAction($"Selected {selectedTicketType} ticket (${ticketPrice:F2})");
+        AddAction($"Child ticket selected - ${ticketPrice:F2}", RenderActionCategory.UserInteraction);
+    }
+
+    private void AddTicketAction(string description)
+    {
+        ticketActions.Add(new TicketAction
+        {
+            Time = DateTime.Now.ToString("HH:mm:ss"),
+            Description = description
+        });
+    }
+
+    private class TicketAction
+    {
+        public string Time { get; set; } = "";
+        public string Description { get; set; } = "";
+    }
+} 

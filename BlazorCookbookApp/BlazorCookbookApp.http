@@ -16,8 +16,8 @@ Accept: text/html
 GET {{baseUrl}}/recipes
 Accept: text/html
 
-### Browse Recipes - Admin View (Hidden Recipes)
-GET {{baseUrl}}/recipes/admin
+### Browse Recipes - Debug View (Hidden Recipes)
+GET {{baseUrl}}/recipes?admin=true&key=show-dark-eyes
 Accept: text/html
 
 ### Learning Journey
@@ -58,4 +58,16 @@ Accept: text/html
 
 ### Recipe4 - WebAssembly Demo
 GET {{baseUrl}}/ch01r04w
+Accept: text/html
+
+### Test Pages (Hidden from Overview)
+GET {{baseUrl}}/ch01r01test
+Accept: text/html
+
+### Test Ticket Interface (Client)
+GET {{baseUrl}}/ch99r02test
+Accept: text/html
+
+### Test Server Processing Page
+GET {{baseUrl}}/ch99r03test
 Accept: text/html 

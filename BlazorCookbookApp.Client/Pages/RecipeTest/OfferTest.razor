@@ -1,0 +1,60 @@
+@page "/ch01r01test"
+@rendermode InteractiveWebAssembly
+@inject NavigationManager Navigation
+@inherits RenderModeComponentBase
+@using BlazorCookbookApp.Client.Shared
+
+<PageTitle>@(PageTitle) - Blazor Cookbook</PageTitle>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>@(PageTitle)</h1>
+            <p class="lead text-muted">
+                This is a test page for client-side WebAssembly testing. 
+                It should be hidden from the Browse Recipes overview.
+            </p>
+
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">Test Page Information</h4>
+                <p>This page is used for testing the recipe manifest system and debug view functionality.</p>
+                <hr>
+                <p class="mb-0">
+                    <strong>Render Mode:</strong> InteractiveWebAssembly<br>
+                    <strong>Project:</strong> Client<br>
+                    <strong>Hidden:</strong> Yes (PageVisibleInOverview = false)
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Simple Test Content</h5>
+                </div>
+                <div class="card-body">
+                    <p>This is a simple test page with minimal interactive content.</p>
+                    <button class="btn btn-primary" @onclick="IncrementCounter">
+                        Click Count: @currentCount
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    // Page metadata properties following existing pattern
+    protected override string PageTitle => "Test Offer Page (Client)";
+    protected override string PageSummary => "Client-side test page for manifest system testing";
+    protected override int PageStars => 5;
+    
+    // Hidden from overview - this is what we're testing
+    private static readonly bool PageVisibleInOverview = false;
+
+    private void IncrementCounter()
+    {
+        currentCount++;
+        AddAction($"Button clicked (count: {currentCount})", RenderActionCategory.UserInteraction);
+    }
+} 

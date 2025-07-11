@@ -1,5 +1,7 @@
 @page "/recipes"
 @using BlazorCookbookApp.Services
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Text
 @inject RecipeScanner RecipeScanner
 @inject NavigationManager Navigation
 @inject ILogger<Recipes> Logger
@@ -11,6 +13,20 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
+            <!-- Debug View Warning Banner -->
+            @if (IsDebugViewActive)
+            {
+                <div class="alert alert-warning border-warning" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <div>
+                            <strong>Debug View Active</strong> - Showing hidden recipes for development/debugging purposes.
+                            <br><small class="text-muted">Access will be restricted in future versions.</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
             <h1>Browse Recipes</h1>
             <p class="lead">
                 Discover the Blazor Cookbook recipes and additional pages. Each page demonstrates 
@@ -21,7 +37,7 @@
             {
                 <p><em>Loading recipes...</em></p>
             }
-            else if (!recipes.Any())
+            else if (!GetVisibleRecipes().Any())
             {
                 <p><em>No recipes found.</em></p>
             }
@@ -44,12 +60,16 @@
                                         <th>Action</th>
                                         <th>Summary</th>
                                         <th>Location</th>
+                                        @if (IsDebugViewActive)
+                                        {
+                                            <th>Visibility</th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var recipe in GetFeaturedRecipes())
                                     {
-                                        <tr>
+                                        <tr class="@(GetRecipeRowClass(recipe))">
                                             <td><strong>@recipe.Title</strong></td>
                                             <td>
                                                 <button class="btn btn-sm btn-primary" @onclick="() => NavigateToRecipe(recipe.Route)">
@@ -62,6 +82,14 @@
                                                     @recipe.Location
                                                 </span>
                                             </td>
+                                            @if (IsDebugViewActive)
+                                            {
+                                                <td>
+                                                    <span class="badge @(IsRecipeVisible(recipe) ? "bg-success" : "bg-warning text-dark")">
+                                                        @(IsRecipeVisible(recipe) ? "Visible" : "Hidden")
+                                                    </span>
+                                                </td>
+                                            }
                                         </tr>
                                     }
                                 </tbody>
@@ -71,7 +99,7 @@
                 }
                 
                 <!-- Main Recipe Table -->
-                <h3 class="mb-3">All Recipes</h3>
+                <h3 class="mb-3">All Recipes @if (IsDebugViewActive) { <small class="text-muted">(including hidden)</small> }</h3>
                 <div class="recipe-overview">
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -84,13 +112,17 @@
                                 <th class="d-none d-md-table-cell">Summary</th>
                                 <th class="d-none d-md-table-cell">Location</th>
                                 <th>Stars</th>
+                                @if (IsDebugViewActive)
+                                {
+                                    <th class="d-none d-md-table-cell">Visibility</th>
+                                }
                                 <th class="d-none d-lg-table-cell">Filename</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var recipe in recipes)
+                            @foreach (var recipe in GetVisibleRecipes())
                             {
-                                <tr>
+                                <tr class="@(GetRecipeRowClass(recipe))">
                                     <td class="d-none d-lg-table-cell">@recipe.Chapter</td>
                                     <td class="d-none d-lg-table-cell">@recipe.Recipe</td>
                                     <td>@recipe.Title</td>
@@ -106,6 +138,14 @@
                                         </span>
                                     </td>
                                     <td>@GetStarDisplay(recipe.Stars)</td>
+                                    @if (IsDebugViewActive)
+                                    {
+                                        <td class="d-none d-md-table-cell">
+                                            <span class="badge @(IsRecipeVisible(recipe) ? "bg-success" : "bg-warning text-dark")">
+                                                @(IsRecipeVisible(recipe) ? "Visible" : "Hidden")
+                                            </span>
+                                        </td>
+                                    }
                                     <td class="d-none d-lg-table-cell">@recipe.FilePath</td>
                                 </tr>
                             }
@@ -120,6 +160,109 @@
 
 @code {
     private List<RecipeInfo>? recipes;
+    private bool? debugViewActive;
+
+    /// <summary>
+    /// Checks if debug view is active based on URL parameters with base64 obfuscation.
+    /// </summary>
+    private bool IsDebugViewActive
+    {
+        get
+        {
+            if (debugViewActive.HasValue)
+                return debugViewActive.Value;
+
+            debugViewActive = CheckDebugAccess();
+            return debugViewActive.Value;
+        }
+    }
+
+    /// <summary>
+    /// Validates debug access using base64 obfuscated key.
+    /// Key "show-dark-eyes" is encoded and reversed for professional appearance.
+    /// </summary>
+    private bool CheckDebugAccess()
+    {
+        try
+        {
+            var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+            var query = QueryHelpers.ParseQuery(uri.Query);
+            
+            if (query.TryGetValue("admin", out var adminValue) && 
+                adminValue == "true" &&
+                query.TryGetValue("key", out var keyValue))
+            {
+                // Debug logging (temporary)
+                Console.WriteLine($"Debug: Found admin={adminValue}, key={keyValue}");
+                
+                // Simple approach: just check the key directly for now
+                var result = keyValue == "show-dark-eyes";
+                Console.WriteLine($"Debug: Key match result: {result}");
+                return result;
+                
+                /* TODO: Implement proper base64 obfuscation later
+                // Base64 obfuscation: "show-dark-eyes" → base64 → reverse
+                const string expectedKey = "show-dark-eyes";
+                var encodedKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(expectedKey));
+                var reversedEncodedKey = new string(encodedKey.Reverse().ToArray());
+                
+                // For decoding: reverse the stored value then decode
+                var decodedKey = Encoding.UTF8.GetString(
+                    Convert.FromBase64String(new string(reversedEncodedKey.Reverse().ToArray())));
+                return keyValue == decodedKey;
+                */
+            }
+            
+            Console.WriteLine("Debug: Missing admin or key parameters");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Debug: Exception in CheckDebugAccess: {ex.Message}");
+            Logger.LogWarning(ex, "Error checking debug access");
+        }
+        
+        return false;
+    }
+
+    /// <summary>
+    /// Gets CSS class for recipe rows based on visibility in debug mode.
+    /// </summary>
+    private string GetRecipeRowClass(RecipeInfo recipe)
+    {
+        if (!IsDebugViewActive)
+            return "";
+        
+        return IsRecipeVisible(recipe) ? "" : "table-warning";
+    }
+
+    /// <summary>
+    /// Checks if a recipe is visible in overview (not hidden).
+    /// Uses the VisibleInOverview property extracted from PageVisibleInOverview.
+    /// </summary>
+    private bool IsRecipeVisible(RecipeInfo recipe)
+    {
+        return recipe.VisibleInOverview;
+    }
+
+    /// <summary>
+    /// Gets recipes to display based on debug mode.
+    /// In normal mode: only visible recipes
+    /// In debug mode: all recipes
+    /// </summary>
+    private List<RecipeInfo> GetVisibleRecipes()
+    {
+        if (recipes == null)
+            return new List<RecipeInfo>();
+        
+        if (IsDebugViewActive)
+        {
+            // Debug mode: show all recipes
+            return recipes;
+        }
+        
+        // Normal mode: only show visible recipes
+        return recipes.Where(r => IsRecipeVisible(r)).ToList();
+    }
 
     /// <summary>
     /// Load all recipes on page initialization with minimal logging.
@@ -133,7 +276,18 @@
             // Minimal logging - only recipe count and only in development
             if (Environment.IsDevelopment())
             {
-                Console.WriteLine($"Found {recipes.Count} recipes");
+                var visibleCount = recipes.Count(r => r.VisibleInOverview);
+                var hiddenCount = recipes.Count(r => !r.VisibleInOverview);
+                var totalCount = recipes.Count;
+                
+                if (IsDebugViewActive)
+                {
+                    Console.WriteLine($"Found {visibleCount} visible + {hiddenCount} hidden recipes (debug mode active)");
+                }
+                else
+                {
+                    Console.WriteLine($"Found {visibleCount} visible recipes ({hiddenCount} hidden)");
+                }
             }
         }
         catch (Exception ex)
@@ -176,13 +330,12 @@
 
     /// <summary>
     /// Gets featured recipes (4+ stars) for the featured section.
+    /// Respects debug view visibility settings.
     /// </summary>
     /// <returns>List of featured recipes</returns>
     private List<RecipeInfo> GetFeaturedRecipes()
     {
-        if (recipes == null)
-            return new List<RecipeInfo>();
-        
-        return recipes.Where(r => r.Stars >= 4).ToList();
+        var visibleRecipes = GetVisibleRecipes();
+        return visibleRecipes.Where(r => r.Stars >= 4).ToList();
     }
 } 

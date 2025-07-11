@@ -30,6 +30,9 @@ public class RecipeInfo
     /// <summary>Star rating for the recipe (1-5 stars, where 4+ stars are featured)</summary>
     public int Stars { get; set; } = 3;
     
+    /// <summary>Whether the recipe is visible in the Browse Recipes overview (default: true)</summary>
+    public bool VisibleInOverview { get; set; } = true;
+    
     /// <summary>Full file path to the .razor file</summary>
     public string FilePath { get; set; } = string.Empty;
 } 

@@ -1,0 +1,171 @@
+@page "/ch99r03test"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@using BlazorCookbookApp.Client.Services
+@using BlazorCookbookApp.Client.Shared
+@inherits RenderModeComponentBase
+
+<PageTitle>@(PageTitle) - Blazor Cookbook</PageTitle>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>@(PageTitle)</h1>
+            <p class="lead text-muted">
+                Server-side test page with InteractiveServer render mode.
+                Hidden from Browse Recipes overview for testing purposes.
+            </p>
+
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Server Test File</h4>
+                <p>This page demonstrates server-side testing with different filename pattern.</p>
+                <hr>
+                <p class="mb-0">
+                    <strong>Render Mode:</strong> InteractiveServer<br>
+                    <strong>Project:</strong> Server<br>
+                    <strong>Pattern:</strong> OfferTestServer.razor variant<br>
+                    <strong>Hidden:</strong> Yes (PageVisibleInOverview = false)
+                </p>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">🔍 Server Test Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Current State:</strong> 
+                               <span class="badge @GetRenderModeClass() fs-6">@GetDisplayRenderMode()</span>
+                            </p>
+                            <p><strong>Interactive:</strong> 
+                               <span class="badge @(GetDisplayInteractive() ? "bg-success" : "bg-secondary")">
+                                   @GetDisplayInteractive()
+                               </span>
+                            </p>
+                            <p><strong>Server Connection:</strong> 
+                               <span class="badge bg-info">SignalR Active</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Processing Location:</strong> 
+                               <span class="badge bg-warning text-dark">Server-Side</span>
+                            </p>
+                            <p><strong>Current Action:</strong> 
+                               <span class="badge bg-success text-white">Testing Server Mode</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Server-Side Test Operations</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Current server time: <strong>@serverTime</strong></p>
+                            <p>Operations count: <strong>@operationCount</strong></p>
+                            
+                            <button class="btn btn-primary" @onclick="PerformServerOperation">
+                                Perform Server Operation
+                            </button>
+                            <button class="btn btn-secondary ms-2" @onclick="UpdateServerTime">
+                                Update Server Time
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Recent Operations</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                @foreach (var op in recentOperations.TakeLast(5))
+                                {
+                                    <li class="mb-1">
+                                        <small class="text-muted">@op.Time</small><br>
+                                        @op.Description
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string serverTime = "";
+    private int operationCount = 0;
+    private List<ServerOperation> recentOperations = new();
+
+    // Page metadata properties following existing pattern
+    protected override string PageTitle => "Test Server Processing Page";
+    protected override string PageSummary => "Server-side test page with InteractiveServer render mode";
+    protected override int PageStars => 2;
+    
+    // Hidden from overview - this is what we're testing
+    private static readonly bool PageVisibleInOverview = false;
+
+    protected override void OnInitializedOverride()
+    {
+        UpdateServerTime();
+        AddServerOperation("Server test page initialized");
+        AddAction("Server test component loaded", RenderActionCategory.Initialization);
+    }
+
+    protected override Task OnAfterFirstRenderAsync()
+    {
+        AddAction("Server test first render completed", RenderActionCategory.Initialization);
+        AddServerOperation("Server connection established");
+        
+        if (GetDisplayInteractive())
+        {
+            AddAction("Server interactive mode active", RenderActionCategory.Active);
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    private void PerformServerOperation()
+    {
+        operationCount++;
+        AddServerOperation($"Server operation #{operationCount} completed");
+        AddAction($"Server operation performed (#{operationCount})", RenderActionCategory.UserInteraction);
+    }
+
+    private void UpdateServerTime()
+    {
+        serverTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        AddServerOperation($"Server time updated: {serverTime}");
+        AddAction("Server time updated", RenderActionCategory.UserInteraction);
+    }
+
+    private void AddServerOperation(string description)
+    {
+        recentOperations.Add(new ServerOperation
+        {
+            Time = DateTime.Now.ToString("HH:mm:ss"),
+            Description = description
+        });
+        
+        // Keep only last 10 operations
+        if (recentOperations.Count > 10)
+        {
+            recentOperations = recentOperations.TakeLast(10).ToList();
+        }
+    }
+
+    private class ServerOperation
+    {
+        public string Time { get; set; } = "";
+        public string Description { get; set; } = "";
+    }
+} 
