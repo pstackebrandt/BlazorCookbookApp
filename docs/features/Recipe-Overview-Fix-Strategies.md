@@ -12,9 +12,9 @@ The deployed package therefore contains only DLLs, so the scanner finds nothing 
 
 | #   | Approach                      | What you do                                                                                                                                                                                       | Pros                                                                             | Cons                                                                                                                                    |
 | --- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | **Build-time manifest**       | During the build create a JSON (or C# class) that contains all recipe metadata and copy only that file to the publish folder. `RecipeScanner` loads the JSON instead of scanning the file system. | * Small package.<br>* No source exposure.<br>* Zero runtime I/O; fastest option. | * Needs a custom MSBuild task or a small console tool.<br>* New build step to maintain.                                                 |
-| 2   | **Reflection at runtime**     | Iterate over all loaded assemblies and read the `RouteAttribute` plus custom attributes (or static fields) for title/summary/stars.                                                               | * No extra files; nothing exposed.<br>* Works with IL only.                      | * Reflection cost at startup.<br>* Must add attributes or static properties to every page.<br>* Logic slightly more complex than regex. |
-| 3   | **Source-generator manifest** | Use a Roslyn Source-Generator to emit a static `RecipeCatalog` class at compile time.                                                                                                             | * No external files.<br>* Fast lookup, strongly-typed.                           | * Requires familiarity with source generators.<br>* Adds build complexity.                                                              |
+| 1   | **Build-time manifest**       | During the build create a JSON (or C# class) that contains all recipe metadata and copy only that file to the publish folder. `RecipeScanner` loads the JSON instead of scanning the file system. | - Small package.<br>- No source exposure.<br>- Zero runtime I/O; fastest option. | - Needs a custom MSBuild task or a small console tool.<br>- New build step to maintain.                                                 |
+| 2   | **Reflection at runtime**     | Iterate over all loaded assemblies and read the `RouteAttribute` plus custom attributes (or static fields) for title/summary/stars.                                                               | - No extra files; nothing exposed.<br>- Works with IL only.                      | - Reflection cost at startup.<br>- Must add attributes or static properties to every page.<br>- Logic slightly more complex than regex. |
+| 3   | **Source-generator manifest** | Use a Roslyn Source-Generator to emit a static `RecipeCatalog` class at compile time.                                                                                                             | - No external files.<br>- Fast lookup, strongly-typed.                           | - Requires familiarity with source generators.<br>- Adds build complexity.                                                              |
 
 ## Rejected Strategies
 
@@ -38,7 +38,7 @@ The deployed package therefore contains only DLLs, so the scanner finds nothing 
 
 1. `dotnet publish` **excludes** all `.razor` files from the output.
 2. On Azure the `RecipeScanner` looks under `/home/site/wwwroot/Components/**.razor` etc. and finds nothing.
-3. It returns an empty list; the UI falls back to *“No recipes found.”*
+3. It returns an empty list; the UI falls back to *"No recipes found."*
 4. while direct navigation still works because routing is compiled into the DLL.
 
 ## How you could detect the issue locally
@@ -57,9 +57,9 @@ The deployed package therefore contains only DLLs, so the scanner finds nothing 
 
 ## Recommendation for the project roadmap
 
-* **Short term**: Implement approach #1 (build-time JSON manifest) – balances performance & simplicity
-* **Mid term**: Evaluate approach #2 (reflection) if build-time manifest proves insufficient
-* **Long term**: Consider approach #3 (source generator) once the codebase stabilizes
+- **Short term**: Implement approach #1 (build-time JSON manifest) – balances performance & simplicity
+- **Mid term**: Evaluate approach #2 (reflection) if build-time manifest proves insufficient
+- **Long term**: Consider approach #3 (source generator) once the codebase stabilizes
 
 ---
 
