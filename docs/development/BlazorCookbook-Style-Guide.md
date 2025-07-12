@@ -256,3 +256,30 @@ protected bool GetActualInteractive() => GetCurrentInteractive();
 - Leverage Bootstrap's built-in accessibility features
 - Use semantic color classes appropriately
 - Ensure keyboard navigation works properly
+
+## Resources Page Color System (Planned)
+
+### Proposed Badge Color Semantics for Resources
+
+**Frameworks/Libraries**: `bg-primary` (blue)
+- Core technologies and frameworks
+- Examples: .NET, Blazor, ASP.NET Core
+
+**Tools**: `bg-secondary` (gray)  
+- Development and deployment tools
+- Examples: Visual Studio Code, Git, Azure CLI
+
+**Deployment**: `bg-success` (green)
+- Production and hosting platforms
+- Examples: Azure App Service, Docker
+
+**Resources**: `bg-info` (light blue)
+- Documentation and learning materials
+- Examples: Official docs, tutorials, books
+
+### Implementation Guidelines
+
+- Apply consistent colors across all resource categories
+- Maintain existing icon source (same as pages and navigation)
+- Review icon semantic appropriateness (e.g., replace rocket for repository)
+- Test visual consistency across different screen sizes

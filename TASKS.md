@@ -159,7 +159,7 @@
 
 ## In Progress
 
-- 🔄 T21.3.1 Add manifest generation to Production Build Guide
+(No tasks currently in progress)
 
 ## Deferred
 
@@ -168,8 +168,30 @@
   - Original responsive problem remains unresolved
   - Deferred to focus on functional changes first - can be revisited after manifest generation work is complete
 
+- ⏸️ T24 Resources Page Visual Consistency Improvements (post-deployment)
+  - T24.1 Reduce badge color variety and implement consistent color system
+    - Frameworks/Libraries: bg-primary (blue)
+    - Tools: bg-secondary (gray) 
+    - Deployment: bg-success (green)
+    - Resources: bg-info (light blue)
+  - T24.2 Review and update icons for semantic appropriateness (e.g., replace rocket icon for repo)
+  - T24.3 Maintain existing icon source (same as used in pages and nav pane)
+  - T24.4 Test visual consistency across different screen sizes
+
+- ⏸️ T25 Home Page Developer Profile Emphasis (post-deployment)
+  - T25.1 Add prominent developer profile section to Home page
+  - T25.2 Link to existing external homepage (same as Resources page)
+  - T25.3 Emphasize project repository and developer profile for visitors (interviewers, colleagues)
+  - T25.4 Ensure clear call-to-action for repository and profile links
+
 ## Done
 
+- [x] T21.3.1 Add manifest generation to Production Build Guide ✅ COMPLETED
+  - Updated build process with `dotnet run --project Tools/RecipeManifestGenerator` step
+  - Added explanation of purpose and functionality
+  - Updated test checklist to verify Browse Recipes page works (10 visible recipes)
+  - Updated deployment verification steps
+  - Removed outdated reference to T18.3 investigation
 - [x] T21.3.2 Test manifest generation and JSON loading ✅ COMPLETED
   - ManifestGenerator successfully creates JSON manifest with 13 recipes (10 visible + 3 hidden)
   - Web application build successful with JSON manifest loading capability

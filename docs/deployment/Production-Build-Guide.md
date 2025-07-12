@@ -10,6 +10,7 @@ package and deploying *BlazorCookbookApp* to Azure App Service.
   - [1  Prerequisites](#1--prerequisites)
     - [One-off App Service settings](#one-off-app-service-settings)
   - [2  Build \& Package](#2--build--package)
+    - [Recipe Manifest Generation](#recipe-manifest-generation)
   - [3  Test locally (optional)](#3--test-locally-optional)
   - [4  Deploy](#4--deploy)
     - [4.1 Preferred – VS Code Azure extension](#41-preferred--vs-code-azure-extension)
@@ -40,15 +41,36 @@ package and deploying *BlazorCookbookApp* to Azure App Service.
 
 ## 2  Build & Package
 
+**Run these commands from the workspace root directory** (where `BlazorCookbookApp.sln` is located):
+
 ```powershell
 # Clean old output (optional)
 Remove-Item -Recurse -Force .\bin\Publish -ErrorAction SilentlyContinue
 
-# 1) Publish the server project in Release mode
+# 1) Generate recipe manifest (required for Browse Recipes page)
+dotnet run --project Tools/RecipeManifestGenerator
+
+# 2) Publish the server project in Release mode
 dotnet publish BlazorCookbookApp/BlazorCookbookApp.csproj -c Release -o .\bin\Publish
 
-# 2) (Optional) create a zip for CLI deployments
+# 3) (Optional) create a zip for CLI deployments
 Compress-Archive -Path '.\bin\Publish\*' -DestinationPath '.\blazor-recipes.zip' -Force
+```
+
+### Recipe Manifest Generation
+
+**Purpose**: The manifest generation step creates `recipe-manifest.json` containing metadata for all recipes in the application. This solves the issue where the Browse Recipes page appears empty in production because `.razor` source files are not included in published output.
+
+**What it does**:
+- Scans all recipe pages for metadata (title, summary, stars, visibility)
+- Generates `recipe-manifest.json` in the project root
+- File gets included in `dotnet publish` and deployed to production
+- Web application loads recipe data from JSON instead of scanning source files
+
+**Output example**:
+```
+Found 13 recipes: 10 visible + 3 hidden
+Generated manifest: recipe-manifest.json (5,638 bytes)
 ```
 
 > **Gotchas**
@@ -74,10 +96,11 @@ dotnet BlazorCookbookApp.dll
 
 **Manual test checklist:**
 - Browse to `http://localhost:5000` → Home page loads correctly
-- Browse to `http://localhost:5000/recipes` → Browse Recipes page (will be empty until Recipe Overview strategy is implemented)
+- Browse to `http://localhost:5000/recipes` → Browse Recipes page shows recipe list (10 visible recipes)
 - Test direct recipe routes: `/ch01r04`, `/ch01r04s`, `/ch01r04a`, `/ch01r04w`
 - Health check: `http://localhost:5000/health` → returns `Healthy`
 - Check console output for any errors or warnings
+- Verify JSON manifest loading: Look for console message "Found X visible recipes (Y hidden)"
 
 Press `Ctrl+C` to stop the application when finished testing.
 
@@ -108,17 +131,17 @@ az webapp deploy `
 1. Portal → **Log stream** → look for
    `Executing startup command: dotnet BlazorCookbookApp.dll` and
    `Now listening on: http://0.0.0.0:8080`.
-2. Browse to `https://<app>.azurewebsites.net/recipes` – the list must show data.
+2. Browse to `https://<app>.azurewebsites.net/recipes` → **Browse Recipes page should show 10 visible recipes** (not empty).
 3. Test a few direct recipe routes (e.g. `/ch01r04`).
 4. Health check: `https://<app>.azurewebsites.net/health` → 200 OK.
+5. Check application logs for JSON manifest loading confirmation.
 
 ---
 
 ## 6  Next steps
 
 - Script the build + deploy commands in **publish.ps1** for convenience.
-- Investigate a build-time manifest (# T18.3) to remove the need to copy
-  `.razor` sources.
+- Consider automating manifest generation with MSBuild tasks (future enhancement).
 - Enable container log streaming (optional):
 
   ```powershell
@@ -128,4 +151,4 @@ az webapp deploy `
 
 ---
 
-*Last updated 2025-01-15*
+*Last updated 2025-01-15 - Added recipe manifest generation step*
