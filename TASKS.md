@@ -167,11 +167,12 @@
   - Issue identified, attempted fix failed (broke hamburger menu), reverted to original state
   - Original responsive problem remains unresolved
   - Deferred to focus on functional changes first - can be revisited after manifest generation work is complete
+  - [Tested] Automatic switch to 1 column layout works in the published app
 
 - ⏸️ T24 Resources Page Visual Consistency Improvements (post-deployment)
   - T24.1 Reduce badge color variety and implement consistent color system
     - Frameworks/Libraries: bg-primary (blue)
-    - Tools: bg-secondary (gray) 
+    - Tools: bg-secondary (gray)
     - Deployment: bg-success (green)
     - Resources: bg-info (light blue)
   - T24.2 Review and update icons for semantic appropriateness (e.g., replace rocket icon for repo)
@@ -183,6 +184,15 @@
   - T25.2 Link to existing external homepage (same as Resources page)
   - T25.3 Emphasize project repository and developer profile for visitors (interviewers, colleagues)
   - T25.4 Ensure clear call-to-action for repository and profile links
+
+- ⏸️ T26 Fix PageVisibleInOverview Warnings (post-deployment)
+  - T26.1 Add #pragma warning disable CS0414 to test files with PageVisibleInOverview properties:
+    - BlazorCookbookApp.Client\Pages\RecipeTest\TicketTest.razor
+    - BlazorCookbookApp.Client\Pages\RecipeTest\OfferTest.razor
+    - BlazorCookbookApp\Components\RecipeTest\OfferTestServer.razor
+  - T26.2 Note: Test files are intentionally hidden (PageVisibleInOverview=false) to test hiding feature
+  - T26.3 Properties are used by manifest generator to detect hidden files (warnings are expected behavior)
+  - T26.4 Verify manifest generation completes without warnings after adding pragma directives
 
 ## Done
 
@@ -449,3 +459,9 @@
 - [ ] T1 Short description of simple task
 - [ ] T2 Short description of main task
 - [ ] T2.1 Short description of subtask
+
+| Task ID | Description                                                                                                                          | Priority |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| T27     | Update /ch01r03cl page: Make it easily visible that only console output is expected when interacting with the page (no UI feedback). | P3       |
+| T28     | Update /ch01r05 page: Make it easily visible that only console output is expected when interacting with the page (no UI feedback).   | P3       |
+| T29     | Add screenshots of the app (e.g., Browse Recipes page) to README.md for visual appeal.                                               | P4       |

@@ -44,16 +44,17 @@ package and deploying *BlazorCookbookApp* to Azure App Service.
 **Run these commands from the workspace root directory** (where `BlazorCookbookApp.sln` is located):
 
 ```powershell
-# Clean old output (optional)
+## Clean old output (optional)
 Remove-Item -Recurse -Force .\bin\Publish -ErrorAction SilentlyContinue
 
-# 1) Generate recipe manifest (required for Browse Recipes page)
+## 1) Generate recipe manifest (required for Browse Recipes page)
 dotnet run --project Tools/RecipeManifestGenerator
 
-# 2) Publish the server project in Release mode
+## 2) Publish the server project in Release mode
 dotnet publish BlazorCookbookApp/BlazorCookbookApp.csproj -c Release -o .\bin\Publish
 
-# 3) (Optional) create a zip for CLI deployments
+## 3) (Optional) create a zip for CLI deployments only
+## Note: VS Code Azure extension uses the folder directly - no zip needed
 Compress-Archive -Path '.\bin\Publish\*' -DestinationPath '.\blazor-recipes.zip' -Force
 ```
 
@@ -111,8 +112,8 @@ Press `Ctrl+C` to stop the application when finished testing.
 ### 4.1 Preferred – VS Code Azure extension
 
 1. Right-click the target App Service → **Deploy to Web App…**
-2. Select the folder **bin\Publish**.
-3. Wait for *Deployment completed*; the extension mounts the zip automatically.
+2. Select the folder **bin\Publish** (no zip file needed).
+3. Wait for *Deployment completed*; the extension handles packaging automatically.
 
 ### 4.2 Alternative – Azure CLI
 

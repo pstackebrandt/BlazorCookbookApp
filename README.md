@@ -18,11 +18,12 @@ Based on "Blazor Web Development Cookbook" with enhanced examples and production
   - [Version Management](#version-management)
   - [Technology Stack](#technology-stack)
   - [Project Structure](#project-structure)
-  - [Sources \& Attribution](#sources--attribution)
+  - [Sources & Attribution](#sources--attribution)
+  - [About the Developer](#about-the-developer)
 
 ## 🌐 Live Demo
 
-**Production URL**: *Coming soon after Azure deployment*
+[Live Demo](https://blazor-recipes-bwaabwhrejgqehgp.germanywestcentral-01.azurewebsites.net/)
 
 ## What You'll Find
 
@@ -47,9 +48,7 @@ Based on "Blazor Web Development Cookbook" with enhanced examples and production
 
 ## Version Management
 
-Current version: **1.0.1** (displayed in navigation footer)
-
-Version is managed centrally in `Directory.Build.props`. See [VERSIONING.md](VERSIONING.md) for update workflow.
+Version is managed centrally in `Directory.Build.props`. See [docs/project-management/Versioning-Strategy.md](docs/project-management/Versioning-Strategy.md) for update workflow. The version badge above reflects the current release. (No need to update version numbers manually in this file.)
 
 ## Technology Stack
 
@@ -68,9 +67,14 @@ Version is managed centrally in `Directory.Build.props`. See [VERSIONING.md](VER
 
 ## Sources & Attribution
 
-- **Primary Source**: [Blazor Web Development Cookbook](https://www.packtpub.com/product/blazor-web-development-cookbook/9781803241524)
- by Pawel Bazyluk
-****- **Publisher**: Packt Publishing
-- **Enhanced with**: Production features, comprehensive testing, mobile optimization
-- **Educational Purpose**: Training reference for Blazor development patterns
-- **Repository**: [GitHub](https://github.com/pstackebrandt/BlazorCookbookApp)
+- **Primary Source:** [Blazor Web Development Cookbook](https://www.packtpub.com/product/blazor-web-development-cookbook/9781803241524) by Pawel Bazyluk (Packt Publishing)
+- **Enhancements:** Production features, comprehensive testing, mobile optimization
+- **Purpose:** Educational reference for Blazor development patterns
+- **Repository:** [GitHub](https://github.com/pstackebrandt/BlazorCookbookApp)
+
+## About the Developer
+
+Peter Stackebrandt  
+[Homepage](https://pstackebrandt.github.io/)  
+[GitHub](https://github.com/pstackebrandt)  
+Email: peter.stackebrandt [at] gmail [dot] com
