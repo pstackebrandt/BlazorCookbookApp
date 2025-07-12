@@ -4,42 +4,16 @@
 
 ## Next Actions
 
-- **P1 Epic: Recipe Overview V2**: T21 Implement Build-time Recipe Manifest
+- **P1 Epic: Recipe Overview V2**: T12 Overview Page Structural and Optical Improvements
 - **P2 Epic: Deployment & Optimization**: T14.4 Application Performance Optimization
-- **P3 Epic: Recipe Overview V2**: T12 Overview Page Structural and Optical Improvements
+- **P3 Epic: User Experience & UI**: T15 Mobile Responsiveness and Testing
 
 ---
 
 ## Todo
 
 ### Epic: Recipe Overview V2
-- [ ] **P1** T21 [XL] Implement Build-time Recipe Manifest (Phase 1)
-  - [ ] T21.1 Create Recipe Manifest Generator console application
-  - [ ] T21.1.3 Create RecipeManifest model classes
-  - [ ] T21.1.4 Add JSON serialization and file output
-  - [ ] T21.1.5 Add PageVisibleInOverview property support and recipe exclusion logic
-  - [ ] T21.2 Update RecipeScanner service for JSON loading
-  - [ ] T21.2.1 Create IManifestLoader interface and implementation
-  - [ ] T21.2.2 Add configuration options in appsettings.json
-  - [ ] T21.2.3 Implement JSON loading with file scanning fallback
-  - [ ] T21.2.4 Add logging for manifest loading operations
-  - [ ] T21.2.5 Implement recipe visibility filtering in JSON loading
-  - [ ] T21.3 Integration and testing
-  - [ ] T21.3.1 Add manifest generation to Production Build Guide
-  - [ ] T21.3.2 Test manifest generation and JSON loading
-  - [ ] T21.3.3 Create unit tests for manifest functionality
-  - [ ] T21.3.4 Test production build with JSON manifest
-  - [ ] T21.3.6 Implement automatic multi-mode testing
-  - [ ] T21.3.7 Test recipe visibility filtering and exclusion logic
-  - [ ] T21.3.8 Test admin view functionality and hidden recipe access
-  - [ ] T21.4 Deployment verification
-  - [ ] T21.4.1 Deploy with manifest and verify Browse Recipes page works
-  - [ ] T21.4.2 Test error scenarios and fallback behavior
-  - [ ] T21.4.3 Verify hidden recipes are excluded from Browse Recipes in production
-  - [ ] T21.4.4 Verify admin view works for hidden recipe management in production
-- [ ] **P1** T18 [L] Recipe Overview Page – Publish Strategies [Depends on T21]
-  - [ ] T18.4 Implement build-time manifest
-- [ ] **P3** T12 [L] Overview Page Structural and Optical Improvements
+- [ ] **P1** T12 [L] Overview Page Structural and Optical Improvements
   - [ ] T12.2 Implement structural improvements for better data display
     - [ ] T12.2.1 Add summary truncation for long text
     - [ ] T12.2.3 Add basic sorting functionality
@@ -71,8 +45,6 @@
 
 ## Deferred
 
-- [ ] ⏸️ T22 Responsive design issue (layout doesn't switch to mobile) ❌ FAILED
-  - Attempted fix failed (broke menu), reverted.
 - [ ] ⏸️ T24 Resources Page Visual Consistency Improvements
 - [ ] ⏸️ T25 Home Page Developer Profile Emphasis
 - [ ] ⏸️ T26 Fix PageVisibleInOverview Warnings
@@ -114,6 +86,33 @@
 
 ## Done
 
+- [x] ✅ T22 [S] Fixed responsive design issue for mobile view.
+- [x] ✅ T21 [XL] Implement Build-time Recipe Manifest (Phase 1)
+  - [x] ✅ T21.1 Create Recipe Manifest Generator console application
+  - [x] ✅ T21.1.3 Create RecipeManifest model classes
+  - [x] ✅ T21.1.4 Add JSON serialization and file output
+  - [x] ✅ T21.1.5 Add PageVisibleInOverview property support and recipe exclusion logic
+  - [x] ✅ T21.2 Update RecipeScanner service for JSON loading
+  - [x] ✅ T21.2.1 Create IManifestLoader interface and implementation
+  - [x] ✅ T21.2.2 Add configuration options in appsettings.json
+  - [x] ✅ T21.2.3 Implement JSON loading with file scanning fallback
+  - [x] ✅ T21.2.4 Add logging for manifest loading operations
+  - [x] ✅ T21.2.5 Implement recipe visibility filtering in JSON loading
+  - [x] ✅ T21.3 Integration and testing
+  - [x] ✅ T21.3.1 Add manifest generation to Production Build Guide
+  - [x] ✅ T21.3.2 Test manifest generation and JSON loading
+  - [x] ✅ T21.3.3 Create unit tests for manifest functionality
+  - [x] ✅ T21.3.4 Test production build with JSON manifest
+  - [x] ✅ T21.3.6 Implement automatic multi-mode testing
+  - [x] ✅ T21.3.7 Test recipe visibility filtering and exclusion logic
+  - [x] ✅ T21.3.8 Test admin view functionality and hidden recipe access
+  - [x] ✅ T21.4 Deployment verification
+  - [x] ✅ T21.4.1 Deploy with manifest and verify Browse Recipes page works
+  - [x] ✅ T21.4.2 Test error scenarios and fallback behavior
+  - [x] ✅ T21.4.3 Verify hidden recipes are excluded from Browse Recipes in production
+  - [x] ✅ T21.4.4 Verify admin view works for hidden recipe management in production
+- [x] ✅ T18 [L] Recipe Overview Page – Publish Strategies
+  - [x] ✅ T18.4 Implement build-time manifest
 - [x] ✅ T30 Refactor and improve the TASKS.md file for better clarity and structure.
 - [x] ✅ T21.3.1 Add manifest generation to Production Build Guide
 - [x] ✅ T21.3.2 Test manifest generation and JSON loading
