@@ -4,15 +4,16 @@
 
 ## Next Actions
 
-- **P1**: T21 Implement Build-time Recipe Manifest (Phase 1)
-- **P2**: T14.4 Application Performance Optimization
-- **P3**: T12 Overview Page Structural and Optical Improvements
+- **P1 Epic: Recipe Overview V2**: T21 Implement Build-time Recipe Manifest
+- **P2 Epic: Deployment & Optimization**: T14.4 Application Performance Optimization
+- **P3 Epic: Recipe Overview V2**: T12 Overview Page Structural and Optical Improvements
 
 ---
 
 ## Todo
 
-- [ ] **P1** T21 Implement Build-time Recipe Manifest (Phase 1)
+### Epic: Recipe Overview V2
+- [ ] **P1** T21 [XL] Implement Build-time Recipe Manifest (Phase 1)
   - [ ] T21.1 Create Recipe Manifest Generator console application
   - [ ] T21.1.3 Create RecipeManifest model classes
   - [ ] T21.1.4 Add JSON serialization and file output
@@ -36,30 +37,29 @@
   - [ ] T21.4.2 Test error scenarios and fallback behavior
   - [ ] T21.4.3 Verify hidden recipes are excluded from Browse Recipes in production
   - [ ] T21.4.4 Verify admin view works for hidden recipe management in production
-
-- [ ] **P2** T14 Azure Deployment Preparation
-  - [ ] T14.4 Application Performance Optimization (bundle size, static assets, caching)
-
-- [ ] **P1** T18 Recipe Overview Page – Publish Strategies
-  - [ ] T18.4 Implement build-time manifest (see T21 tasks for details)
-
-- [ ] **P3** T15 Mobile Responsiveness and Testing
-  - [ ] T15.6 Manual mobile testing on actual phone devices
-
-- [ ] **P3** T12 Overview Page Structural and Optical Improvements
+- [ ] **P1** T18 [L] Recipe Overview Page – Publish Strategies [Depends on T21]
+  - [ ] T18.4 Implement build-time manifest
+- [ ] **P3** T12 [L] Overview Page Structural and Optical Improvements
   - [ ] T12.2 Implement structural improvements for better data display
     - [ ] T12.2.1 Add summary truncation for long text
-    - [ ] T12.2.3 Add basic sorting functionality (Chapter/Recipe/Location)
+    - [ ] T12.2.3 Add basic sorting functionality
     - [ ] T12.2.4 Add search/filter functionality
     - [ ] T12.2.5 Column structure enhancements
   - [ ] T12.3 Apply optical improvements for better user experience
     - [ ] T12.3.3 Optimize table spacing and visual hierarchy
-  - [ ] T12.1 Fix existing bugs in overview functionality [LOW PRIORITY]
+  - [ ] T12.1 Fix existing bugs in overview functionality [LOW PRIORITY] [Depends on T12.2, T12.3]
     - [ ] T12.1.1 Console logging cleanup
     - [ ] T12.1.2 Error handling enhancement
 
-- [ ] **P3** T27 Update /ch01r03cl page: Make it easily visible that only console output is expected.
-- [ ] **P3** T28 Update /ch01r05 page: Make it easily visible that only console output is expected.
+### Epic: Deployment & Optimization
+- [ ] **P2** T14 [M] Azure Deployment Preparation
+  - [ ] T14.4 Application Performance Optimization
+
+### Epic: User Experience & UI
+- [ ] **P3** T15 [S] Mobile Responsiveness and Testing
+  - [ ] T15.6 Manual mobile testing on actual phone devices
+- [ ] **P3** T27 [S] Update `/ch01r03cl` page: Make it easily visible that only console output is expected.
+- [ ] **P3** T28 [S] Update `/ch01r05` page: Make it easily visible that only console output is expected.
 
 ---
 
@@ -83,7 +83,8 @@
 
 ## Backlog
 
-- [ ] **P4** T23 Debug View Enhancements
+### Epic: Code Quality & Refactoring
+- [ ] **P4** T23 [M] Debug View Enhancements
   - [ ] T23.1 Fix base64 obfuscation implementation
   - [ ] T23.2 Add debug statistics panel with structural separation
   - [ ] T23.2.1 Create separate DebugInfoPanel component
@@ -92,7 +93,7 @@
   - [ ] T23.2.4 Add fallback activation status display
   - [ ] T23.2.5 Style debug panel with clear visual separation
   - [ ] T23.3 Remove temporary debug console logging
-- [ ] **P4** T8 Optimize render mode pages by reducing code duplication
+- [ ] **P4** T8 [L] Optimize render mode pages by reducing code duplication [Depends on T12, T18, T21]
   - [ ] T8.2 Phase 2: Extract status card into shared component
     - [ ] T8.2.1 Create RenderModeStatusCard component
     - [ ] T8.2.2 Integrate status card with WebAssembly page
@@ -101,9 +102,13 @@
   - [ ] T8.3 Phase 3: Additional optimizations (optional)
     - [ ] T8.3.1 Extract Component Lifecycle Insight component
     - [ ] T8.3.2 Extract Educational Delay Indicator component
-- [ ] **P4** T7.5 Document educational comparison between all three modes
-- [ ] **P4** T7.4 Show adaptive render mode switching (Server → Client) [BLOCKED]
-- [ ] **P4** T29 Add screenshots of the app to README.md for visual appeal.
+
+### Epic: Foundational Features
+- [ ] **P4** T7.5 [S] Document educational comparison between all three modes [Depends on T12, T18, T21]
+- [ ] **P4** T7.4 [M] Show adaptive render mode switching (Server → Client) [BLOCKED] by persistence.
+
+### Epic: User Experience & UI
+- [ ] **P4** T29 [S] Add screenshots of the app to README.md for visual appeal.
 
 ---
 
@@ -163,13 +168,15 @@
 - Use `- [x] ⏸️` for deferred tasks.
 - **Task Order**: In the Done section, newer tasks are at the top.
 - **Priorities**: P1 (Highest) to P4 (Lowest). P5 tasks are not planned.
+- **Task Format**: Use `[ ] **Priority** TaskID [Size] Description [Depends on TX, TY]`.
 - **Linking**: For tasks related to specific files, consider adding a markdown link to the file for quick navigation.
 
 ---
 
 ## Examples
 
-- [ ] **P1** T1 Short description of a high-priority task
-- [ ] **P3** T2 Short description of a medium-priority task
-  - [ ] T2.1 Short description of subtask
-- [x] ✅ T3 Example of a completed task
+### Epic: Example Epic
+- [ ] **P1** T1 [S] Short description of a high-priority task.
+- [ ] **P3** T2 [M] Short description of a medium-priority task. [Depends on T1]
+  - [ ] T2.1 Short description of subtask.
+- [x] ✅ T3 [S] Example of a completed task.
