@@ -5,12 +5,12 @@
 **Title:** Blazor Cookbook - Blazor examples and demos
 **German Title:** Blazor Cookbook - Blazor Beispiele und Demos
 
-**Description:** Diese Single Page Application dient als Lernressource für Blazor-Apps.
+**Description:** Als Lernressource für Blazor-Entwicklung implementiert diese Single Page App verschiedene Konzepte.
 Einige Beispiele entstanden als Übungsaufgaben aus dem Buch "Blazor Web Development Cookbook" von P. Bazyluk.
 Das Projekt wurde durch fortgeschrittene Demos für Blazor Render-Modi
 und eine automatische Auflistung der Beispielseiten erweitert.
 
-Bei einer Überarbeitung der Anwendung wurde ein automatisiertes Aufgabenmanagement mit Cursor AI und Markdown-Dateien erprobt.
+Bei einer Überarbeitung der Anwendung kam ein automatisiertes Aufgabenmanagement mit Cursor AI und Markdown-Dateien zum Einsatz.
 
 **Repository Link:** https://github.com/pstackebrandt/blazor-cookbook-app
 
