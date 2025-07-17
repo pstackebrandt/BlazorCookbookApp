@@ -34,6 +34,17 @@
   - [ ] T15.6 Manual mobile testing on actual phone devices
 - [ ] **P3** T27 [S] Update `/ch01r03cl` page: Make it easily visible that only console output is expected.
 - [ ] **P3** T28 [S] Update `/ch01r05` page: Make it easily visible that only console output is expected.
+- [ ] **P3** T31 [S] Create custom favicon for BlazorCookbookApp
+  - [ ] T31.1 Design individual favicon that represents the app's purpose
+  - [ ] T31.2 Replace current favicon.png in wwwroot with custom design
+  - [ ] T31.3 Consider using the same icon within the app (e.g., between app title)
+
+### Epic: Documentation & Knowledge Sharing
+- [ ] **P4** T33 [M] Document Cursor AI Task Management Workflow
+  - [ ] T33.1 Complete lessons learned documentation in prepared file
+  - [ ] T33.2 Include specific examples of chat-controlled task management
+  - [ ] T33.3 Document benefits and challenges of AI-assisted project management
+  - [ ] T33.4 Create recommendations for other developers
 
 ---
 
@@ -86,6 +97,17 @@
 
 ## Done
 
+- [x] ✅ T32 [S] GitHub Pages Project Content Creation
+  - [x] ✅ T32.1 Create project description for BlazorCookbookApp listing
+  - [x] ✅ T32.2 Propose title, description, and used tools for GitHub pages
+  - [x] ✅ T32.3 Create reusable template for future GitHub pages project additions
+  - [x] ✅ T32.4 Optimize description for conciseness and character count (264→188 chars)
+  - [x] ✅ T32.5 Enhance template with optimization guidelines and character targets
+  - [x] ✅ T32.6 Refine content based on feedback and create final Markdown file
+  - [x] ✅ T32.7 Separate Bootstrap (tool) from Responsive Design (feature)
+  - [x] ✅ T32.8 Enhance Cursor AI description with "based on Markdown files"
+  - [x] ✅ T32.9 Add live demo URL to GitHub Pages content
+  - [x] ✅ T32.10 Refine task management description to "structured task management using Markdown files"
 - [x] ✅ T22 [S] Fixed responsive design issue for mobile view.
 - [x] ✅ T21 [XL] Implement Build-time Recipe Manifest (Phase 1)
   - [x] ✅ T21.1 Create Recipe Manifest Generator console application
@@ -114,24 +136,6 @@
 - [x] ✅ T18 [L] Recipe Overview Page – Publish Strategies
   - [x] ✅ T18.4 Implement build-time manifest
 - [x] ✅ T30 Refactor and improve the TASKS.md file for better clarity and structure.
-- [x] ✅ T21.3.1 Add manifest generation to Production Build Guide
-- [x] ✅ T21.3.2 Test manifest generation and JSON loading
-- [x] ✅ T21.3 Integration and testing
-- [x] ✅ T21.2.5 Implement recipe visibility filtering in JSON loading (PageVisibleInOverview)
-- [x] ✅ T21.2.4 Add logging for manifest loading operations
-- [x] ✅ T21.2.3 Implement JSON loading with file scanning fallback
-- [x] ✅ T21.2.2 Add configuration options in appsettings.json
-- [x] ✅ T21.2.1 Create IManifestLoader interface and implementation
-- [x] ✅ T21.2 Update RecipeScanner service for JSON loading
-- [x] ✅ T21.1.5 Add PageVisibleInOverview property support and recipe exclusion logic
-- [x] ✅ T21.1.4 Add JSON serialization and file output
-- [x] ✅ T21.1.3 Create RecipeManifest model classes
-- [x] ✅ T21.1.2 Implement ManifestGenerator class reusing existing RecipeScanner logic
-- [x] ✅ T21.3.5a Fix test file route patterns and enhanced functionality
-- [x] ✅ T21.3.5 Add test files with PageVisibleInOverview=false for testing
-- [x] ✅ T21.2.7 Implement debug view security with base64 obfuscation
-- [x] ✅ T21.2.6 Add debug view functionality for hidden recipe management
-- [x] ✅ T21.1.1 Create Tools/RecipeManifestGenerator project structure
 - [x] ✅ T20 Fix Recipe Overview Build Error (NETSDK1022)
 - [x] ✅ T19 Consolidate production build docs
 - [x] ✅ T18 Recipe Overview Page – Publish Strategies (Initial parts)
@@ -168,7 +172,7 @@
 - **Task Order**: In the Done section, newer tasks are at the top.
 - **Priorities**: P1 (Highest) to P4 (Lowest). P5 tasks are not planned.
 - **Task Format**: Use `[ ] **Priority** TaskID [Size] Description [Depends on TX, TY]`.
-- **Linking**: For tasks related to specific files, consider adding a markdown link to the file for quick navigation.
+- **Linking**: For tasks related to specific files, consider adding a Markdown link to the file for quick navigation.
 
 ---
 
