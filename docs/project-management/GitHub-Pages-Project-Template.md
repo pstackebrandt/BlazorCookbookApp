@@ -15,7 +15,7 @@ Use this template when adding new projects to your GitHub Pages site at `https:/
 ### Basic Information
 - **Project Name:** [Enter project name]
 - **Repository URL:** [GitHub repository URL]
-- **Live Demo URL:** [Deployed application URL, if available]
+- **Live Demo URL:** [Deployed application URL - prioritize this over repository link]
 - **Project Status:** [Active/Completed/Archived]
 
 ### Description Elements
@@ -48,17 +48,20 @@ Use this template when adding new projects to your GitHub Pages site at `https:/
 
 ### Step 2: Create Description
 1. Write a concise title (max 80 characters)
-2. Create a 2-3 sentence description (target: 150-200 characters) focusing on:
-   - What the project does
-   - Key technical features
-   - Why it's useful or interesting
-3. Avoid overly technical jargon unless targeting developers
+2. Create a 2-3 sentence description focusing on:
+   - **What the project actually does** (concrete actions, not vague concepts)
+   - **Technical implementation** (specific technologies and functionality)
+   - **Purpose and development approach** (why it was built, how it was developed)
+3. **Writing style guidelines:**
+   - **Concrete action verbs:** "implements", "manages", "lists", "serves" rather than "showcases", "demonstrates"
+   - **Specific functionality:** "dynamically lists recipe content pages" not "dynamic content listing"
+   - **Technical accuracy:** Describe what the application actually accomplishes
 4. **Text prominence:** Keep description as main focus - don't let technology lists overshadow the core message
-5. **Optimization checklist:**
-   - Remove redundant words and phrases
-   - Use action verbs ("showcases", "demonstrates", "features")
-   - Combine related concepts
-   - Focus on visitor value, not implementation details
+5. **German translations:** Consider adding German title and description for broader accessibility
+6. **Fluent structure pattern:**
+   - **First sentence:** What it does technically
+   - **Second sentence:** What purpose it serves / who benefits
+   - **Third sentence:** Development approach or unique aspects
 
 ### Step 3: List Technologies
 1. **Primary Technology:** The main framework/language
@@ -79,17 +82,22 @@ Use this template when adding new projects to your GitHub Pages site at `https:/
 ### Standard Project Entry
 ```
 Title: Task Management API
-Description: RESTful API for task management with user authentication and real-time updates. Built with modern web standards and scalable architecture.
-Primary: Node.js (Node.js Foundation)
-Supporting: Express.js, MongoDB, Socket.io, JWT
+Description: This API manages tasks in a simple in-memory list. It validates inputs in a service class and returns HTTP status messages. The application was built with Spring Boot for learning REST principles and containerization.
+Primary: Spring Boot (Pivotal)
+Supporting: Java, Docker, OpenAPI
 ```
 
-### Double-Width Project Entry
+### Double-Width Project Entry with German Translation
 ```
-Title: E-Commerce Platform with AI Recommendations
-Description: Full-stack e-commerce solution featuring AI-powered product recommendations, real-time inventory management, and secure payment processing. Demonstrates modern web development practices with microservices architecture and cloud deployment.
-Primary: React (Meta/Facebook)
-Supporting: Node.js, PostgreSQL, Redis, AWS Lambda, Stripe API
+Title: Blazor Cookbook - Blazor examples and demos
+German Title: Blazor Kochbuch - Blazor Beispiele und Demos
+
+Description: This Single Page Application implements various Blazor render modes and dynamically lists recipe content pages. It serves as a practical learning resource for Blazor fundamentals and component development. The project uses structured task management with Markdown files and Cursor AI for development planning.
+
+German Description: Diese Single Page Application implementiert verschiedene Blazor Render-Modi und listet Rezept-Inhaltsseiten dynamisch auf. Sie dient als praktische Lernressource für Blazor-Grundlagen und Komponentenentwicklung. Das Projekt verwendet strukturiertes Aufgabenmanagement mit Markdown-Dateien und Cursor AI.
+
+Primary: Blazor with .NET 9 (Microsoft)
+Supporting: Bootstrap 5, Azure App Service, Cursor AI
 ```
 
 ---
@@ -159,6 +167,14 @@ Supporting: Node.js, PostgreSQL, Redis, AWS Lambda, Stripe API
 - **Mobile Consideration:** Test how descriptions display on smaller screens
 - **Consistency:** Maintain similar formatting and style across all projects
 - **Updates:** Review and update project information periodically
+
+### Writing Style Lessons Learned
+- **Concrete over abstract:** "implements various render modes" not "showcases render modes"
+- **Specific functionality:** "dynamically lists recipe content pages" not "dynamic content listing"
+- **Technical accuracy:** Describe what the application actually accomplishes
+- **Fluent structure:** Technical function → Purpose/benefit → Development approach
+- **German translations:** Consider adding for broader accessibility
+- **Live demos:** Prioritize working applications over repository links when available
 
 ---
 

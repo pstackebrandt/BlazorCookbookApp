@@ -111,6 +111,7 @@
   - [x] ✅ T32.11 Improve description fluency with concrete action verbs and specific functionality
   - [x] ✅ T32.12 Add German translations for title and description
   - [x] ✅ T32.13 Update template with writing style lessons learned and German translation examples
+  - [x] ✅ T32.14 Refine German description: avoid "Diese" beginning, remove passive voice ("wurde")
 - [x] ✅ T22 [S] Fixed responsive design issue for mobile view.
 - [x] ✅ T21 [XL] Implement Build-time Recipe Manifest (Phase 1)
   - [x] ✅ T21.1 Create Recipe Manifest Generator console application
