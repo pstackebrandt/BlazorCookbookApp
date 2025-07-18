@@ -9,7 +9,8 @@ globs: "*.ps1", "*.sh", "*.psm1", "*.psd1", "*.md"
 alwaysApply: false
 ---
 
-# Shell Choice Guidelines
+Shell Choice Guidelines
+=======================
 
 - Use PowerShell for Windows-specific tasks and system automation
 - Use Git Bash for cross-platform scripts and git operations

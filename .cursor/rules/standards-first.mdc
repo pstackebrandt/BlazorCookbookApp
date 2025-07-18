@@ -3,13 +3,19 @@ description:
 globs: 
 alwaysApply: true
 ---
-# Standards-First Rule
 
-## The Rule
+Standards-First Rule
+====================
 
-**Always default to established industry standards and conventions unless they introduce unnecessary overhead or complexity for the specific context. Prefer simplicity and familiarity over novel approaches unless there's a compelling reason to deviate.**
+The Rule
+--------
 
-## Application Examples
+**Always default to established industry standards and conventions unless they introduce
+unnecessary overhead or complexity for the specific context. Prefer simplicity and
+familiarity over novel approaches unless there's a compelling reason to deviate.**
+
+Application Examples
+--------------------
 
 - Use `.cursor/rules` instead of `cursor-rules/` for Cursor IDE configuration
 - Follow standard naming conventions for files and folders (e.g., `.vscode`, `.git`)
@@ -17,7 +23,8 @@ alwaysApply: true
 - Use standard project structures unless project-specific needs dictate otherwise
 - Implement common design patterns rather than inventing alternatives
 
-## When to Deviate
+When to Deviate
+---------------
 
 Deviation from standards is appropriate when:
 
@@ -25,4 +32,4 @@ Deviation from standards is appropriate when:
 2. Project requirements strongly conflict with the standard approach
 3. Performance or resource constraints necessitate a different solution
 4. The standard is obsolete or being replaced by a newer standard
-5. The team has established a well-documented alternative that provides clear benefits 
+5. The team has established a well-documented alternative that provides clear benefits
